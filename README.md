@@ -12,7 +12,7 @@
 
 ```bash
 # 1. 마켓플레이스 등록 (최초 1회)
-claude plugin marketplace add <github-계정>/mw_agent_kit
+claude plugin marketplace add blueclover222/mw_agent_kit
 #    (로컬 체크아웃에서 쓰려면: claude plugin marketplace add /path/to/mw_agent_kit)
 
 # 2. 플러그인 설치

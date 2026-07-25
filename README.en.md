@@ -12,7 +12,7 @@
 
 ```bash
 # 1. Register the marketplace (once)
-claude plugin marketplace add <github-account>/mw_agent_kit
+claude plugin marketplace add blueclover222/mw_agent_kit
 #    (from a local checkout: claude plugin marketplace add /path/to/mw_agent_kit)
 
 # 2. Install the plugin

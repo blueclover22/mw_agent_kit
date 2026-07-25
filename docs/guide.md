@@ -107,7 +107,7 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
 ## 5. 설치와 적용
 
 ```bash
-claude plugin marketplace add <github-계정>/mw_agent_kit   # 최초 1회
+claude plugin marketplace add blueclover222/mw_agent_kit   # 최초 1회
 claude plugin install mak@mw-agent-kit
 ```
 

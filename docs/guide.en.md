@@ -107,7 +107,7 @@ Decision criteria:
 ## 5. Install and Apply
 
 ```bash
-claude plugin marketplace add <github-account>/mw_agent_kit   # once
+claude plugin marketplace add blueclover222/mw_agent_kit   # once
 claude plugin install mak@mw-agent-kit
 ```
 
