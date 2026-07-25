@@ -1,0 +1,14 @@
+{
+  "name": "mw-agent-kit",
+  "description": "Marketplace for the mak plugin — a process-driven development workflow kit for Claude Code.",
+  "owner": {
+    "name": "Minwoo"
+  },
+  "plugins": [
+    {
+      "name": "mak",
+      "source": ".",
+      "description": "Process-driven development workflow kit: brainstorm → kickoff → design → implement → verify → review, with planner/coder/reviewer/doc-editor/analyzer agents."
+    }
+  ]
+}

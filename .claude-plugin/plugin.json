@@ -1,0 +1,9 @@
+{
+  "name": "mak",
+  "displayName": "MW Agent Kit",
+  "version": "0.1.0",
+  "description": "Process-driven development workflow kit: brainstorm → kickoff → design → implement → verify → review. Includes planner/coder/reviewer/doc-editor/analyzer agents, design-doc and roadmap templates, and a reverse-engineering doc set.",
+  "author": {
+    "name": "Minwoo"
+  }
+}
