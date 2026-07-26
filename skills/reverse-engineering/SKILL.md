@@ -23,7 +23,8 @@ Templates are in English. Fill content in the user's language (or the project's 
 ### 1. Confirm target and state
 
 - Confirm the project root (default: current working directory).
-- If `docs/` already exists with content, list what's there and confirm with the user how to proceed (merge into existing files / copy only missing files / abort). **Never overwrite an existing document without reading it first.**
+- Check for existing guide documents — `docs/` content, plus obvious guide files elsewhere (e.g. a root-level ARCHITECTURE/CONTRIBUTING guide). If any exist, list them and **confirm with the user whether to merge** (merge / copy only missing files / abort). **Never overwrite an existing document without reading it first.**
+- **On merge, this skill's doc-set format is the baseline** — migrate the existing documents' content into the set's structure (per-topic SSOT, numbering, frontmatter per `00.INDEX.md`), not the other way around. Facts already written in the existing guides are treated as source material for step 4 (verify against code before carrying over; unverifiable claims become `_(TODO)_`). After migration, list the superseded originals and let the user decide whether to archive or delete them — do not delete on your own.
 
 ### 2. Choose a profile
 
