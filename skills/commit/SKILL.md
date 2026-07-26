@@ -51,7 +51,7 @@ Type = the change's primary intent, not its file type:
 - Scope optional (module/domain; reuse scopes from `git log`). Breaking change: `!` + `BREAKING CHANGE:` body line.
 - mak outputs: design doc / roadmap / doc-set → `docs`; a verify-caught fix before commit → part of the original `feat`/`fix`; kit/config housekeeping → `chore`.
 
-**Style** — terse, fact-dense, outcome-first: the subject states the outcome ("remove the cross-layer duplication"), not the mechanics ("move a file"); the body is 2–6 bullets, one verifiable fact each with counts, stating preserved invariants (contract unchanged, tests moved along) and what intentionally stayed put; doc syncs cite sections. Example (imitate the structure, in the user's language):
+**Style** — terse, fact-dense, outcome-first: the subject states the outcome ("remove the cross-layer duplication"), not the mechanics ("move a file"); the body is 2–6 bullets, one verifiable fact each with counts, stating preserved invariants (contract unchanged, tests moved along) and what intentionally stayed put; doc syncs cite sections. **Scale the body to the diff** — a tiny change (a line or two, single concern) takes the subject alone or at most one bullet; multi-bullet bodies are for diffs with multiple facts worth recording. Example (imitate the structure, in the user's language):
 
 ```
 refactor(order): move OrderStatus to the shared domain layer to remove duplication
