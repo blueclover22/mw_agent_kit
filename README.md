@@ -1,10 +1,10 @@
 # mak — MW Agent Kit
 
-> Claude Code 용 개발 프로세스 플러그인 — 발산 → 착수 → 설계 → 구현 → 검증 → 리뷰 흐름을 skill 과 agent 로 제공합니다.
+> Claude Code 용 개발 프로세스 플러그인 — 발산 → 착수 → 설계 → 구현 → 검증 → 리뷰 → 커밋 흐름을 skill 과 agent 로 제공합니다.
 >
 > English version: [README.en.md](README.en.md)
 
-`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 10종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
+`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 11종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
 
 ---
 
@@ -12,7 +12,7 @@
 
 ```bash
 # 1. 마켓플레이스 등록 (최초 1회)
-claude plugin marketplace add blueclover222/mw_agent_kit
+claude plugin marketplace add blueclover22/mw_agent_kit
 #    (로컬 체크아웃에서 쓰려면: claude plugin marketplace add /path/to/mw_agent_kit)
 
 # 2. 플러그인 설치
@@ -51,7 +51,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. 구성
 
-### Skills (10종)
+### Skills (11종)
 
 | skill | 역할 |
 | :--- | :--- |
@@ -62,6 +62,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:roadmap-planning` | 프로젝트 전체 Phase 구조·상태 추적 (상위 축) |
 | `/mak:verify-checklist` | 구현 후 빌드→린트→테스트→포맷→수동 검증 순서 |
 | `/mak:review-report` | 리뷰 절차·보고서 형식 (Critical/Warning/Pass/메모) |
+| `/mak:commit` | 작업 마무리 커밋 — 게이트 통과 후 커밋, 변경 내용 한눈 보고. push 등 기타 git 명령은 명시 요청 시에만 |
 | `/mak:setup` | 공통 규칙(Workflow 등급·코딩 원칙 매핑·위임 요약)을 `~/.claude/CLAUDE.md` 에 마커 블록으로 설치 |
 | `/mak:teardown` | 설치된 마커 블록 제거 (플러그인 삭제 전 실행) |
 | `/mak:reverse-engineering` | 표준 문서 세트(14종)를 복사하고 프로젝트를 리버스 엔지니어링 |
@@ -84,6 +85,7 @@ claude plugin uninstall mak@mw-agent-kit
 (막연하면) /mak:brainstorming → /mak:dev-kickoff → [필요 시 mak:planner 자문]
    → 설계 문서 (mak:design-doc-template / 큰 기능은 mak:major-feature-pack)
    → 사용자 승인 → 구현 (mak:coder) → /mak:verify-checklist → mak:reviewer 리뷰
+   → (마무리) /mak:commit — push 등 기타 git 명령은 명시 요청 시에만
 ```
 
 - 명백한 Trivial / Small 작업(오타·1줄 수정 등)은 위 절차 없이 바로 수정합니다.

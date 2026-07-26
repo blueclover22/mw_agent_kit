@@ -3,6 +3,7 @@
 # mak — Common Development Rules
 
 > This block is managed by the `mak` plugin's `/mak:setup`. Edit it in the plugin repository; remove it with `/mak:teardown`.
+> If the mak plugin is not installed in this environment, ignore the `mak:*` skill/agent references in this block and apply only the general rules (grades, principles).
 
 ## Workflow
 
@@ -33,9 +34,11 @@ Classify work by size and risk first. The grade decides whether to enter `mak:de
 
 ## mak Delegation Summary
 
-- Development-process skills/agents come from the `mak` plugin — skills: `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` / `mak:major-feature-pack` (design documentation) → `mak:verify-checklist` (verification) → `mak:review-report` (review); top-level axis `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. Follow each mak skill/agent description for flow details.
+- Development-process skills/agents come from the `mak` plugin — skills: `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` / `mak:major-feature-pack` (design documentation) → `mak:verify-checklist` (verification) → `mak:review-report` (review) → `mak:commit` (wrap-up commit — invoking the skill is the explicit commit request; other git ops such as push run only on explicit request); top-level axis `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. Follow each mak skill/agent description for flow details.
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
 - Never invoke `mak:coder` without an approved plan (simple work on explicit request is the exception). `mak:reviewer` reports only and never modifies code.
+- Design docs are written once — if `mak:planner` is available, delegate the writing with the confirmed decisions; otherwise the main thread writes it directly.
+- Simple typo/format cleanups of existing Markdown documents are delegated to `mak:doc-editor`.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
 
 <!-- mak:end -->

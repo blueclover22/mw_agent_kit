@@ -1,7 +1,7 @@
 # mak Usage Guide
 
-> Scope: the `mak` plugin's 10 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
-> Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → verify → review" flow in any project, plus a roadmap axis for project-wide direction
+> Scope: the `mak` plugin's 11 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
+> Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
 >
 > 한국어 버전: [guide.md](guide.md)
 
@@ -9,9 +9,9 @@
 
 ## 1. Purpose of the Kit
 
-**A development-process skill set (diverge → kickoff/consult → design → verify → review) + a top-level roadmap axis + coding principles (§Coding Rules)**
+**A development-process skill set (diverge → kickoff/consult → design → verify → review → commit) + a top-level roadmap axis + coding principles (§Coding Rules)**
 
-The kit packages the core stages that repeat in every project — idea divergence → kickoff/convergence → architecture consultation when needed → design documentation → implementation verification → review reporting — into reusable skills with consistent procedures and formats. On top, `mak:roadmap-planning` handles mid/long-term direction across phases as a separate axis.
+The kit packages the core stages that repeat in every project — idea divergence → kickoff/convergence → architecture consultation when needed → design documentation → implementation verification → review reporting → wrap-up commit — into reusable skills with consistent procedures and formats. On top, `mak:roadmap-planning` handles mid/long-term direction across phases as a separate axis.
 
 - No dependency on a specific language, framework, or build tool
 - With the agents (mak:planner/coder/reviewer/doc-editor/analyzer) available, skills are used through delegation; where delegation isn't possible, the skills alone reproduce the same flow
@@ -29,6 +29,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:major-feature-pack` | Structured 9-doc pack for large features/ports whose upfront analysis must be split across documents. `mig_`/`feat_` prefixes, cross-reference conventions, intentional-deviation tables. Judged by analysis breadth, not PR/module count (§4) |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
 | `mak:review-report` | SSOT for the review procedure and report format. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 Note, 6-item Warning checklist |
+| `mak:commit` | Work wrap-up commit. Pre-commit gates (verification confirmed, every changed line ties to the request, junk/secret scan) → commit with a message matching the repo's convention → at-a-glance result report. Invoking the skill counts as the explicit commit request; other git ops (push/amend/rebase, …) run only on the user's explicit request |
 | `mak:setup` / `mak:teardown` | Install / remove the common rules as a marker block in `~/.claude/CLAUDE.md` |
 | `mak:reverse-engineering` | Copy the standard doc set (14 docs + domains/) into the project's `docs/` and fill it via code analysis |
 
@@ -56,14 +57,14 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 
 ## 3. `mak:roadmap-planning` — the Roadmap Axis
 
-Operates as a **separate, higher axis** above the 5-stage flow. Shape the project-wide direction (phases) first; apply the 5-stage flow at each phase's kickoff.
+Operates as a **separate, higher axis** above the 6-stage flow. Shape the project-wide direction (phases) first; apply the 6-stage flow at each phase's kickoff.
 
 ```
 mak:roadmap-planning (once at project start + periodic updates)
       │  pick a phase
       ▼
 [opt] mak:brainstorming → mak:dev-kickoff → [mak:planner Brief if needed]
-      → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report
+      → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report → mak:commit
 ```
 
 ## 4. Scenario Flows (single feature vs. large feature)
@@ -82,7 +83,7 @@ Requirements received
    ▼                              ▼
 ② mak:dev-kickoff →            ②' mak:major-feature-pack
    [planner Brief if needed]      (9 docs: 02→01→03→04→05→06→07→08→00)
-③ mak:design-doc-template          │ repeat ②–⑤ per PR step of §08
+③ mak:design-doc-template          │ repeat ②–⑥ per PR step of §08
                                     │ (9-doc pack stays the SSOT)
    │                                │
    └──────────┬─────────────────────┘
@@ -90,6 +91,8 @@ Requirements received
       ④ implement → mak:verify-checklist
               ▼
       ⑤ mak:review-report (fixes → re-delegate to ④; reviewer never edits)
+              ▼
+      ⑥ (wrap-up) mak:commit — commit after gates (push etc. only on explicit request)
 ```
 
 Decision criteria:
@@ -107,7 +110,7 @@ Decision criteria:
 ## 5. Install and Apply
 
 ```bash
-claude plugin marketplace add blueclover222/mw_agent_kit   # once
+claude plugin marketplace add blueclover22/mw_agent_kit   # once
 claude plugin install mak@mw-agent-kit
 ```
 
@@ -120,7 +123,7 @@ claude plugin install mak@mw-agent-kit
 
 The default design-doc path is `.claude/mak/plan/`; a path specified in the project `.claude/CLAUDE.md` wins (`mak:design-doc-template` §Save location is the SSOT).
 
-> Mechanical enforcement (secret-file read-deny, verification-command allowlists, hooks) varies per project/user and is not shipped in the plugin. Configure it yourself in `~/.claude/settings.json` / `<project>/.claude/settings.json` if needed.
+> Mechanical enforcement (secret-file read-deny, verification-command allowlists, hooks) varies per project/user and is not shipped in the plugin. Configure it yourself in `~/.claude/settings.json` / `<project>/.claude/settings.json` if needed. **Agent constraints like "documents only" / "never modifies code" are prompt-level rules** — tool lists narrow the surface, but they don't technically prevent mistakes or prompt injection; on sensitive codebases, back them with permission settings, sandboxing, and command allowlists.
 
 ## 6. Relationship with the Agents
 

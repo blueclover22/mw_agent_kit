@@ -1,7 +1,7 @@
 # mak 사용 가이드
 
-> 대상: `mak` 플러그인의 skill 10종 + agent 5종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
-> 목적: 어떤 프로젝트에서도 일관된 "발산 → 착수/아키텍처 자문 → 설계 → 검증 → 리뷰" 흐름 재현, 그리고 프로젝트 전체 방향을 다루는 로드맵 축 지원
+> 대상: `mak` 플러그인의 skill 11종 + agent 5종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
+> 목적: 어떤 프로젝트에서도 일관된 "발산 → 착수/아키텍처 자문 → 설계 → 검증 → 리뷰 → 커밋" 흐름 재현, 그리고 프로젝트 전체 방향을 다루는 로드맵 축 지원
 >
 > English version: [guide.en.md](guide.en.md)
 
@@ -9,9 +9,9 @@
 
 ## 1. 이 kit 의 목적
 
-**개발 프로세스 skill 세트 (발산 → 착수/아키텍처 자문 → 설계 → 검증 → 리뷰) + 상위 로드맵 축 + 코딩 원칙(§Coding Rules)**
+**개발 프로세스 skill 세트 (발산 → 착수/아키텍처 자문 → 설계 → 검증 → 리뷰 → 커밋) + 상위 로드맵 축 + 코딩 원칙(§Coding Rules)**
 
-프로젝트마다 반복되는 핵심 단계(아이디어 발산 → 개발 착수·수렴 → 필요 시 아키텍처 자문 → 설계 문서화 → 구현 검증 → 리뷰 보고)를 일관된 절차와 형식으로 수행할 수 있도록 재사용 가능한 skill 을 묶어 제공한다. 여기에 더해, 여러 Phase 에 걸친 중장기 방향을 다루는 `mak:roadmap-planning` 을 별도 축으로 제공한다.
+프로젝트마다 반복되는 핵심 단계(아이디어 발산 → 개발 착수·수렴 → 필요 시 아키텍처 자문 → 설계 문서화 → 구현 검증 → 리뷰 보고 → 마무리 커밋)를 일관된 절차와 형식으로 수행할 수 있도록 재사용 가능한 skill 을 묶어 제공한다. 여기에 더해, 여러 Phase 에 걸친 중장기 방향을 다루는 `mak:roadmap-planning` 을 별도 축으로 제공한다.
 
 - 특정 언어, 프레임워크, 빌드 도구에 종속되지 않는다
 - agent(mak:planner/coder/reviewer/doc-editor/analyzer)가 있으면 각 skill 을 위임 형태로 활용하고, agent 위임이 어려운 환경에서도 skill 만으로 동일한 흐름을 수행할 수 있다
@@ -29,6 +29,7 @@
 | `mak:major-feature-pack` | 선행 분석을 여러 문서로 분리해야 추적 가능한 큰 신규 기능·다른 스택 이식을 9개 문서로 정형화. `mig_` / `feat_` prefix, 정합 출처 규약, 의도적 차이 표 포함. 다PR·다모듈 여부가 아니라 분석면 넓이로 판단(§4) |
 | `mak:verify-checklist` | 구현 완료 후 빌드→린트→테스트→포맷(변경 파일만)→수동 시나리오 순 검증. 보고 직전 자가 질의 + "사전 정의 성공 기준 vs 결과" 표 |
 | `mak:review-report` | 리뷰 절차와 보고서 형식의 SSOT. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 메모 분류, Warning 세부 점검 6종 |
+| `mak:commit` | 작업 마무리 커밋. 사전 게이트(검증 수행 확인·변경 라인=요청 직결·잡파일/시크릿 스캔) → 저장소 컨벤션에 맞는 메시지로 커밋 → 변경 내용 한눈 보고. skill 실행 자체가 명시적 커밋 요청으로 간주되며, push·amend·rebase 등 기타 git 명령은 사용자가 명시 요청할 때만 수행 |
 | `mak:setup` / `mak:teardown` | 공통 규칙을 `~/.claude/CLAUDE.md` 마커 블록으로 설치 / 제거 |
 | `mak:reverse-engineering` | 표준 문서 세트(14종 + domains/)를 프로젝트 `docs/` 로 복사하고 코드 분석으로 채움 |
 
@@ -56,14 +57,14 @@
 
 ## 3. `mak:roadmap-planning` — 프로젝트 로드맵 축
 
-아래 5단계 개발 흐름과 **별개의 상위 축**으로 동작한다. 프로젝트 전체 방향(Phase 구조)을 먼저 잡은 뒤, 각 Phase 착수 시 5단계 흐름을 적용한다.
+아래 6단계 개발 흐름과 **별개의 상위 축**으로 동작한다. 프로젝트 전체 방향(Phase 구조)을 먼저 잡은 뒤, 각 Phase 착수 시 6단계 흐름을 적용한다.
 
 ```
 mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
       │  Phase 선택
       ▼
 [선택] mak:brainstorming → mak:dev-kickoff → [필요 시 mak:planner Brief]
-      → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report
+      → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report → mak:commit
 ```
 
 ## 4. 사용 시나리오 흐름 (단일 기능 / 큰 기능 분기)
@@ -83,13 +84,15 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
 ② mak:dev-kickoff →          ②' mak:major-feature-pack
    [필요 시 planner Brief]      (9개 문서: 02→01→03→04→05→06→07→08→00)
 ③ mak:design-doc-template        │ §08 의 PR Step 단위로
-                                  │ ②~⑤ 흐름 반복 (9-doc = SSOT)
+                                  │ ②~⑥ 흐름 반복 (9-doc = SSOT)
    │                              │
    └──────────┬───────────────────┘
               ▼
       ④ 구현 → mak:verify-checklist
               ▼
       ⑤ mak:review-report (수정 필요 시 ④ 재위임, 직접 수정 금지)
+              ▼
+      ⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 명시 요청 시에만)
 ```
 
 판단 기준:
@@ -107,7 +110,7 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
 ## 5. 설치와 적용
 
 ```bash
-claude plugin marketplace add blueclover222/mw_agent_kit   # 최초 1회
+claude plugin marketplace add blueclover22/mw_agent_kit   # 최초 1회
 claude plugin install mak@mw-agent-kit
 ```
 
@@ -120,7 +123,7 @@ claude plugin install mak@mw-agent-kit
 
 설계 문서 기본 경로는 `.claude/mak/plan/` 이며, 프로젝트 `.claude/CLAUDE.md` 에 다른 경로를 명시하면 그쪽이 우선한다 (`mak:design-doc-template` §저장 경로가 SSOT).
 
-> 기계적 강제(비밀 파일 read-deny, 검증 명령 allow, 훅 등)는 프로젝트·개인 환경마다 달라 플러그인에 포함하지 않는다. 필요하면 `~/.claude/settings.json` / `<project>/.claude/settings.json` 에서 직접 구성한다.
+> 기계적 강제(비밀 파일 read-deny, 검증 명령 allow, 훅 등)는 프로젝트·개인 환경마다 달라 플러그인에 포함하지 않는다. 필요하면 `~/.claude/settings.json` / `<project>/.claude/settings.json` 에서 직접 구성한다. **agent 의 "문서만 수정"·"코드 수정 금지" 류 제약은 프롬프트 수준 규칙**이라(도구 목록으로 표면은 좁혀 두었지만) 오작동·프롬프트 주입까지 기술적으로 막지는 못한다 — 민감한 코드베이스에서는 권한 설정·샌드박스·명령 허용 목록으로 보완한다.
 
 ## 6. agent 와의 관계
 

@@ -1,10 +1,10 @@
 # mak — MW Agent Kit
 
-> A development-process plugin for Claude Code — provides the diverge → kickoff → design → implement → verify → review flow as skills and agents.
+> A development-process plugin for Claude Code — provides the diverge → kickoff → design → implement → verify → review → commit flow as skills and agents.
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 10 skills and 5 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 11 skills and 5 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -12,7 +12,7 @@
 
 ```bash
 # 1. Register the marketplace (once)
-claude plugin marketplace add blueclover222/mw_agent_kit
+claude plugin marketplace add blueclover22/mw_agent_kit
 #    (from a local checkout: claude plugin marketplace add /path/to/mw_agent_kit)
 
 # 2. Install the plugin
@@ -51,7 +51,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. What's Included
 
-### Skills (10)
+### Skills (11)
 
 | Skill | Role |
 | :--- | :--- |
@@ -62,6 +62,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:roadmap-planning` | Project-wide phase structure and status tracking (top-level axis) |
 | `/mak:verify-checklist` | Post-implementation order: build → lint → tests → format → manual |
 | `/mak:review-report` | Review procedure and report format (Critical/Warning/Pass/Note) |
+| `/mak:commit` | Work wrap-up commit — gates, commit, at-a-glance result report. Other git ops (push, …) only on explicit request |
 | `/mak:setup` | Install the common rules (workflow grades, principle mapping, delegation summary) into `~/.claude/CLAUDE.md` as a marker block |
 | `/mak:teardown` | Remove the installed marker block (run before uninstalling) |
 | `/mak:reverse-engineering` | Copy the standard 14-doc set and reverse-engineer the project |
@@ -84,6 +85,7 @@ The basic development flow:
 (if vague) /mak:brainstorming → /mak:dev-kickoff → [mak:planner brief if needed]
    → design doc (mak:design-doc-template / mak:major-feature-pack for large features)
    → user approval → implement (mak:coder) → /mak:verify-checklist → mak:reviewer review
+   → (wrap-up) /mak:commit — other git ops (push, …) only on explicit request
 ```
 
 - Obvious Trivial / Small work (typos, one-liners) skips the process entirely.

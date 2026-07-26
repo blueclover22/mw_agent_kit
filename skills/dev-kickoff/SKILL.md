@@ -21,9 +21,14 @@ Enter for behavior changes spanning multiple files/modules, new features/compone
 - A large feature / cross-stack port whose upfront analysis (current state, spec alignment, policy, data matrices, boundary contracts) must be split across documents → `mak:major-feature-pack` (multi-PR / multi-module is NOT the criterion)
 
 <HARD-GATE>
-Within this skill's flow, do not write code, modify files, or perform any implementation until the design is approved by the user. Exception: if sizing clearly comes out Trivial / Small, stop this skill and switch to the general lightweight flow.
+Two approvals gate two different actions — do not conflate them:
 
-Reading files, read-only commands (git log, ls, grep, etc.), and search tools are allowed and encouraged during exploration. Prohibited writes: file creation, modification, deletion. No writes until design approval.
+1. **Design-content approval (§6)** — until the user approves the presented design content, no writes of any kind (file creation, modification, deletion).
+2. **Implementation-start approval (§9–§10)** — until the user approves against the saved document, no implementation writes.
+
+The ONLY writes permitted between the two gates are: saving the design doc itself (§7, requires §6 approval first) and subsequent edits to that same document (§8 self-review fixes, §9 user change requests). Nothing else is written until §10.
+
+Reading files, read-only commands (git log, ls, grep, etc.), and search tools are allowed and encouraged throughout. Exception: if sizing clearly comes out Trivial / Small, stop this skill and switch to the general lightweight flow.
 </HARD-GATE>
 
 ## Checklist
@@ -112,7 +117,7 @@ Clear success criteria enable independent iteration. Narrow vague criteria like 
 
 ### 7. Documentation handoff
 
-The approved design is documented **once**, per the `mak:design-doc-template` spec (sections, save location, file naming). This step's core responsibility is producing the confirmed inputs to hand to `mak:planner`.
+Runs only after §6 design-content approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see HARD-GATE). The approved design is documented **once**, per the `mak:design-doc-template` spec (sections, save location, file naming). This step's core responsibility is producing the confirmed inputs to hand to `mak:planner`.
 
 - If the `mak:planner` agent is available: **delegate the writing by passing the confirmed design inputs** — purpose/non-goals, chosen option, scope of changes, verification plan, confirmed decisions, remaining uncertainties. Planner is non-interactive, so leave no items that require asking the user. Once delegated, do not rewrite the same document in later steps (§10).
 - If planner is unavailable: the main thread writes it directly.
@@ -136,11 +141,11 @@ Fix immediately. No re-review needed.
 
 If self-review produced substantive changes beyond typos, mention them briefly when handing the document to the user.
 
-### 9. User review gate
+### 9. User review gate (implementation-start approval)
 
 > "The design doc is saved at `<path>`. Please review and tell me anything that needs changing. If it looks good, reply 'proceed' or 'approve'. I'll continue to the next stage after explicit confirmation."
 
-Wait for confirmation. On change requests, apply them and re-run the self-review.
+Wait for confirmation. On change requests, apply them to the design doc and re-run the self-review; if a change alters an already-approved design decision (not just wording), re-present that section per §6 before proceeding.
 
 ### 10. Handoff to next stage
 

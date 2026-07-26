@@ -3,6 +3,7 @@
 # mak — 공통 개발 규칙
 
 > 이 블록은 `mak` 플러그인의 `/mak:setup` 이 관리한다. 수정은 플러그인 저장소에서, 제거는 `/mak:teardown` 으로 한다.
+> mak 플러그인이 설치되어 있지 않은 환경에서는 이 블록의 `mak:*` skill·agent 참조를 무시하고, 등급·원칙 등 일반 규칙만 적용한다.
 
 ## Workflow
 
@@ -33,9 +34,11 @@
 
 ## mak 위임 요약
 
-- 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template` / `mak:major-feature-pack`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰), 상위 축 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
+- 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template` / `mak:major-feature-pack`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰) → `mak:commit`(마무리 커밋 — skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 명시 요청 시에만), 상위 축 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
 - 계획 승인 없이 `mak:coder` 를 호출하지 않는다 (단순 작업은 명시 요청 시 예외). `mak:reviewer` 는 보고만 하고 코드를 수정하지 않는다.
+- 설계 문서 집필은 한 번만 한다 — `mak:planner` 가 사용 가능하면 확정된 결정을 전달해 집필을 위임하고, 없으면 메인이 직접 작성한다.
+- 단순 오타·포맷 등 기존 Markdown 문서 정리는 `mak:doc-editor` 로 위임한다.
 - 설계 문서는 `mak:design-doc-template` 의 경로 규칙(기본 `.claude/mak/plan/`)을 따른다.
 
 <!-- mak:end -->

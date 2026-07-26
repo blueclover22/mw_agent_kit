@@ -24,7 +24,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 
 ## Components
 
-- 10 skills: brainstorming / dev-kickoff / design-doc-template / major-feature-pack / roadmap-planning / verify-checklist / review-report / setup / teardown / reverse-engineering
+- 11 skills: brainstorming / dev-kickoff / design-doc-template / major-feature-pack / roadmap-planning / verify-checklist / review-report / commit / setup / teardown / reverse-engineering
 - 5 agents: planner(opus) / coder(sonnet) / reviewer(opus) / doc-editor(haiku) / analyzer(opus) — coder/reviewer/planner load their companion skill via frontmatter `skills:`; analyzer follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
 
 ## Verification Commands
@@ -46,6 +46,6 @@ This is a Markdown/JSON repository — no build or tests. After changes, run:
 
 ## Release
 
-- Bump `version` in `.claude-plugin/plugin.json` (semver)
+- Bump `version` in `.claude-plugin/plugin.json` (semver, 1.0.0 = first real release). Major: breaks installed users — skill/agent renames, marker-format or snippet-contract changes, save-path default changes. Minor: new skills/agents/capabilities. Patch: wording, typo, doc-only fixes
 - The marketplace name `mw-agent-kit` and plugin name `mak` must not change (installed users' references would break)
 - When the `claude-md-snippet.ko.md` / `.en.md` pair changes, confirm the README note "re-run /mak:setup after updates" still holds
