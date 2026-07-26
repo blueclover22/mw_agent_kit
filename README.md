@@ -10,6 +10,8 @@
 
 ## 1. 설치
 
+**터미널에서 실행 시:**
+
 ```bash
 # 1. 마켓플레이스 등록 (최초 1회)
 claude plugin marketplace add blueclover22/mw_agent_kit
@@ -19,7 +21,16 @@ claude plugin marketplace add blueclover22/mw_agent_kit
 claude plugin install mak@mw-agent-kit
 ```
 
-설치 후 Claude Code 세션에서 **공통 규칙을 1회 설치**합니다:
+**Claude Code 세션에서 실행 시** (빌트인 명령 — 모델 미개입·토큰 무소모):
+
+```
+/plugin marketplace add blueclover22/mw_agent_kit
+/plugin install mak@mw-agent-kit
+```
+
+> 세션 안에서 `claude plugin ...` 을 자연어처럼 입력하면 모델이 대신 실행해 토큰을 소모합니다 — 세션에서는 반드시 `/plugin` 빌트인을 사용하세요.
+
+설치 후 **Claude Code 세션 안에서** 공통 규칙을 1회 설치합니다:
 
 ```
 /mak:setup
@@ -29,9 +40,13 @@ claude plugin install mak@mw-agent-kit
 
 ## 2. 업데이트
 
+**터미널에서 실행 시:**
+
 ```bash
 claude plugin update mak@mw-agent-kit
 ```
+
+**Claude Code 세션에서 실행 시:** `/plugin` 패널 → Installed 탭에서 업데이트
 
 규칙(스니펫)이 변경된 업데이트라면 `/mak:setup` 을 재실행해 블록을 갱신하세요.
 
@@ -39,14 +54,24 @@ claude plugin update mak@mw-agent-kit
 
 ## 3. 삭제
 
-삭제 전 **반드시** 규칙 블록을 먼저 제거하세요 (플러그인에는 uninstall 훅이 없습니다):
+삭제 전 **반드시** 규칙 블록을 먼저 제거하세요 (플러그인에는 uninstall 훅이 없습니다). Claude Code 세션 안에서:
 
 ```
 /mak:teardown
 ```
 
+이후 플러그인을 제거합니다.
+
+**터미널에서 실행 시:**
+
 ```bash
 claude plugin uninstall mak@mw-agent-kit
+```
+
+**Claude Code 세션에서 실행 시:**
+
+```
+/plugin uninstall mak@mw-agent-kit
 ```
 
 ## 4. 구성
@@ -88,6 +113,7 @@ claude plugin uninstall mak@mw-agent-kit
    → (마무리) /mak:commit — push 등 기타 git 명령은 명시 요청 시에만
 ```
 
+- 슬래시 메뉴에서 skill 이 `mak:` prefix 없이 보일 수 있습니다(Claude Code 구버전 표시 방식). 표시와 무관하게 `/mak:brainstorming` 정식 형태와 `/brainstorming` 단축 형태 모두 동작하며, 같은 이름의 다른 skill 이 생기면 prefix 형태만 유효합니다.
 - 명백한 Trivial / Small 작업(오타·1줄 수정 등)은 위 절차 없이 바로 수정합니다.
 - 설계 문서는 기본적으로 프로젝트의 `.claude/mak/plan/` 하위에 저장됩니다.
 - 기존 프로젝트를 분석해 문서화하려면 `/mak:reverse-engineering` 을 사용합니다.

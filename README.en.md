@@ -10,6 +10,8 @@
 
 ## 1. Install
 
+**When running in the terminal:**
+
 ```bash
 # 1. Register the marketplace (once)
 claude plugin marketplace add blueclover22/mw_agent_kit
@@ -19,7 +21,16 @@ claude plugin marketplace add blueclover22/mw_agent_kit
 claude plugin install mak@mw-agent-kit
 ```
 
-Then, in a Claude Code session, **install the common rules once**:
+**When running inside a Claude Code session** (built-in command — no model, no tokens):
+
+```
+/plugin marketplace add blueclover22/mw_agent_kit
+/plugin install mak@mw-agent-kit
+```
+
+> Avoid typing `claude plugin ...` as a natural-language prompt in a session — the model runs it for you and burns tokens; always use the `/plugin` built-in in-session.
+
+Then, **inside a Claude Code session**, install the common rules once:
 
 ```
 /mak:setup
@@ -29,9 +40,13 @@ This adds the Workflow task grades, the coding-principle mapping, and the mak de
 
 ## 2. Update
 
+**When running in the terminal:**
+
 ```bash
 claude plugin update mak@mw-agent-kit
 ```
+
+**When running inside a Claude Code session:** `/plugin` panel → update from the Installed tab
 
 If the update changed the rules (snippet), re-run `/mak:setup` to refresh the block.
 
@@ -39,14 +54,24 @@ If the update changed the rules (snippet), re-run `/mak:setup` to refresh the bl
 
 ## 3. Uninstall
 
-Before uninstalling, **remove the rules block first** (plugins have no uninstall hook):
+Before uninstalling, **remove the rules block first** (plugins have no uninstall hook). Inside a Claude Code session:
 
 ```
 /mak:teardown
 ```
 
+Then uninstall the plugin.
+
+**When running in the terminal:**
+
 ```bash
 claude plugin uninstall mak@mw-agent-kit
+```
+
+**When running inside a Claude Code session:**
+
+```
+/plugin uninstall mak@mw-agent-kit
 ```
 
 ## 4. What's Included
@@ -88,6 +113,7 @@ The basic development flow:
    → (wrap-up) /mak:commit — other git ops (push, …) only on explicit request
 ```
 
+- The slash menu may show skills without the `mak:` prefix (older Claude Code display behavior). Regardless of display, both `/mak:brainstorming` (canonical) and `/brainstorming` (shorthand) work; if another skill claims the same name, only the prefixed form remains valid.
 - Obvious Trivial / Small work (typos, one-liners) skips the process entirely.
 - Design docs are saved under the project's `.claude/mak/plan/` by default.
 - To analyze and document an existing project, use `/mak:reverse-engineering`.

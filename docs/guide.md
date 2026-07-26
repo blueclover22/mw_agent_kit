@@ -109,9 +109,18 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
 
 ## 5. 설치와 적용
 
+**터미널에서 실행 시:**
+
 ```bash
 claude plugin marketplace add blueclover22/mw_agent_kit   # 최초 1회
 claude plugin install mak@mw-agent-kit
+```
+
+**Claude Code 세션에서 실행 시** (빌트인 명령 — 모델 미개입·토큰 무소모):
+
+```
+/plugin marketplace add blueclover22/mw_agent_kit
+/plugin install mak@mw-agent-kit
 ```
 
 | 단계 | 명령/행동 | 효과 |

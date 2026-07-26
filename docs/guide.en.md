@@ -109,9 +109,18 @@ Decision criteria:
 
 ## 5. Install and Apply
 
+**When running in the terminal:**
+
 ```bash
 claude plugin marketplace add blueclover22/mw_agent_kit   # once
 claude plugin install mak@mw-agent-kit
+```
+
+**When running inside a Claude Code session** (built-in command — no model, no tokens):
+
+```
+/plugin marketplace add blueclover22/mw_agent_kit
+/plugin install mak@mw-agent-kit
 ```
 
 | Step | Command/action | Effect |
