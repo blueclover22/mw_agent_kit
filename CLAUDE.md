@@ -46,6 +46,10 @@ This is a Markdown/JSON repository — no build or tests. After changes, run:
 
 ## Release
 
-- Bump `version` in `.claude-plugin/plugin.json` (semver, 1.0.0 = first real release). Major: breaks installed users — skill/agent renames, marker-format or snippet-contract changes, save-path default changes. Minor: new skills/agents/capabilities. Patch: wording, typo, doc-only fixes
+- Bump `version` in `.claude-plugin/plugin.json` (semver, 1.0.0 = first real release). **Bump only when shipped behavior changes** — the install cache is keyed by version, so a bump is exactly what makes an update reach installed users:
+  - Major: breaks installed users — skill/agent renames, marker-format or snippet-contract changes, save-path default changes
+  - Minor: new skills / agents / capabilities
+  - Patch: fixes inside existing skills/agents that change what the model does (procedure, gates, rule wording)
+  - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway
 - The marketplace name `mw-agent-kit` and plugin name `mak` must not change (installed users' references would break)
 - When the `claude-md-snippet.ko.md` / `.en.md` pair changes, confirm the README note "re-run /mak:setup after updates" still holds
