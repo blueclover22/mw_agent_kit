@@ -55,6 +55,8 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 | **Precise changes** | No out-of-scope files; single purpose per change; no adjacent "improvements"; match existing style; every changed line ties to the request | mak:dev-kickoff §8, mak:verify-checklist §Self-Check, mak:review-report §Warning, mak:coder agent |
 | **Goal-driven execution** | Convert to verifiable goals; `Step → verify: check` plans; verify after changes; confirm behavior before reporting | mak:dev-kickoff §5, mak:design-doc-template §5.0, mak:verify-checklist §Report Format |
 
+> Source: these four principles are adapted from — and inspired by — the AI-coding guidelines shared by Andrej Karpathy.
+
 ## 3. `mak:roadmap-planning` — the Roadmap Axis
 
 Operates as a **separate, higher axis** above the 6-stage flow. Shape the project-wide direction (phases) first; apply the 6-stage flow at each phase's kickoff.

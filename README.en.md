@@ -128,3 +128,8 @@ For the full process, task grades, decision criteria, and agent delegation princ
 ## 6. Customizing
 
 Installed plugin files can't be edited in place. To adapt the kit, fork the repository, edit the skill `assets/` templates (design doc, review report, roadmap, 9-doc, doc set) and `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` (injected rules, ko/en mirrors), and distribute via your own marketplace.
+
+## 7. License / Acknowledgements
+
+- [MIT License](LICENSE)
+- The four coding principles (think before coding / simplicity first / precise changes / goal-driven execution) are adapted from — and inspired by — the AI-coding guidelines shared by Andrej Karpathy.

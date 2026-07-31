@@ -55,6 +55,8 @@
 | **정밀한 수정** | 범위 밖 파일 금지 · 단일 목적 · 인접 코드 개선 금지 · 기존 스타일 일치 · 변경 라인=요청 직결 | mak:dev-kickoff §8, mak:verify-checklist §Self-Check, mak:review-report §Warning, mak:coder agent |
 | **목표 중심적 실행** | 검증 가능한 목표로 전환 · `Step → verify: check` 계획 · 변경 후 검증 · 동작 확인 후 보고 | mak:dev-kickoff §5, mak:design-doc-template §5.0, mak:verify-checklist §Report Format |
 
+> 출처: 위 4원칙은 Andrej Karpathy 가 공유한 AI 코딩 가이드라인에서 영감을 받아 재구성한 것이다.
+
 ## 3. `mak:roadmap-planning` — 프로젝트 로드맵 축
 
 아래 6단계 개발 흐름과 **별개의 상위 축**으로 동작한다. 프로젝트 전체 방향(Phase 구조)을 먼저 잡은 뒤, 각 Phase 착수 시 6단계 흐름을 적용한다.

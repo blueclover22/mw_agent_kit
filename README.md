@@ -128,3 +128,8 @@ claude plugin uninstall mak@mw-agent-kit
 ## 6. 커스터마이징
 
 설치된 플러그인 파일은 직접 수정할 수 없습니다. 팀·프로젝트에 맞게 고치려면 저장소를 fork 한 뒤 skill 의 `assets/` 템플릿(설계 문서·리뷰 보고서·로드맵·9-doc·문서 세트)과 `skills/setup/assets/claude-md-snippet.ko.md`·`.en.md`(주입 규칙, 한/영 미러)를 수정해 자체 마켓플레이스로 배포하세요.
+
+## 7. 라이선스 / 출처
+
+- [MIT License](LICENSE)
+- 코딩 원칙 4종(코딩하기 전에 생각하기 / 단순함이 최우선 / 정밀한 수정 / 목표 중심적 실행)은 Andrej Karpathy 가 공유한 AI 코딩 가이드라인에서 영감을 받아 재구성한 것입니다.
