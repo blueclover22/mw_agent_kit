@@ -51,5 +51,6 @@ This is a Markdown/JSON repository — no build or tests. After changes, run:
   - Minor: new skills / agents / capabilities
   - Patch: fixes inside existing skills/agents that change what the model does (procedure, gates, rule wording)
   - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway
+- Tag the version-bump commit with the matching annotated tag (`git tag -a v1.2.3 -m "mak v1.2.3"`, pushed separately via `git push origin v1.2.3`). Tags do not affect installation — the marketplace always tracks the default branch — but they pin which commit shipped as each version. Before bumping, run `git diff <last tag>..HEAD --stat -- skills/ agents/` to catch behavior changes that accumulated without a bump
 - The marketplace name `mw-agent-kit` and plugin name `mak` must not change (installed users' references would break)
 - When the `claude-md-snippet.ko.md` / `.en.md` pair changes, confirm the README note "re-run /mak:setup after updates" still holds
