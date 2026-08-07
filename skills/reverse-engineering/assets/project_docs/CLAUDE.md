@@ -9,7 +9,7 @@ This folder (`docs/`) is a **project documentation set template**. It defines th
 ## 0. Required Checks Before Starting
 
 1. Read [`00.INDEX.md`](00.INDEX.md) — Table of Contents · §Per-Topic SSOT · §Content Rules · §Frontmatter Conventions.
-2. Confirm the target stack — Spring Boot / web (React/Next.js) / Tauri / Android. The mapping of 04·05·06·07 differs (INDEX §Stack-Specific Application Checklist).
+2. Confirm the target stack — Spring Boot / web (React/Next.js) / Tauri / Android. The mapping of 04·05·06·07 differs (INDEX §Table of Contents, stack table).
 3. Decide the scale — which slim profile (compact / standard) to start with (INDEX §Slim Profiles).
 
 ---

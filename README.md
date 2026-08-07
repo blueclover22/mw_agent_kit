@@ -90,7 +90,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:commit` | 작업 마무리 커밋 — 게이트 통과 후 커밋, 변경 내용 한눈 보고. push 등 기타 git 명령은 명시 요청 시에만 |
 | `/mak:setup` | 공통 규칙(Workflow 등급·코딩 원칙 매핑·위임 요약)을 `~/.claude/CLAUDE.md` 에 마커 블록으로 설치 |
 | `/mak:teardown` | 설치된 마커 블록 제거 (플러그인 삭제 전 실행) |
-| `/mak:reverse-engineering` | 표준 문서 세트(14종)를 복사하고 프로젝트를 리버스 엔지니어링 |
+| `/mak:reverse-engineering` | 문서 세트(기본 compact 8종 / standard 14종)를 복사하고 프로젝트를 리버스 엔지니어링 |
 
 ### Agents (5종)
 

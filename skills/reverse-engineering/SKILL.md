@@ -1,6 +1,6 @@
 ---
 name: reverse-engineering
-description: Copy the bundled project-docs template set (14 permanent guide docs + domains/) into the current project's docs/ and reverse-engineer the codebase into it — call-chain analysis first, then foundation/domain/operations docs. Choose the compact or standard profile at start. Also usable to bootstrap the doc set for a brand-new project.
+description: Copy the bundled project-docs template set into the current project's docs/ and reverse-engineer the codebase into it — call-chain analysis first, then foundation/domain/operations docs. Starts on the compact profile (8 docs) by default; standard (14 docs + domains/) when the project warrants it. Also usable to bootstrap the doc set for a brand-new project.
 ---
 
 # mak:reverse-engineering — Project Analysis into the Standard Doc Set
@@ -28,14 +28,14 @@ Templates are in English. Fill content in the user's language (or the project's 
 
 ### 2. Choose a profile
 
-Ask the user (recommend based on project size):
+**compact is the default.** Confirm it with the user, and move to standard only when the project clearly warrants it — production service, multiple domains, or team collaboration. Growing later is cheap; a set nobody maintains is not.
 
 | Profile | Docs copied | Fits |
 | :--- | :--- | :--- |
-| **compact** | `00` `02` `03` `04` `06` `09` `10` `13` + `CLAUDE.md` (8 docs + guide) | solo / small single-stack apps |
+| **compact** (default) | `00` `02` `03` `04` `06` `09` `10` `13` + `CLAUDE.md` (8 docs + guide) | solo / small single-stack apps |
 | **standard** | `00`–`13` all + `CLAUDE.md` + `domains/` (incl. `_template.md`) | production / multi-domain / teams |
 
-(Rationale and promotion path: `00.INDEX.md` §Slim Profiles.)
+(Rationale: `00.INDEX.md` §Slim Profiles. Promotion path: its §File Naming Rules.)
 
 ### 3. Copy the set
 

@@ -31,7 +31,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents. `mak:review-report` audits one design against implementation; `mak:doc-audit` checks whether other docs citing that slice remain valid — the gap. Triggered after slice/phase completion, at phase transitions, or before handing off an unfinished session. Reports only; never edits documents |
 | `mak:commit` | Work wrap-up commit. Pre-commit gates (verification confirmed, every changed line ties to the request, junk/secret scan) → commit with a message matching the repo's convention → at-a-glance result report. Invoking the skill counts as the explicit commit request; other git ops (push/amend/rebase, …) run only on the user's explicit request |
 | `mak:setup` / `mak:teardown` | Install / remove the common rules as a marker block in `~/.claude/CLAUDE.md` |
-| `mak:reverse-engineering` | Copy the standard doc set (14 docs + domains/) into the project's `docs/` and fill it via code analysis |
+| `mak:reverse-engineering` | Copy the doc set (8 docs compact by default, 14 docs standard + domains/) into the project's `docs/` and fill it via code analysis |
 
 > Each skill carries "route to a different skill when" pointers at the top, so a wrong pick self-corrects mid-procedure.
 
@@ -110,7 +110,7 @@ claude plugin install mak@mw-agent-kit
 | Step | Command/action | Effect |
 | :--- | :--- | :--- |
 | Install common rules (once) | `/mak:setup` | Adds the Workflow task grades + coding-principle mapping + mak delegation summary marker block to `~/.claude/CLAUDE.md`. Re-running updates only the block; personal rules untouched |
-| Project doc set (optional) | `/mak:reverse-engineering` | Copies the standard doc set to `docs/` and fills it via analysis (compact/standard profile) |
+| Project doc set (optional) | `/mak:reverse-engineering` | Copies the doc set to `docs/` and fills it via analysis (compact by default, standard to expand) |
 | Project-specific rules (recommended) | Write `<project>/.claude/CLAUDE.md` | Verification commands, doc paths, domain rules. Skills consult this file first |
 | Remove | `/mak:teardown` → `claude plugin uninstall` | Restore the marker block, then uninstall |
 

@@ -31,7 +31,7 @@
 | `mak:doc-audit` | 문서 ↔ 문서 정합성 감사 + 문서가 인용한 코드 경로·심볼의 실재성 대조. `mak:review-report` 는 설계서 하나와 구현을 대조할 뿐, 그 슬라이스를 참조하는 다른 문서들이 여전히 유효한지는 보지 않음 — 그 빈칸 담당. 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전 호출. 보고만 하고 문서는 수정하지 않음 |
 | `mak:commit` | 작업 마무리 커밋. 사전 게이트(검증 수행 확인·변경 라인=요청 직결·잡파일/시크릿 스캔) → 저장소 컨벤션에 맞는 메시지로 커밋 → 변경 내용 한눈 보고. skill 실행 자체가 명시적 커밋 요청으로 간주되며, push·amend·rebase 등 기타 git 명령은 사용자가 명시 요청할 때만 수행 |
 | `mak:setup` / `mak:teardown` | 공통 규칙을 `~/.claude/CLAUDE.md` 마커 블록으로 설치 / 제거 |
-| `mak:reverse-engineering` | 표준 문서 세트(14종 + domains/)를 프로젝트 `docs/` 로 복사하고 코드 분석으로 채움 |
+| `mak:reverse-engineering` | 문서 세트(기본 compact 8종 / standard 14종 + domains/)를 프로젝트 `docs/` 로 복사하고 코드 분석으로 채움 |
 
 > 각 skill 상단에 "다음 경우엔 다른 skill 로" 포인터가 있어, 잘못된 skill 을 골라도 절차 중 올바른 skill 로 자가 유도된다.
 
@@ -110,7 +110,7 @@ claude plugin install mak@mw-agent-kit
 | 단계 | 명령/행동 | 효과 |
 | :--- | :--- | :--- |
 | 공통 규칙 설치 (1회) | `/mak:setup` | `~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 요약 마커 블록 추가. 재실행 시 블록만 갱신, 개인 규칙 비접촉 |
-| 프로젝트 문서 세트 (선택) | `/mak:reverse-engineering` | 표준 문서 세트를 `docs/` 로 복사하고 코드 분석으로 채움 (compact/표준 프로파일) |
+| 프로젝트 문서 세트 (선택) | `/mak:reverse-engineering` | 문서 세트를 `docs/` 로 복사하고 코드 분석으로 채움 (기본 compact/확장 standard 프로파일) |
 | 프로젝트 특화 규칙 (권장) | `<project>/.claude/CLAUDE.md` 직접 작성 | 검증 명령·문서 경로·도메인 규칙 등 프로젝트 고유 사항. skill 들이 이 파일을 우선 참조한다 |
 | 제거 | `/mak:teardown` → `claude plugin uninstall` | 마커 블록 원복 후 삭제 |
 

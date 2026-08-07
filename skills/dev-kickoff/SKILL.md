@@ -1,6 +1,6 @@
 ---
 name: dev-kickoff
-description: Use to kick off Non-trivial / Risky work, or when task sizing is unclear. Converges requirements, decides planner consultation, proposes options, and gates implementation behind user approval. Skip for obviously Trivial / Small work (typos, formatting, one-line or single-file fixes); if judged Trivial / Small after entering, exit to the lightweight flow. If direction itself is vague, run mak:brainstorming first. Sizing criteria are in the skill body.
+description: Use to kick off Non-trivial / Risky work, or when task sizing is unclear. Skip for obviously Trivial / Small work (typos, formatting, one-line or single-file fixes); if judged Trivial / Small after entering, exit to the lightweight flow. If direction itself is vague, run mak:brainstorming first. Sizing criteria and the approval gates are in the skill body.
 ---
 
 # Development Kickoff — Turning Requirements into an Approvable Design

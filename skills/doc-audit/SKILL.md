@@ -1,6 +1,6 @@
 ---
 name: doc-audit
-description: Use right after a slice/phase completes, at a phase transition, or before handing off an unfinished session — audits consistency across the project's own documents and the reality of code paths/symbols they cite. Not for comparing implementation against one design doc (mak:review-report), build/lint/test verification (mak:verify-checklist), or judging whether documented behavior matches the code (mak:analyzer).
+description: Use right after a slice/phase completes, at a phase transition, or before handing off an unfinished session. Not for implementation vs. one design doc (mak:review-report), build/lint/test verification (mak:verify-checklist), or judging whether documented behavior matches the code (mak:analyzer).
 ---
 
 # Document Audit Guide
@@ -36,6 +36,8 @@ If `docs/00.INDEX.md` / `docs/CLAUDE.md` exist, they are the SSOT for that set's
 ## Scope Rule
 
 Fixed entry points — never scan everything, unless the user explicitly requests a full scan.
+
+Resolve cited paths against the project they belong to — a document may legitimately cite a *target* project's file (`docs/CLAUDE.md`, `.claude/CLAUDE.md`) that does not exist in this repository. Treat those as out of scope, not as dangling.
 
 1. Collect entry points — slice IDs / documents / source files or symbols changed or completed this cycle
 2. Trace backward — grep each entry point across the audit surface
