@@ -126,7 +126,7 @@ claude plugin install mak@mw-agent-kit
 | `mak:coder` 사용 가능 | 설계 승인 후 구현 위임. Trivial / Small 은 명시 요청 시 설계 문서 없이 위임 가능 |
 | `mak:reviewer` 사용 가능 | 단계 완료 후 검토 위임. 보고만 하고 코드 수정 금지 |
 | `mak:doc-editor` 사용 가능 | 기능 완료 후 기존 문서 동기화 위임 |
-| `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
+| `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고와 `mak:doc-audit` 감사도 수행하며, 감사는 보고만 하고 감사 대상 문서를 편집하지 않는다. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
 | agent 위임 불가 환경 | 해당 skill 의 절차를 메인이 직접 수행 — skill 내부 자가 점검 게이트가 코딩 원칙(§2.2)을 강제 |
 
 **위임 원칙**: 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다(subagent 는 사용자와 대화 불가). 계획 승인 없이 `mak:coder` 를 호출하지 않는다. `mak:reviewer` 는 proactive 자동 호출 대상이 아니다.

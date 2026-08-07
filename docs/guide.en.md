@@ -126,7 +126,7 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 | `mak:coder` available | Implementation delegated after design approval. Trivial/Small may skip the design doc on explicit request |
 | `mak:reviewer` available | Review delegated on stage completion. Reports only; never edits code |
 | `mak:doc-editor` available | Doc sync delegated after feature completion |
-| `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |
+| `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports and `mak:doc-audit` audits — audits are report-only and never edit the audited documents. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |
 | Delegation unavailable | The main thread runs the skill's procedure directly — the in-skill self-check gates enforce the coding principles (§2.2) |
 
 **Delegation principles**: stages requiring conversation (requirements convergence, option approval, design gates) stay in the main thread (subagents can't talk to the user). Never invoke `mak:coder` without an approved plan. `mak:reviewer` is not proactively auto-invoked.

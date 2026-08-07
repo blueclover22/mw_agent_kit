@@ -100,7 +100,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `mak:coder` | sonnet | Implementation against an approved design |
 | `mak:reviewer` | opus | Review and report only (never modifies code) |
 | `mak:doc-editor` | haiku | Editing/syncing existing Markdown documents |
-| `mak:analyzer` | opus | Code analysis / doc filling for reverse-engineering (never modifies code) |
+| `mak:analyzer` | opus | Code analysis, doc filling, and document auditing — auditing is report-only (never modifies code) |
 
 ## 5. Usage & Documentation
 

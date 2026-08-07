@@ -100,7 +100,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `mak:coder` | sonnet | 승인된 설계 기반 구현 전담 |
 | `mak:reviewer` | opus | 구현 결과 검토·보고 전담 (코드 수정 금지) |
 | `mak:doc-editor` | haiku | 기존 Markdown 문서 편집·동기화 전담 |
-| `mak:analyzer` | opus | reverse-engineering 의 코드 분석·문서 채움 전담 (코드 수정 금지) |
+| `mak:analyzer` | opus | 코드 분석·문서 채움·문서 감사 전담, 감사는 보고만 (코드 수정 금지) |
 
 ## 5. 사용 방법 및 문서
 
