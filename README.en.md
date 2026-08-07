@@ -4,7 +4,7 @@
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 11 skills and 5 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 5 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -76,7 +76,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. What's Included
 
-### Skills (11)
+### Skills (12)
 
 | Skill | Role |
 | :--- | :--- |
@@ -87,6 +87,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:roadmap-planning` | Project-wide phase structure and status tracking (top-level axis) |
 | `/mak:verify-checklist` | Post-implementation order: build → lint → tests → format → manual |
 | `/mak:review-report` | Review procedure and report format (Critical/Warning/Pass/Note) |
+| `/mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents |
 | `/mak:commit` | Work wrap-up commit — gates, commit, at-a-glance result report. Other git ops (push, …) only on explicit request |
 | `/mak:setup` | Install the common rules (workflow grades, principle mapping, delegation summary) into `~/.claude/CLAUDE.md` as a marker block |
 | `/mak:teardown` | Remove the installed marker block (run before uninstalling) |

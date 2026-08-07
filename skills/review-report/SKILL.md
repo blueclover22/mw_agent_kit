@@ -57,6 +57,7 @@ Pre-existing unused code (out of scope) goes to 📝 Note and is not fixed.
 - Record out-of-scope findings only under 📝 Note; do not unilaterally decide to expand scope. If Critical or Warning issues exist, report to the main thread that re-delegation to `mak:coder` is needed — do not re-delegate directly
 - If build/test results could not be verified directly, state "could not run directly — based on coder's report"
 - Distinguish "no issues" from "could not verify"
+- After a slice/stage completion review, hand off to `mak:doc-audit` to check whether other documents referencing this change still hold
 
 If there are no issues, close concisely with "✅ All checks passed".
 

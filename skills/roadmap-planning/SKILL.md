@@ -165,6 +165,8 @@ Save-path priority:
 2. Update the summary table row
 3. Add the sub-item to the destination phase
 
+After processing a phase completion or transfer, hand off to `mak:doc-audit` to check whether other documents referencing that phase still hold.
+
 ### Recording status changes
 
 State status changes as a change-log unit. Run git commit only when the user explicitly requests it.

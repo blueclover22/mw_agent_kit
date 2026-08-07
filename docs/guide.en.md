@@ -1,6 +1,6 @@
 # mak Usage Guide
 
-> Scope: the `mak` plugin's 11 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
+> Scope: the `mak` plugin's 12 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
 > Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
 >
 > 한국어 버전: [guide.md](guide.md)
@@ -29,6 +29,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:major-feature-pack` | Structured 9-doc pack for large features/ports whose upfront analysis must be split across documents. `mig_`/`feat_` prefixes, cross-reference conventions, intentional-deviation tables. Judged by analysis breadth, not PR/module count (§4) |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
 | `mak:review-report` | SSOT for the review procedure and report format. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 Note, 6-item Warning checklist |
+| `mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents. `mak:review-report` audits one design against implementation; `mak:doc-audit` checks whether other docs citing that slice remain valid — the gap. Triggered after slice/phase completion, at phase transitions, or before handing off an unfinished session. Reports only; never edits documents |
 | `mak:commit` | Work wrap-up commit. Pre-commit gates (verification confirmed, every changed line ties to the request, junk/secret scan) → commit with a message matching the repo's convention → at-a-glance result report. Invoking the skill counts as the explicit commit request; other git ops (push/amend/rebase, …) run only on the user's explicit request |
 | `mak:setup` / `mak:teardown` | Install / remove the common rules as a marker block in `~/.claude/CLAUDE.md` |
 | `mak:reverse-engineering` | Copy the standard doc set (14 docs + domains/) into the project's `docs/` and fill it via code analysis |

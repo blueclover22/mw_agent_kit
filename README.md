@@ -4,7 +4,7 @@
 >
 > English version: [README.en.md](README.en.md)
 
-`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 11종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
+`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 12종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
 
 ---
 
@@ -76,7 +76,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. 구성
 
-### Skills (11종)
+### Skills (12종)
 
 | skill | 역할 |
 | :--- | :--- |
@@ -87,6 +87,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:roadmap-planning` | 프로젝트 전체 Phase 구조·상태 추적 (상위 축) |
 | `/mak:verify-checklist` | 구현 후 빌드→린트→테스트→포맷→수동 검증 순서 |
 | `/mak:review-report` | 리뷰 절차·보고서 형식 (Critical/Warning/Pass/메모) |
+| `/mak:doc-audit` | 문서 ↔ 문서 정합성 감사 + 문서가 인용한 코드 경로·심볼의 실재성 대조 |
 | `/mak:commit` | 작업 마무리 커밋 — 게이트 통과 후 커밋, 변경 내용 한눈 보고. push 등 기타 git 명령은 명시 요청 시에만 |
 | `/mak:setup` | 공통 규칙(Workflow 등급·코딩 원칙 매핑·위임 요약)을 `~/.claude/CLAUDE.md` 에 마커 블록으로 설치 |
 | `/mak:teardown` | 설치된 마커 블록 제거 (플러그인 삭제 전 실행) |
