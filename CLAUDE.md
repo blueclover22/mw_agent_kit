@@ -27,6 +27,33 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 - 11 skills: brainstorming / dev-kickoff / design-doc-template / roadmap-planning / verify-checklist / review-report / doc-audit / commit / setup / teardown / reverse-engineering
 - 5 agents: planner(opus) / coder(sonnet) / reviewer(opus) / doc-editor(haiku) / analyzer(opus) — coder/reviewer/planner load their companion skill via frontmatter `skills:`; analyzer follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
 
+## Adding or Removing a Skill / Agent
+
+The inventory above is mirrored across user-facing docs, so every add/remove is a multi-file sync. Grep alone is not enough: a removal also leaves **inbound** references (routing pointers, handoff lines) that name the component, and an addition is silently dead unless something routes into it.
+
+**Skill** — 7 sync points:
+
+| # | Target | What |
+| :-- | :--- | :--- |
+| 1 | `skills/<name>/SKILL.md` (+ `assets/` if any) | The skill itself |
+| 2 | Handoff wiring | Skills that route into/out of it (§Route to a different skill when, handoff lines). **Skipping this leaves a skill nothing ever invokes** |
+| 3 | `skills/setup/assets/claude-md-snippet.ko.md` + `.en.md` | Delegation-summary chain — **edit both** |
+| 4 | `README.md` + `README.en.md` | Count in **2 places each** (intro line, `### Skills (N)` heading) + the `/mak:<name>` table row |
+| 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
+| 6 | `CLAUDE.md` §Components | Count + the slash-separated list |
+| 7 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |
+
+**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en agent table → `docs/guide.md` / `.en` §6 table → `CLAUDE.md` §Components → `plugin.json`.
+
+Then run §Verification Commands plus:
+
+```
+ls -d skills/*/ | wc -l                      # must equal every count in 4–6
+grep -rn "mak:<name>" skills/ agents/ README*.md docs/guide*.md CLAUDE.md
+```
+
+`AGENTS.md` deliberately carries **no counts or component lists** — keep it that way so it never enters this sync set.
+
 ## Verification Commands
 
 This is a Markdown/JSON repository — no build or tests. After changes, run:
