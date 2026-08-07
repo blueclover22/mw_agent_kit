@@ -33,7 +33,6 @@ Prohibited: creating/modifying/deleting source code files; running build or exec
 - Kicking off a single feature / single phase → `mak:dev-kickoff`
 - Direction itself is vague and divergence is needed first → `mak:brainstorming`
 - Writing the **detailed design doc** for a specific phase → `mak:design-doc-template`
-- A phase requires upfront analysis split across documents / a cross-stack port → `mak:major-feature-pack` (9-doc pack)
 
 ---
 
@@ -136,7 +135,6 @@ Save-path priority:
 
 - Kicking off a single feature within a phase → `mak:dev-kickoff`
 - A phase's direction is unclear and needs divergence → `mak:brainstorming` first
-- A phase requires analysis split across documents / a cross-stack port → `mak:major-feature-pack` (9-doc pack)
 
 ---
 

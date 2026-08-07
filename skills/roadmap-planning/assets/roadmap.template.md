@@ -56,11 +56,11 @@ However, to reach {{next goal or expansion direction}}, priorities and status ar
 
 **Scope / next entry**
 
-{{Scope covered in this phase and the next skill to enter: mak:dev-kickoff / mak:major-feature-pack / mak:brainstorming, etc.}}
+{{Scope covered in this phase and the next skill to enter: mak:dev-kickoff / mak:brainstorming, etc.}}
 
 **Linked docs / status notes**
 
-{{Related design-doc / major-feature-pack / issue links. TBD if none}}
+{{Related design-doc / issue links. TBD if none}}
 
 ### 0-2. {{Sub-item name}} ({{status}})
 
@@ -74,7 +74,7 @@ However, to reach {{next goal or expansion direction}}, priorities and status ar
 
 **Linked docs / status notes**
 
-{{Related design-doc / major-feature-pack / issue links. TBD if none}}
+{{Related design-doc / issue links. TBD if none}}
 
 ---
 
@@ -96,14 +96,14 @@ However, to reach {{next goal or expansion direction}}, priorities and status ar
 
 **Linked docs / status notes**
 
-{{Related design-doc / major-feature-pack / issue links. TBD if none}}
+{{Related design-doc / issue links. TBD if none}}
 
 ---
 
 ## Next Kickoff Order
 
 Below is the next kickoff order, organized by dependency and risk.
-When starting each phase, enter `mak:dev-kickoff` for a single concern (design-doc master + sub-docs if multi-PR), `mak:major-feature-pack` for work whose upfront analysis must be split across multiple documents, and `mak:brainstorming` when direction needs divergence.
+When starting each phase, enter `mak:dev-kickoff` for a single concern (design-doc master + sub-docs if multi-PR), and `mak:brainstorming` when direction needs divergence.
 
 1. **Phase 0** — {{one-line summary}}
 2. **Phase 1** — {{one-line summary}}

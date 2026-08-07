@@ -4,7 +4,7 @@
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 5 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 11 skills and 5 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -76,14 +76,13 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. What's Included
 
-### Skills (12)
+### Skills (11)
 
 | Skill | Role |
 | :--- | :--- |
 | `/mak:brainstorming` | Idea divergence when requirements are vague (no-implementation gate) |
 | `/mak:dev-kickoff` | Kickoff for non-trivial work — requirements convergence, options, approval gate |
 | `/mak:design-doc-template` | Design-doc format, save-location rule (SSOT), skeleton |
-| `/mak:major-feature-pack` | Structured 9-doc design for broad-analysis features/ports |
 | `/mak:roadmap-planning` | Project-wide phase structure and status tracking (top-level axis) |
 | `/mak:verify-checklist` | Post-implementation order: build → lint → tests → format → manual |
 | `/mak:review-report` | Review procedure and report format (Critical/Warning/Pass/Note) |
@@ -109,7 +108,7 @@ The basic development flow:
 
 ```
 (if vague) /mak:brainstorming → /mak:dev-kickoff → [mak:planner brief if needed]
-   → design doc (mak:design-doc-template / mak:major-feature-pack for large features)
+   → design doc (mak:design-doc-template)
    → user approval → implement (mak:coder) → /mak:verify-checklist → mak:reviewer review
    → (wrap-up) /mak:commit — other git ops (push, …) only on explicit request
 ```
@@ -128,7 +127,7 @@ For the full process, task grades, decision criteria, and agent delegation princ
 
 ## 6. Customizing
 
-Installed plugin files can't be edited in place. To adapt the kit, fork the repository, edit the skill `assets/` templates (design doc, review report, roadmap, 9-doc, doc set) and `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` (injected rules, ko/en mirrors), and distribute via your own marketplace.
+Installed plugin files can't be edited in place. To adapt the kit, fork the repository, edit the skill `assets/` templates (design doc, review report, roadmap, doc set) and `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` (injected rules, ko/en mirrors), and distribute via your own marketplace.
 
 ## 7. License / Acknowledgements
 

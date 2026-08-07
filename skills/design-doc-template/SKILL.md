@@ -97,12 +97,11 @@ This rule is the **single source of truth** for where design docs live. Other ma
 
 ### Multi-PR work — master doc + per-PR sub-docs
 
-Large single-concern work split across PRs (e.g. structural refactor, sequential expansion) is handled inside this skill without `mak:major-feature-pack` (9-doc). **If the upfront analysis fits one document, a design doc suffices even for multi-PR work** — PR count is not the 9-doc criterion (`mak:major-feature-pack` judges by *breadth of analysis*).
+Large single-concern work split across PRs (e.g. structural refactor, sequential expansion) is handled inside this skill. **If the upfront analysis fits one document, a design doc suffices even for multi-PR work.**
 
 - **Master doc** — pins decisions, policies, the **PR dependency graph**, and overall consistency only. No per-file/per-line detail.
 - **Per-PR sub-doc** — written at each PR's entry. Contains that PR's changed files/lines and verification steps; state at the top that **the master doc wins** on conflict. Do not start implementation (mak:coder delegation) before the sub-doc exists.
 - **Naming** — master and sub-docs share an axis. If tied to a roadmap section: master `<roadmap-section>-<slug>.md` / sub-doc `<roadmap-section>-<n>-<slug>.md`; otherwise master `<topic-slug>.md` / sub-doc `<topic-slug>-<n>-<slug>.md`. (Project doc-path conventions take precedence.)
-- The same relationship applies when implementing `mak:major-feature-pack`'s `08-implementation-plan` PR steps as design-doc sub-docs (9-doc = analysis SSOT, sub-doc = per-PR execution design; 9-doc wins on conflict).
 
 ### Verification plan — Step → verify table (§5)
 

@@ -28,7 +28,6 @@ Audit only what exists; silently skip what doesn't.
 | Surface | Where |
 | :--- | :--- |
 | Design docs (master + sub-docs) | per the `mak:design-doc-template` save-path rule |
-| 9-doc packs | `mig_*/`, `feat_*/` |
 | Roadmap | per the `mak:roadmap-planning` save-path priority |
 | Permanent doc set | `docs/` |
 
@@ -48,7 +47,7 @@ Fixed entry points — never scan everything, unless the user explicitly request
 2. **Dangling references** — references to nonexistent symbols, sections, documents, or code paths/identifiers
 3. **Mismarked completion** — marked done while residual tasks remain
 4. **Cross-document contradiction** — phase placement/status differs between documents
-5. **SSOT inversion** — a derived document contradicts its SSOT (sub-doc vs. master, sub-doc vs. 9-doc pack, `docs/` per-topic SSOT)
+5. **SSOT inversion** — a derived document contradicts its SSOT (sub-doc vs. master, `docs/` per-topic SSOT)
 
 ### Handoff Check
 

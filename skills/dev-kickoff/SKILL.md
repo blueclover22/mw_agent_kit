@@ -18,7 +18,6 @@ Enter for behavior changes spanning multiple files/modules, new features/compone
 - Direction itself is vague and idea divergence is needed first → `mak:brainstorming`
 - Establishing/updating the project-wide **phase structure** or mid/long-term roadmap → `mak:roadmap-planning`
 - Writing a feature/module **design doc** to spec → `mak:design-doc-template`
-- A large feature / cross-stack port whose upfront analysis (current state, spec alignment, policy, data matrices, boundary contracts) must be split across documents → `mak:major-feature-pack` (multi-PR / multi-module is NOT the criterion)
 
 <HARD-GATE>
 Two approvals gate two different actions — do not conflate them:

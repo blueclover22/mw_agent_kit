@@ -1,7 +1,7 @@
 # mak Usage Guide
 
-> Scope: the `mak` plugin's 12 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
-> Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
+> Scope: the `mak` plugin's 11 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
+> Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → implement → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
 >
 > 한국어 버전: [guide.md](guide.md)
 
@@ -9,7 +9,7 @@
 
 ## 1. Purpose of the Kit
 
-**A development-process skill set (diverge → kickoff/consult → design → verify → review → commit) + a top-level roadmap axis + coding principles (§Coding Rules)**
+**A development-process skill set (diverge → kickoff/consult → design → implement → verify → review → commit) + a top-level roadmap axis + coding principles (§Coding Rules)**
 
 The kit packages the core stages that repeat in every project — idea divergence → kickoff/convergence → architecture consultation when needed → design documentation → implementation verification → review reporting → wrap-up commit — into reusable skills with consistent procedures and formats. On top, `mak:roadmap-planning` handles mid/long-term direction across phases as a separate axis.
 
@@ -26,7 +26,6 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:brainstorming` | Divergence-only stage for vague/multi-directional requirements. Simplicity is an evaluation axis; "simpler alternative" check enforced. No implementation or design docs (HARD-GATE) |
 | `mak:dev-kickoff` | Kickoff sizing + conversational orchestration for Non-trivial/Risky work. Requirements convergence → planner consult decision → options → verifiable goals → approval gate → documentation handoff. No implementation before approval (HARD-GATE) |
 | `mak:design-doc-template` | Design-doc sections §1–§8, §5.0 Step → verify table, option comparison, assumption notation, quality checklist, and the **save-location rule SSOT (default `.claude/mak/plan/`)** |
-| `mak:major-feature-pack` | Structured 9-doc pack for large features/ports whose upfront analysis must be split across documents. `mig_`/`feat_` prefixes, cross-reference conventions, intentional-deviation tables. Judged by analysis breadth, not PR/module count (§4) |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
 | `mak:review-report` | SSOT for the review procedure and report format. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 Note, 6-item Warning checklist |
 | `mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents. `mak:review-report` audits one design against implementation; `mak:doc-audit` checks whether other docs citing that slice remain valid — the gap. Triggered after slice/phase completion, at phase transitions, or before handing off an unfinished session. Reports only; never edits documents |
@@ -70,9 +69,7 @@ mak:roadmap-planning (once at project start + periodic updates)
       → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report → mak:commit
 ```
 
-## 4. Scenario Flows (single feature vs. large feature)
-
-Branch on **whether the upfront analysis fits one document** — into the single design-doc flow or the 9-doc pack flow (analysis breadth, not PR/module count).
+## 4. Scenario Flow
 
 ```
 Requirements received
@@ -81,34 +78,18 @@ Requirements received
 [opt] ① mak:brainstorming — only when vague / multi-directional
       │ direction chosen
       ▼
-   ┌──────────────────────────────┬────────────────────────────────────┐
-   │ single concern (one doc)     │ split analysis / cross-stack port  │
-   ▼                              ▼
-② mak:dev-kickoff →            ②' mak:major-feature-pack
-   [planner Brief if needed]      (9 docs: 02→01→03→04→05→06→07→08→00)
-③ mak:design-doc-template          │ repeat ②–⑥ per PR step of §08
-                                    │ (9-doc pack stays the SSOT)
-   │                                │
-   └──────────┬─────────────────────┘
-              ▼
-      ④ implement → mak:verify-checklist
-              ▼
-      ⑤ mak:review-report (fixes → re-delegate to ④; reviewer never edits)
-              ▼
-      ⑥ (wrap-up) mak:commit — commit after gates (push etc. only on explicit request)
+② mak:dev-kickoff — [mak:planner Brief if needed]
+      ▼
+③ mak:design-doc-template
+      ▼
+④ implement (delegate to mak:coder) → mak:verify-checklist
+      ▼
+⑤ mak:review-report (delegate to mak:reviewer — fixes → re-delegate to ④; reviewer never edits)
+      ▼
+⑥ (wrap-up) mak:commit — commit after gates (push etc. only on explicit request)
 ```
 
-Decision criteria:
-
-| Signal | design-doc-template | major-feature-pack |
-| :--- | :--- | :--- |
-| **Need to split upfront analysis** (key) | Fits one document | Current state, spec gaps, policy, data, contracts need separate tracking |
-| External/legacy system alignment | None or local | Required (current vs spec + intentional-deviation matrix) |
-| External policy/security decisions | None or one | Many (TBDs arise) |
-| Cross-stack port | — | Applies |
-| Data-model change | Single type | Matrix-scale |
-
-> **Multi-PR / multi-module is not the criterion.** Single-concern multi-PR work (e.g. structural refactor) uses `mak:design-doc-template`'s **master doc (decisions, PR dependency graph) + per-PR sub-docs**.
+> Single-concern multi-PR work (e.g. structural refactor) uses `mak:design-doc-template`'s **master doc (decisions, PR dependency graph) + per-PR sub-docs**.
 
 ## 5. Install and Apply
 
@@ -142,7 +123,7 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 | Situation | Behavior |
 | :--- | :--- |
 | `mak:planner` available | For Non-trivial/Risky work the main thread hands over scope and requests an Architecture Brief. Planner reports options/recommendation/risks/decisions-needed; after decisions are confirmed it writes the design doc once. It never questions the user or finalizes decisions |
-| `mak:coder` available | Implementation delegated after design approval. Trivial/Small may skip the design doc on explicit request. In 9-doc packs, `08-implementation-plan.md`'s PR steps are the scope SSOT |
+| `mak:coder` available | Implementation delegated after design approval. Trivial/Small may skip the design doc on explicit request |
 | `mak:reviewer` available | Review delegated on stage completion. Reports only; never edits code |
 | `mak:doc-editor` available | Doc sync delegated after feature completion |
 | `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |

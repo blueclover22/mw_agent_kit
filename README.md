@@ -4,7 +4,7 @@
 >
 > English version: [README.en.md](README.en.md)
 
-`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 12종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
+`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 11종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
 
 ---
 
@@ -76,14 +76,13 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. 구성
 
-### Skills (12종)
+### Skills (11종)
 
 | skill | 역할 |
 | :--- | :--- |
 | `/mak:brainstorming` | 요구사항이 막연할 때 아이디어 발산 (구현 금지 게이트) |
 | `/mak:dev-kickoff` | Non-trivial 작업 착수 — 요구사항 수렴·옵션 제안·승인 게이트 |
 | `/mak:design-doc-template` | 설계 문서 규격·저장 경로 규칙(SSOT)·스켈레톤 |
-| `/mak:major-feature-pack` | 분석면이 넓은 큰 기능·이식의 9-doc 정형 설계 |
 | `/mak:roadmap-planning` | 프로젝트 전체 Phase 구조·상태 추적 (상위 축) |
 | `/mak:verify-checklist` | 구현 후 빌드→린트→테스트→포맷→수동 검증 순서 |
 | `/mak:review-report` | 리뷰 절차·보고서 형식 (Critical/Warning/Pass/메모) |
@@ -109,7 +108,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ```
 (막연하면) /mak:brainstorming → /mak:dev-kickoff → [필요 시 mak:planner 자문]
-   → 설계 문서 (mak:design-doc-template / 큰 기능은 mak:major-feature-pack)
+   → 설계 문서 (mak:design-doc-template)
    → 사용자 승인 → 구현 (mak:coder) → /mak:verify-checklist → mak:reviewer 리뷰
    → (마무리) /mak:commit — push 등 기타 git 명령은 명시 요청 시에만
 ```
@@ -128,7 +127,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 6. 커스터마이징
 
-설치된 플러그인 파일은 직접 수정할 수 없습니다. 팀·프로젝트에 맞게 고치려면 저장소를 fork 한 뒤 skill 의 `assets/` 템플릿(설계 문서·리뷰 보고서·로드맵·9-doc·문서 세트)과 `skills/setup/assets/claude-md-snippet.ko.md`·`.en.md`(주입 규칙, 한/영 미러)를 수정해 자체 마켓플레이스로 배포하세요.
+설치된 플러그인 파일은 직접 수정할 수 없습니다. 팀·프로젝트에 맞게 고치려면 저장소를 fork 한 뒤 skill 의 `assets/` 템플릿(설계 문서·리뷰 보고서·로드맵·문서 세트)과 `skills/setup/assets/claude-md-snippet.ko.md`·`.en.md`(주입 규칙, 한/영 미러)를 수정해 자체 마켓플레이스로 배포하세요.
 
 ## 7. 라이선스 / 출처
 

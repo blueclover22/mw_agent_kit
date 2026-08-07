@@ -33,7 +33,6 @@ Conversely, skip this skill and go straight to `mak:dev-kickoff` when:
 - Direction is set and only detailed requirements need narrowing → `mak:dev-kickoff`
 - Establishing/updating the project-wide **phase structure** or mid/long-term roadmap → `mak:roadmap-planning`
 - Writing a **design doc** for a specific feature/module to spec → `mak:design-doc-template`
-- A large feature / cross-stack port whose upfront analysis must be split across documents → `mak:major-feature-pack`
 
 ## Procedure
 

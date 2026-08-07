@@ -1,7 +1,7 @@
 # mak 사용 가이드
 
-> 대상: `mak` 플러그인의 skill 12종 + agent 5종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
-> 목적: 어떤 프로젝트에서도 일관된 "발산 → 착수/아키텍처 자문 → 설계 → 검증 → 리뷰 → 커밋" 흐름 재현, 그리고 프로젝트 전체 방향을 다루는 로드맵 축 지원
+> 대상: `mak` 플러그인의 skill 11종 + agent 5종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
+> 목적: 어떤 프로젝트에서도 일관된 "발산 → 착수/아키텍처 자문 → 설계 → 구현 → 검증 → 리뷰 → 커밋" 흐름 재현, 그리고 프로젝트 전체 방향을 다루는 로드맵 축 지원
 >
 > English version: [guide.en.md](guide.en.md)
 
@@ -9,7 +9,7 @@
 
 ## 1. 이 kit 의 목적
 
-**개발 프로세스 skill 세트 (발산 → 착수/아키텍처 자문 → 설계 → 검증 → 리뷰 → 커밋) + 상위 로드맵 축 + 코딩 원칙(§Coding Rules)**
+**개발 프로세스 skill 세트 (발산 → 착수/아키텍처 자문 → 설계 → 구현 → 검증 → 리뷰 → 커밋) + 상위 로드맵 축 + 코딩 원칙(§Coding Rules)**
 
 프로젝트마다 반복되는 핵심 단계(아이디어 발산 → 개발 착수·수렴 → 필요 시 아키텍처 자문 → 설계 문서화 → 구현 검증 → 리뷰 보고 → 마무리 커밋)를 일관된 절차와 형식으로 수행할 수 있도록 재사용 가능한 skill 을 묶어 제공한다. 여기에 더해, 여러 Phase 에 걸친 중장기 방향을 다루는 `mak:roadmap-planning` 을 별도 축으로 제공한다.
 
@@ -26,7 +26,6 @@
 | `mak:brainstorming` | 요구사항이 불명확하거나 방향이 여러 갈래일 때 아이디어 발산 전용 단계. 평가 축에 단순성 포함, "더 단순한 대안" 자문 강제. 구현·설계 문서 작성 금지(HARD-GATE) |
 | `mak:dev-kickoff` | Non-trivial / Risky 또는 등급 불명확 작업의 착수 분류·대화형 오케스트레이션. 요구사항 수렴 → planner 자문 여부 결정 → 접근법 제안 → 검증 가능한 목표 변환 → 승인 게이트 → 문서화 인계. 설계 승인 전 구현 금지(HARD-GATE) |
 | `mak:design-doc-template` | 설계 문서의 §1~§8 섹션 구성, §5.0 Step → verify 표, 옵션 비교 표, 추정 표기, 품질 체크리스트, **저장 경로 규칙 SSOT(기본 `.claude/mak/plan/`)** 제공 |
-| `mak:major-feature-pack` | 선행 분석을 여러 문서로 분리해야 추적 가능한 큰 신규 기능·다른 스택 이식을 9개 문서로 정형화. `mig_` / `feat_` prefix, 정합 출처 규약, 의도적 차이 표 포함. 다PR·다모듈 여부가 아니라 분석면 넓이로 판단(§4) |
 | `mak:verify-checklist` | 구현 완료 후 빌드→린트→테스트→포맷(변경 파일만)→수동 시나리오 순 검증. 보고 직전 자가 질의 + "사전 정의 성공 기준 vs 결과" 표 |
 | `mak:review-report` | 리뷰 절차와 보고서 형식의 SSOT. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 메모 분류, Warning 세부 점검 6종 |
 | `mak:doc-audit` | 문서 ↔ 문서 정합성 감사 + 문서가 인용한 코드 경로·심볼의 실재성 대조. `mak:review-report` 는 설계서 하나와 구현을 대조할 뿐, 그 슬라이스를 참조하는 다른 문서들이 여전히 유효한지는 보지 않음 — 그 빈칸 담당. 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전 호출. 보고만 하고 문서는 수정하지 않음 |
@@ -70,9 +69,7 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
       → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report → mak:commit
 ```
 
-## 4. 사용 시나리오 흐름 (단일 기능 / 큰 기능 분기)
-
-**선행 분석을 한 문서로 담을 수 있는지**에 따라 **단일 design-doc 흐름** 과 **9-doc pack 흐름** 으로 분기한다 (다PR·다모듈 여부가 아니라 분석면 넓이 기준).
+## 4. 사용 시나리오 흐름
 
 ```
 요구사항 접수
@@ -81,34 +78,18 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
 [선택] ① mak:brainstorming — 막연하거나 방향이 여러 갈래일 때만
       │ 방향 선택
       ▼
-   ┌────────────────────────────┬──────────────────────────────────┐
-   │ 단일 관심사 (분석 한 문서) │ 분석 분리 필요 / 다른 스택 이식  │
-   ▼                            ▼
-② mak:dev-kickoff →          ②' mak:major-feature-pack
-   [필요 시 planner Brief]      (9개 문서: 02→01→03→04→05→06→07→08→00)
-③ mak:design-doc-template        │ §08 의 PR Step 단위로
-                                  │ ②~⑥ 흐름 반복 (9-doc = SSOT)
-   │                              │
-   └──────────┬───────────────────┘
-              ▼
-      ④ 구현 → mak:verify-checklist
-              ▼
-      ⑤ mak:review-report (수정 필요 시 ④ 재위임, 직접 수정 금지)
-              ▼
-      ⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 명시 요청 시에만)
+② mak:dev-kickoff — [필요 시 mak:planner Brief]
+      ▼
+③ mak:design-doc-template
+      ▼
+④ 구현 (mak:coder 위임) → mak:verify-checklist
+      ▼
+⑤ mak:review-report (mak:reviewer 위임 — 수정 필요 시 ④ 재위임, 직접 수정 금지)
+      ▼
+⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 명시 요청 시에만)
 ```
 
-판단 기준:
-
-| 신호 | design-doc-template | major-feature-pack |
-| :--- | :--- | :--- |
-| **선행 분석 분리 필요성** (핵심) | 한 문서로 담김 | 현상태·명세 gap·정책·데이터·계약을 분리 추적해야 함 |
-| 외부/기존 시스템 정합 | 없음 또는 국소 | 필요 (현상태 vs 명세 + 의도적 차이 매트릭스) |
-| 외부 정책/보안 결정 | 없음 또는 1건 | 다수 (TBD 항목 발생) |
-| 다른 스택 이식 | — | 해당 |
-| 데이터 모델 변경 | 단일 타입 | 매트릭스 단위 |
-
-> **다PR·다모듈은 판별 기준이 아니다.** 단일 관심사의 다PR 작업(구조 리팩터 등)은 `mak:design-doc-template` 의 **마스터 문서(결정·PR 의존 그래프) + PR별 sub-doc** 로 처리한다.
+> 단일 관심사의 다PR 작업(구조 리팩터 등)은 `mak:design-doc-template` 의 **마스터 문서(결정·PR 의존 그래프) + PR별 sub-doc** 로 처리한다.
 
 ## 5. 설치와 적용
 
@@ -142,7 +123,7 @@ claude plugin install mak@mw-agent-kit
 | 상황 | 동작 방식 |
 | :--- | :--- |
 | `mak:planner` 사용 가능 | Non-trivial / Risky 작업에서 메인 스레드가 범위를 넘겨 Architecture Brief 를 요청. planner 는 옵션·권장안·리스크·결정 필요 사항을 보고하고, 결정 확정 후 설계 문서 집필을 한 번만 위임받는다. 사용자에게 질문하거나 결정을 확정하지 않는다 |
-| `mak:coder` 사용 가능 | 설계 승인 후 구현 위임. Trivial / Small 은 명시 요청 시 설계 문서 없이 위임 가능. 9-doc pack 에서는 `08-implementation-plan.md` 의 PR Step 이 변경 범위 SSOT |
+| `mak:coder` 사용 가능 | 설계 승인 후 구현 위임. Trivial / Small 은 명시 요청 시 설계 문서 없이 위임 가능 |
 | `mak:reviewer` 사용 가능 | 단계 완료 후 검토 위임. 보고만 하고 코드 수정 금지 |
 | `mak:doc-editor` 사용 가능 | 기능 완료 후 기존 문서 동기화 위임 |
 | `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |

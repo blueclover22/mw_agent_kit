@@ -24,7 +24,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 
 ## Components
 
-- 12 skills: brainstorming / dev-kickoff / design-doc-template / major-feature-pack / roadmap-planning / verify-checklist / review-report / doc-audit / commit / setup / teardown / reverse-engineering
+- 11 skills: brainstorming / dev-kickoff / design-doc-template / roadmap-planning / verify-checklist / review-report / doc-audit / commit / setup / teardown / reverse-engineering
 - 5 agents: planner(opus) / coder(sonnet) / reviewer(opus) / doc-editor(haiku) / analyzer(opus) — coder/reviewer/planner load their companion skill via frontmatter `skills:`; analyzer follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
 
 ## Verification Commands
