@@ -7,8 +7,8 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
-# Claude Code local (per-user) settings
-.claude/settings.local.json
+# Claude Code local (per-user) settings and working documents
+.claude/
 
 # Editors / IDEs
 .idea/
