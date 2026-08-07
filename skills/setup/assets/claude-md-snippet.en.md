@@ -34,11 +34,13 @@ Classify work by size and risk first. The grade decides whether to enter `mak:de
 
 ## mak Delegation Summary
 
-- Development-process skills/agents come from the `mak` plugin — skills: `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` (design documentation) → `mak:verify-checklist` (verification) → `mak:review-report` (review) → `mak:doc-audit` (cross-document consistency audit) → `mak:commit` (wrap-up commit — invoking the skill is the explicit commit request; other git ops such as push run only on explicit request); top-level axis `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. Follow each mak skill/agent description for flow details.
+- Development-process skills/agents come from the `mak` plugin — skills: `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` (design documentation) → `mak:verify-checklist` (verification) → `mak:review-report` (review) → `mak:commit` (wrap-up commit — invoking the skill is the explicit commit request; other git ops such as push run only on explicit request); top-level axis `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. Follow each mak skill/agent description for flow details.
+- `mak:doc-audit` (cross-document consistency audit) sits outside that cycle — run it only right after a slice/phase completes, at a phase transition, or before handing off an unfinished session; never on every commit.
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
 - Never invoke `mak:coder` without an approved plan (simple work on explicit request is the exception). `mak:reviewer` reports only and never modifies code.
 - Design docs are written once — if `mak:planner` is available, delegate the writing with the confirmed decisions; otherwise the main thread writes it directly.
 - Simple typo/format cleanups of existing Markdown documents are delegated to `mak:doc-editor`.
+- `mak:analyzer` handles reverse-engineering analysis/doc filling, standalone codebase analysis, and `mak:doc-audit` audits — when auditing it reports only and never edits the audited documents.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
 
 <!-- mak:end -->

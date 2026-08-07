@@ -34,11 +34,13 @@
 
 ## mak 위임 요약
 
-- 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰) → `mak:doc-audit`(문서 간 정합성 감사) → `mak:commit`(마무리 커밋 — skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 명시 요청 시에만), 상위 축 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
+- 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰) → `mak:commit`(마무리 커밋 — skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 명시 요청 시에만), 상위 축 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
+- `mak:doc-audit`(문서 간 정합성 감사)은 위 주기 밖이다 — 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전에만 부르고, 매 커밋 대상이 아니다.
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
 - 계획 승인 없이 `mak:coder` 를 호출하지 않는다 (단순 작업은 명시 요청 시 예외). `mak:reviewer` 는 보고만 하고 코드를 수정하지 않는다.
 - 설계 문서 집필은 한 번만 한다 — `mak:planner` 가 사용 가능하면 확정된 결정을 전달해 집필을 위임하고, 없으면 메인이 직접 작성한다.
 - 단순 오타·포맷 등 기존 Markdown 문서 정리는 `mak:doc-editor` 로 위임한다.
+- `mak:analyzer` 는 reverse-engineering 의 분석·문서 채움, 단독 코드베이스 분석, `mak:doc-audit` 감사를 수행한다 — 감사 시에는 보고만 하고 대상 문서를 편집하지 않는다.
 - 설계 문서는 `mak:design-doc-template` 의 경로 규칙(기본 `.claude/mak/plan/`)을 따른다.
 
 <!-- mak:end -->
