@@ -19,7 +19,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 - The review procedure / report format has ONE home: `skills/review-report/SKILL.md`. `agents/reviewer.md` must not duplicate the procedure
 - The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both (task-grade table from §2.1, principle mapping from §2.2) + the mak delegation summary — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en. Skills/agents keep the "project/global Coding Rules take precedence" phrasing
 - Skills that reference files inside the plugin use `${CLAUDE_PLUGIN_ROOT}`
-- Frontmatter `description` carries trigger conditions only (when to use / when not to). Detailed criteria go in the body — descriptions are loaded into every session and cost tokens permanently
+- Frontmatter `description` carries trigger conditions only (when to use / when not to). Detailed criteria go in the body — descriptions are loaded into every session and cost tokens permanently. **Agent descriptions are the exception**: the orchestrator picks an agent from its description alone, so capability and constraint wording ("reads source and fills docs", "never modifies code") is functional there and stays
 - Agent principle bullets (`agents/*.md`) start with a bold lead-in label (`- **Label** — detail`). Keep this emphasis structure uniform across all five agents
 
 ## Components
@@ -43,7 +43,7 @@ The inventory above is mirrored across user-facing docs, so every add/remove is 
 | 6 | `CLAUDE.md` §Components | Count + the slash-separated list |
 | 7 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |
 
-**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en agent table → `docs/guide.md` / `.en` §6 table → `CLAUDE.md` §Components → `plugin.json`.
+**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `CLAUDE.md` §Components → `plugin.json`.
 
 Then run §Verification Commands plus:
 
@@ -74,7 +74,7 @@ This is a Markdown/JSON repository — no build or tests. After changes, run:
 ## Release
 
 - Bump `version` in `.claude-plugin/plugin.json` (semver, 1.0.0 = first real release). **Bump only when shipped behavior changes** — the install cache is keyed by version, so a bump is exactly what makes an update reach installed users:
-  - Major: breaks installed users — skill/agent renames, marker-format or snippet-contract changes, save-path default changes
+  - Major: breaks installed users — skill/agent **removals** or renames, marker-format or snippet-contract changes, save-path default changes
   - Minor: new skills / agents / capabilities
   - Patch: fixes inside existing skills/agents that change what the model does (procedure, gates, rule wording)
   - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway

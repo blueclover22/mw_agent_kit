@@ -40,8 +40,9 @@ Whether the project is new or existing, the essence of the work is the same — 
 3. **Update `13` when adding features or planning.** When first authoring the documentation set, do not fabricate a history of past work — write only the backlog and future consideration items still remaining.
 4. **Template cleanup (once, on application)** — after filling in content, **remove all template-only scaffolding** so only project documents remain:
    - The `> Template: …` notice block at the top of each document (a marker common to all documents). **However, `CLAUDE.md` (the writing guide) and `domains/_template.md` (the copy source for new domains) are scaffolds that remain in the project, so do not delete them.**
-   - The INDEX's opening introduction block (`> This document is … template`, etc.) and the entire `## Template Usage Guide` section (including Slim Profiles and the stack checklist).
-   - Unused stack/domain examples (the §Table of Contents stack-specific 04/05 table, example rows in `08.domains.md`, etc.).
+   - The INDEX's opening introduction block (`> This document is … template`, etc.) and the entire `## Template Usage Guide` section (including Slim Profiles).
+   - Unused domain examples (example rows in `08.domains.md`, etc.).
+   - **Prune, do not delete, the stack table under §Table of Contents** — keep your project's row and drop the others. §Domain Guide points at this table for the per-stack 06 / 07 mapping, so removing it outright leaves a dangling pointer.
    - Fill unsubstituted `<...>` with actual values, and leave `_(TODO)_` only for the unverified (no leaving empty placeholders or unsubstituted `<...>` behind).
    - **Verify: `grep -rn '> Template:' docs/ --exclude=CLAUDE.md --exclude=_template.md` returns 0 hits.** (`CLAUDE.md` · `domains/_template.md` are retained scaffolds and keep their markers, hence excluded.)
 

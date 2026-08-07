@@ -18,7 +18,7 @@ Full development rules live in [CLAUDE.md](CLAUDE.md). The invariants below are 
 - The design-doc save-path rule has ONE home: `skills/design-doc-template/SKILL.md` §Save location (default `.claude/mak/plan/`). Everywhere else references that rule instead of hardcoding paths
 - The review procedure/report format has ONE home: `skills/review-report/SKILL.md`; `agents/reviewer.md` must not duplicate it
 - The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en; skills/agents keep the "project/global Coding Rules take precedence" phrasing
-- Frontmatter `description` carries trigger conditions only (loaded into every session); detailed criteria go in the body
+- Frontmatter `description` carries trigger conditions only (loaded into every session); detailed criteria go in the body. Agent descriptions are the exception — the orchestrator selects on that text, so capability/constraint wording stays
 - Use `${CLAUDE_PLUGIN_ROOT}` for referencing files inside the plugin
 - Adding or removing a skill/agent is a 7-point sync (handoff wiring, setup snippets ko/en, README ko/en, guide ko/en, `CLAUDE.md` §Components, `plugin.json`) — follow [CLAUDE.md](CLAUDE.md) §Adding or Removing a Skill / Agent. **This file intentionally carries no counts or component lists**, so it stays out of that sync
 
