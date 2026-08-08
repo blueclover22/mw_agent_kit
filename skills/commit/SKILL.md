@@ -51,17 +51,23 @@ Type = the change's primary intent, not its file type:
 - Scope optional (module/domain; reuse scopes from `git log`). Breaking change: `!` + `BREAKING CHANGE:` body line.
 - mak outputs: design doc / roadmap / doc-set → `docs`; a verify-caught fix before commit → part of the original `feat`/`fix`; kit/config housekeeping → `chore`.
 
-**Style** — terse, fact-dense, outcome-first: the subject states the outcome ("remove the cross-layer duplication"), not the mechanics ("move a file"); the body is 2–6 bullets, one verifiable fact each with counts, stating preserved invariants (contract unchanged, tests moved along) and what intentionally stayed put; doc syncs cite sections. **Scale the body to the diff** — a tiny change (a line or two, single concern) takes the subject alone or at most one bullet; multi-bullet bodies are for diffs with multiple facts worth recording. Example (imitate the structure, in the user's language):
+**Style — concise and declarative, never narrative.** Every line carries a fact, not prose about the work:
+
+- **Subject** — the outcome ("remove the cross-layer duplication"), not the mechanics ("move a file"). Imperative or noun phrase, no trailing period, ≤ 72 chars.
+- **Body** — 2–6 bullets, **one line per bullet**, one verifiable fact each with counts/names. No paragraphs, no multi-sentence bullets, no prose connecting them.
+- **Cut, always** — "this commit …" openers, background/motivation essays, restating the diff file by file, closing summaries, hedges ("slightly", "some"), and polite or past-tense sentence endings (in languages with such endings — e.g. Korean — use noun-phrase endings instead).
+- **Keep** — preserved invariants (contract unchanged, tests moved along), what intentionally stayed put, doc-sync section names.
+- **Scale the body to the diff** — a tiny change (a line or two, single concern) takes the subject alone or at most one bullet; multi-bullet bodies are for diffs with multiple facts worth recording.
+
+The terseness rule holds in every language; only the wording changes with §Message's language rule. Example (imitate the structure, in the user's language):
 
 ```
-refactor(order): move OrderStatus to the shared domain layer to remove duplication
+refactor(order): remove OrderStatus duplication via the shared domain layer
 
-- Move OrderStatus from features/checkout/model to domain/order
-  (serialization contract unchanged; 2 unit tests moved along)
-- Switch payment/history references to the domain path —
-  removes 1 cross-feature import exception
-- OrderStatusDto (API response shape) intentionally stays in features/checkout
-- Docs sync: architecture guide (§module tree, §exception list) / glossary
+- OrderStatus: features/checkout/model -> domain/order (serialization contract unchanged, 2 unit tests moved)
+- payment/history references switched to the domain path — 1 cross-feature import exception removed
+- OrderStatusDto stays in features/checkout (API response shape)
+- Docs sync: architecture guide (§module tree, §exception list), glossary
 ```
 
 ### 5. Commit and report (at a glance)
