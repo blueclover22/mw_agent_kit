@@ -27,14 +27,14 @@
 
 | 원칙 | 핵심 행동 | 강제 게이트 |
 | :--- | :--- | :--- |
-| **코딩하기 전에 생각하기** | 가정 명시("추정") · 다중 해석 모두 제시 · 더 단순한 대안 제안/반박 · 이해 안 되면 멈춤·질문 | mak:brainstorming §3·§5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
+| **코딩하기 전에 생각하기** | 가정 명시("추정") · 다중 해석 모두 제시 · 더 단순한 대안 제안/반박 · 이해 안 되면 멈춤·질문 | mak:brainstorming §Procedure 3·5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
 | **단순함이 최우선** | 미요청 기능·추측성 유연성·발생 불가 오류 처리 금지 · 단순한 대안 포함 | mak:dev-kickoff §3·§4·§8, mak:planner Brief, mak:design-doc-template §Quality Checklist, mak:verify-checklist §Self-Check, mak:review-report §Warning |
 | **정밀한 수정** | 범위 밖 파일 금지 · 단일 목적 · 인접 코드 개선 금지 · 기존 스타일 일치 · 변경 라인=요청 직결 | mak:dev-kickoff §8, mak:verify-checklist §Self-Check, mak:review-report §Warning, mak:coder agent |
 | **목표 중심적 실행** | 검증 가능한 목표로 전환 · `Step → verify: check` 계획 · 변경 후 검증 · 동작 확인 후 보고 | mak:dev-kickoff §5, mak:design-doc-template §5.0, mak:verify-checklist §Report Format |
 
 ## mak 위임 요약
 
-- 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰) → `mak:commit`(마무리 커밋 — skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 명시 요청 시에만), 상위 축 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
+- 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰). 마무리 커밋 `mak:commit` 은 이 체인이 자동으로 잇지 않고 사용자 명시 요청 시에만 진입한다(skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 별도 명시 요청 시에만). 상위 축은 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
 - `mak:dev-resume`(작업 재진입)도 위 주기 밖이다 — 다음 작업 자체가 미정인 재개·인계 시점에 사용자가 이름으로 호출할 때만 쓰고, 진단·보고·라우팅만 한다. 신규 착수에는 부르지 않는다.
 - `mak:doc-audit`(문서 간 정합성 감사)은 위 주기 밖이다 — 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전에만 부르고, 매 커밋 대상이 아니다.
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.

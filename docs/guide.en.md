@@ -51,7 +51,7 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 
 | Principle | Core behaviors | Enforcement gates |
 | :--- | :--- | :--- |
-| **Think before coding** | Mark assumptions; present all interpretations; propose/push back with simpler alternatives; stop and ask when confused | mak:brainstorming §3·§5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
+| **Think before coding** | Mark assumptions; present all interpretations; propose/push back with simpler alternatives; stop and ask when confused | mak:brainstorming §Procedure 3·5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
 | **Simplicity first** | No unrequested features, speculative flexibility, impossible-scenario handling; include simpler alternatives | mak:dev-kickoff §3·§4·§8, mak:planner Brief, mak:design-doc-template §Quality Checklist, mak:verify-checklist §Self-Check, mak:review-report §Warning |
 | **Precise changes** | No out-of-scope files; single purpose per change; no adjacent "improvements"; match existing style; every changed line ties to the request | mak:dev-kickoff §8, mak:verify-checklist §Self-Check, mak:review-report §Warning, mak:coder agent |
 | **Goal-driven execution** | Convert to verifiable goals; `Step → verify: check` plans; verify after changes; confirm behavior before reporting | mak:dev-kickoff §5, mak:design-doc-template §5.0, mak:verify-checklist §Report Format |
@@ -77,8 +77,9 @@ Requirements received
 ④ implement (delegate to mak:coder) → mak:verify-checklist
       ▼
 ⑤ mak:review-report (delegate to mak:reviewer — fixes → re-delegate to ④; reviewer never edits)
+      ┊ not chained automatically — only on the user's explicit request
       ▼
-⑥ (wrap-up) mak:commit — commit after gates (push etc. only on explicit request)
+⑥ (wrap-up) mak:commit — commit after gates (push etc. need their own explicit request)
       │
       ▼
 [outside the cycle] mak:doc-audit — right after a slice/phase completes, at a phase
@@ -89,6 +90,14 @@ Requirements received
 
 > Single-concern multi-PR work (e.g. structural refactor) uses `mak:design-doc-template`'s **master doc (decisions, PR dependency graph) + per-PR sub-docs**.
 
+### What the arrows mean — routing hints, not guaranteed execution
+
+The arrows above are **not an execution path that advances on its own.** mak has no scheduler; the main thread is always what decides and performs a stage transition. Skills and agents never invoke each other directly — when ⑤ turns up something to fix, `mak:reviewer` does not call `mak:coder`; it reports back and asks the main thread to re-delegate. So this picture is an advisory graph the main thread consults:
+
+- Skipping stages or going back is normal — each skill's entry conditions (frontmatter `description` and §When to Use) outrank the arrows
+- ⑥ `mak:commit` is not chained from the preceding stage. Committing is a gate entered only on the user's explicit request
+- What persists between stages is the **design doc** (including its §5.0 step status column), not the conversation. When a session ends, only what the documents recorded survives — which is why resuming starts with `mak:dev-resume` reading them
+
 ## 4. `mak:roadmap-planning` — the Roadmap Axis
 
 Operates as a **separate, higher axis** wrapping the 6-stage flow above. Shape the project-wide direction (phases) first; apply the 6-stage flow at each phase's kickoff.
@@ -98,7 +107,8 @@ mak:roadmap-planning (once at project start + periodic updates)
       │  pick a phase
       ▼
 [opt] mak:brainstorming → mak:dev-kickoff → [mak:planner Brief if needed]
-      → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report → mak:commit
+      → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report
+      ┄▶ (only on the user's explicit request) mak:commit
 ```
 
 ## 5. Install and Apply

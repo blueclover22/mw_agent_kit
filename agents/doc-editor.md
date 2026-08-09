@@ -19,4 +19,4 @@ Principles:
 Primary targets:
 
 - The project's roadmap and convention documents (e.g. `docs/roadmap.md`, `docs/*.md`)
-- Design docs under the project's design-doc path (per the `mak:design-doc-template` save-path rule, default `.claude/mak/plan/`) — link/cross-reference updates
+- Design docs under the project's design-doc path (per the `mak:design-doc-template` save-path rule, default `.claude/mak/plan/`) — link/cross-reference updates only. Progress bookkeeping (the §5.0 `Step → verify` status column) belongs to whoever implements the step, not here

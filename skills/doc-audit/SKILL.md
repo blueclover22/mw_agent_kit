@@ -47,7 +47,7 @@ Resolve cited paths against the project they belong to — a document may legiti
 
 1. **Back-reference tracking** — grep changed slice IDs/symbols; do referencing documents match the post-change content?
 2. **Dangling references** — references to nonexistent symbols, sections, documents, or code paths/identifiers
-3. **Mismarked completion** — marked done while residual tasks remain
+3. **Mismarked completion** — marked done while residual tasks remain. Includes the design doc's own progress record: a meta `Status: done` over §5.0 rows still sitting at `⬜ todo` / `▶ in progress`, or a roadmap item marked complete while its design doc's §5.0 disagrees. Compare the documents against each other only — whether a `✅ done` row matches the actual code is §Non-goals
 4. **Cross-document contradiction** — phase placement/status differs between documents
 5. **SSOT inversion** — a derived document contradicts its SSOT (sub-doc vs. master, `docs/` per-topic SSOT)
 

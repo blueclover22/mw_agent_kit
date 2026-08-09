@@ -105,7 +105,7 @@ Before moving to design, convert the request into measurable success criteria.
 3. <Step>  → verify: <check>
 ```
 
-This table goes into the design doc §5 verification plan (see `mak:design-doc-template`).
+This table goes into the design doc as §5.0, inside its §5 verification plan (see `mak:design-doc-template`).
 
 Clear success criteria enable independent iteration. Narrow vague criteria like "just make it work" before proceeding.
 
@@ -135,7 +135,7 @@ Before the documentation handoff (or after writing directly), check:
 - **Ambiguity** — any requirement readable two ways? Pick one and make it explicit.
 - **Simplicity** — unrequested features / speculative flexibility / impossible-scenario error handling / excessive abstraction? Remove them.
 - **Precise changes** — does every §4 scope item connect directly to the user's request? Split out anything that doesn't.
-- **Verifiability** — does §5 contain measurable success criteria or a `Step → verify` table?
+- **Verifiability** — does §5.0 contain measurable success criteria or a `Step → verify` table?
 
 Fix immediately. No re-review needed.
 

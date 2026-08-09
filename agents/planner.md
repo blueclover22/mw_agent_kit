@@ -31,7 +31,7 @@ Include:
 
 Used after the main thread has confirmed user decisions, to pin the approved design as a design doc.
 
-- Follow the `mak:design-doc-template` skill (loaded for this agent): section structure, option-comparison tables, "Assumption" notation, scope-of-changes table, §5 Step → verify table, and its save-location rule (default `.claude/mak/plan/`).
+- Follow the `mak:design-doc-template` skill (loaded for this agent): section structure, option-comparison tables, "Assumption" notation, scope-of-changes table, §5.0 Step → verify table, and its save-path rule (default `.claude/mak/plan/`).
 - State at the top of the output: "This document follows the `mak:design-doc-template` skill format."
 - Record already-agreed choices as confirmed decisions.
 

@@ -79,11 +79,12 @@
 ### 5.0 Success Criteria / Step → verify
 
 > For multi-step work, use the table. For single-step work, state a one-line success criterion instead.
+> `Status` starts as `⬜ todo` for every row and advances only when that row's verify criterion actually passes (`▶ in progress` / `✅ done`). This column is what `mak:dev-resume` reads to see how far work got.
 
-| #   | Step                 | verify (success criterion)          |
-| :-- | :------------------- | :---------------------------------- |
-| 1   | {{step description}} | {{measurable verification method}}  |
-| 2   | {{step description}} | {{measurable verification method}}  |
+| #   | Step                 | verify (success criterion)          | Status  |
+| :-- | :------------------- | :---------------------------------- | :------ |
+| 1   | {{step description}} | {{measurable verification method}}  | ⬜ todo |
+| 2   | {{step description}} | {{measurable verification method}}  | ⬜ todo |
 
 ### 5.1 Automated verification
 

@@ -107,12 +107,27 @@ claude plugin uninstall mak@mw-agent-kit
 
 기본 개발 흐름:
 
+```mermaid
+flowchart TD
+    RM["/mak:roadmap-planning<br/>상위 축 · Phase 구조"] -. Phase 선택 .-> B
+    RS["/mak:dev-resume<br/>다음 작업이 미정일 때"] -. 작업 확정 .-> B
+
+    B["① /mak:brainstorming<br/>막연할 때만"] --> K
+    K["② /mak:dev-kickoff<br/>요구사항 수렴 · 승인 게이트"] --> D
+    D["③ /mak:design-doc-template<br/>설계 문서 = 단계 간 상태 저장소"] --> I
+    I["④ 구현 → /mak:verify-checklist"] --> V
+    V["⑤ /mak:review-report"] -- 수정 필요 --> I
+    V -. 사용자 명시 요청 시에만 .-> C["⑥ /mak:commit"]
+    V -. 슬라이스 · phase 완료 후 .-> AU["/mak:doc-audit<br/>주기 밖"]
+
+    K -. 위임 .-> AP(["mak:planner"])
+    I -. 위임 .-> AC(["mak:coder"])
+    V -. 위임 .-> AR(["mak:reviewer"])
 ```
-(막연하면) /mak:brainstorming → /mak:dev-kickoff → [필요 시 mak:planner 자문]
-   → 설계 문서 (mak:design-doc-template)
-   → 사용자 승인 → 구현 (mak:coder) → /mak:verify-checklist → mak:reviewer 리뷰
-   → (마무리) /mak:commit — push 등 기타 git 명령은 명시 요청 시에만
-```
+
+- **실선** = 기본 진행, **점선** = 조건부 진입·agent 위임
+- 화살표는 자동 실행 경로가 아니라 **메인 스레드가 참고하는 라우팅 힌트**입니다. skill·agent 끼리 서로를 직접 호출하지 않으며, 단계 전환은 항상 메인 스레드가 판단합니다 ([자세히](docs/guide.md#화살표의-의미--실행-보장이-아니라-라우팅-힌트))
+- 단계 사이에 남는 상태는 대화 맥락이 아니라 **③ 설계 문서**입니다 — 세션이 끊기면 문서에 적힌 것만 살아남습니다
 
 - 슬래시 메뉴에서 skill 이 `mak:` prefix 없이 보일 수 있습니다(Claude Code 구버전 표시 방식). 표시와 무관하게 `/mak:brainstorming` 정식 형태와 `/brainstorming` 단축 형태 모두 동작하며, 같은 이름의 다른 skill 이 생기면 prefix 형태만 유효합니다.
 - 명백한 Trivial / Small 작업(오타·1줄 수정 등)은 위 절차 없이 바로 수정합니다.

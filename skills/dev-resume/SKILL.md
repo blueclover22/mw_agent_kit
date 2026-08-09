@@ -31,11 +31,11 @@ Route elsewhere:
 
 Fixed entry points only — inherits `mak:doc-audit` §Scope Rule; never a full codebase scan.
 
-Entry points: roadmap SSOT status, design-doc `Status` values, recent commits, uncommitted changes — plus the paths/symbols those documents cite.
+Entry points: the roadmap's SSOT status (located per the `mak:roadmap-planning` save-path priority), design docs (located per the `mak:design-doc-template` save-path rule) — their meta `Status` values and §5.0 `Step → verify` status column, recent commits, uncommitted changes — plus the paths/symbols those documents cite.
 
 ## Procedure
 
-1. **Confirm current position** — read the entry points above
+1. **Confirm current position** — read the entry points above. The design doc's §5.0 status column is the stated progress: read it first and treat it as a claim, not as truth. Infer position from commits and code only where that column is missing, or where step 3 shows it contradicts the observed state
 2. **Collect entry points** — trace cited paths/symbols per §Scope Rule
 3. **Verify claims** — reproduce only commands that verify a claim the documents actually make (stated test counts, "clean" lint/build, etc.); read only cited code. No claim → no command
 4. **Report diagnosis** — see §Report

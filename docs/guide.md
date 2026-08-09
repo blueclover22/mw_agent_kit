@@ -51,7 +51,7 @@
 
 | 원칙 | 핵심 행동 | 강제 게이트 |
 | :--- | :--- | :--- |
-| **코딩하기 전에 생각하기** | 가정 명시("추정") · 다중 해석 모두 제시 · 더 단순한 대안 제안/반박 · 이해 안 되면 멈춤·질문 | mak:brainstorming §3·§5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
+| **코딩하기 전에 생각하기** | 가정 명시("추정") · 다중 해석 모두 제시 · 더 단순한 대안 제안/반박 · 이해 안 되면 멈춤·질문 | mak:brainstorming §Procedure 3·5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
 | **단순함이 최우선** | 미요청 기능·추측성 유연성·발생 불가 오류 처리 금지 · 단순한 대안 포함 | mak:dev-kickoff §3·§4·§8, mak:planner Brief, mak:design-doc-template §Quality Checklist, mak:verify-checklist §Self-Check, mak:review-report §Warning |
 | **정밀한 수정** | 범위 밖 파일 금지 · 단일 목적 · 인접 코드 개선 금지 · 기존 스타일 일치 · 변경 라인=요청 직결 | mak:dev-kickoff §8, mak:verify-checklist §Self-Check, mak:review-report §Warning, mak:coder agent |
 | **목표 중심적 실행** | 검증 가능한 목표로 전환 · `Step → verify: check` 계획 · 변경 후 검증 · 동작 확인 후 보고 | mak:dev-kickoff §5, mak:design-doc-template §5.0, mak:verify-checklist §Report Format |
@@ -77,8 +77,9 @@
 ④ 구현 (mak:coder 위임) → mak:verify-checklist
       ▼
 ⑤ mak:review-report (mak:reviewer 위임 — 수정 필요 시 ④ 재위임, 직접 수정 금지)
+      ┊ 자동으로 이어지지 않음 — 사용자 명시 요청 시에만
       ▼
-⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 명시 요청 시에만)
+⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 별도 명시 요청 시에만)
       │
       ▼
 [주기 밖] mak:doc-audit — 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
@@ -87,6 +88,14 @@
 > `mak:dev-resume` 과 `mak:doc-audit` 은 ①~⑥ 의 단계가 아니다. 전자는 주기에 **들어오기 전**(무엇을 할지 문서에서 찾을 때, 사용자 이름 호출 전용), 후자는 주기를 **몇 번 돈 뒤**(문서 간 정합성이 틀어졌을 만할 때) 부른다. 매 사이클마다 부르는 것이 아니다.
 
 > 단일 관심사의 다PR 작업(구조 리팩터 등)은 `mak:design-doc-template` 의 **마스터 문서(결정·PR 의존 그래프) + PR별 sub-doc** 로 처리한다.
+
+### 화살표의 의미 — 실행 보장이 아니라 라우팅 힌트
+
+위 화살표는 **자동으로 이어지는 실행 경로가 아니다.** mak 에는 스케줄러가 없고, 단계 전환을 판단·수행하는 주체는 언제나 메인 스레드다. skill·agent 끼리 서로를 직접 호출하지 않는다 — ⑤에서 수정이 필요해도 `mak:reviewer` 가 `mak:coder` 를 직접 부르지 않고, 메인에 보고해 재위임을 요청한다. 즉 이 그림은 메인이 참고하는 조언 그래프이며:
+
+- 단계를 건너뛰거나 되돌아가는 것은 정상이다 — 각 skill 의 진입 조건(frontmatter `description` 과 §When to Use)이 화살표보다 우선한다
+- ⑥ `mak:commit` 은 앞 단계가 자동으로 잇지 않는다. 커밋은 사용자 명시 요청이 있을 때만 진입하는 게이트다
+- 단계 사이에 남는 상태는 대화 맥락이 아니라 **설계 문서**다(§5.0 Step 상태 열 포함). 세션이 끊기면 문서에 적힌 것만 살아남으므로, 재개는 `mak:dev-resume` 이 그 문서를 읽는 데서 시작한다
 
 ## 4. `mak:roadmap-planning` — 프로젝트 로드맵 축
 
@@ -97,7 +106,8 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
       │  Phase 선택
       ▼
 [선택] mak:brainstorming → mak:dev-kickoff → [필요 시 mak:planner Brief]
-      → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report → mak:commit
+      → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report
+      ┄▶ (사용자 명시 요청 시) mak:commit
 ```
 
 ## 5. 설치와 적용
@@ -123,7 +133,7 @@ claude plugin install mak@mw-agent-kit
 | 프로젝트 특화 규칙 (권장) | `<project>/.claude/CLAUDE.md` 직접 작성 | 검증 명령·문서 경로·도메인 규칙 등 프로젝트 고유 사항. skill 들이 이 파일을 우선 참조한다 |
 | 제거 | `/mak:teardown` → `claude plugin uninstall` | 마커 블록 원복 후 삭제 |
 
-설계 문서 기본 경로는 `.claude/mak/plan/` 이며, 프로젝트 `.claude/CLAUDE.md` 에 다른 경로를 명시하면 그쪽이 우선한다 (`mak:design-doc-template` §저장 경로가 SSOT).
+설계 문서 기본 경로는 `.claude/mak/plan/` 이며, 프로젝트 `.claude/CLAUDE.md` 에 다른 경로를 명시하면 그쪽이 우선한다 (`mak:design-doc-template` §Save location 이 SSOT).
 
 > 기계적 강제(비밀 파일 read-deny, 검증 명령 allow, 훅 등)는 프로젝트·개인 환경마다 달라 플러그인에 포함하지 않는다. 필요하면 `~/.claude/settings.json` / `<project>/.claude/settings.json` 에서 직접 구성한다. **agent 의 "문서만 수정"·"코드 수정 금지" 류 제약은 프롬프트 수준 규칙**이라(도구 목록으로 표면은 좁혀 두었지만) 오작동·프롬프트 주입까지 기술적으로 막지는 못한다 — 민감한 코드베이스에서는 권한 설정·샌드박스·명령 허용 목록으로 보완한다.
 
@@ -157,6 +167,6 @@ claude plugin install mak@mw-agent-kit
 ## 8. 운영 팁 (경량 모드·관측·회귀)
 
 - **필요한 만큼만 쓴다** — Trivial / Small 위주 프로젝트라면 `mak:verify-checklist` 만으로 시작하고, 필요할 때 dev-kickoff → planner/reviewer 로 올린다. 문서 세트도 compact 프로파일로 시작한다.
-- **관측** — 보고 전 자가검토(verify-checklist §자가 질의)를 습관화한다: 변경 라인=요청 직결? 범위 밖 수정 없나? 검증 수행했나?
+- **관측** — 보고 전 자가검토(verify-checklist §Self-Check)를 습관화한다: 변경 라인=요청 직결? 범위 밖 수정 없나? 검증 수행했나?
 - **회귀 점검** — fork 에서 skill/규칙을 고치면 대표 시나리오 2개로 흐름을 수동 확인한다: ① Trivial 작업이 게이트에 막히지 않는가 ② Non-trivial 새 기능이 "승인 전 구현 금지 / planner 는 자문만 / 집필 1회 / reviewer 코드 미수정" 을 지키는가.
 - **메모리** — 반복되는 교정·선호·결정은 프로젝트 `CLAUDE.md` / `docs/` / Claude Code 메모리 중 적절한 곳에 누적한다.

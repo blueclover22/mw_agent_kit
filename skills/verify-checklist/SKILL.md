@@ -86,6 +86,20 @@ Only applies when UI or user interaction changed.
 
 ---
 
+## Handoff
+
+Verification never decides the next stage on its own — report the results and let the main thread route.
+
+| Outcome | Next |
+| :--- | :--- |
+| A step failed | Fix and re-run from ①. If the fix is non-trivial and the `mak:coder` agent is in the available agent list, delegate it. If the failure exposes a design mismatch or a scope expansion, stop and report instead of fixing |
+| All passed, slice/stage complete | Hand off to `mak:review-report` (or the `mak:reviewer` agent if it is in the available agent list) |
+| All passed, work continues | Return to the main thread — it decides the next step |
+
+Never route into `mak:commit` from here. Committing requires the user's explicit request.
+
+---
+
 ## Prohibited Commands / Cautions
 
 > If the project CLAUDE.md defines allowed/denied command lists, those take precedence. Below are general principles.
@@ -106,7 +120,7 @@ Ask yourself the following before writing the verification report. Clean up simp
 - [ ] Did any unrequested "improvement" of adjacent code/comments/formatting slip in? (Precise Changes)
 - [ ] Are all unused imports/variables/functions introduced by your change cleaned up? (Precise Changes)
 - [ ] Were unrequested features / speculative flexibility / impossible-scenario error handling added? (Simplicity)
-- [ ] Are all items in the design doc §5 success criteria or `Step → verify` table actually met? (Goal-driven)
+- [ ] Are all items in the design doc §5.0 success criteria or `Step → verify` table actually met? (Goal-driven)
 
 ## Report Format
 
@@ -125,7 +139,7 @@ After verification, report in this format (render headings in the user's languag
 
 ## Predefined Success Criteria vs Results
 
-| # | Step (design doc §5) | Success criterion | Actual result |
+| # | Step (design doc §5.0) | Success criterion | Actual result |
 | :- | :--- | :--- | :--- |
 | 1 | <Step> | <verify> | ✅ met / ❌ not met |
 | 2 | <Step> | <verify> | ✅ met / ❌ not met |

@@ -107,12 +107,27 @@ claude plugin uninstall mak@mw-agent-kit
 
 The basic development flow:
 
+```mermaid
+flowchart TD
+    RM["/mak:roadmap-planning<br/>higher axis · phase structure"] -. pick a phase .-> B
+    RS["/mak:dev-resume<br/>when the next task is undecided"] -. task decided .-> B
+
+    B["① /mak:brainstorming<br/>only when vague"] --> K
+    K["② /mak:dev-kickoff<br/>requirements · approval gate"] --> D
+    D["③ /mak:design-doc-template<br/>design doc = state between stages"] --> I
+    I["④ implement → /mak:verify-checklist"] --> V
+    V["⑤ /mak:review-report"] -- fixes needed --> I
+    V -. only on explicit request .-> C["⑥ /mak:commit"]
+    V -. after a slice · phase .-> AU["/mak:doc-audit<br/>outside the cycle"]
+
+    K -. delegate .-> AP(["mak:planner"])
+    I -. delegate .-> AC(["mak:coder"])
+    V -. delegate .-> AR(["mak:reviewer"])
 ```
-(if vague) /mak:brainstorming → /mak:dev-kickoff → [mak:planner brief if needed]
-   → design doc (mak:design-doc-template)
-   → user approval → implement (mak:coder) → /mak:verify-checklist → mak:reviewer review
-   → (wrap-up) /mak:commit — other git ops (push, …) only on explicit request
-```
+
+- **Solid** = default progression, **dashed** = conditional entry / agent delegation
+- The arrows are **routing hints the main thread consults**, not an execution path that advances on its own. Skills and agents never invoke each other directly; the main thread always decides the transition ([details](docs/guide.en.md#what-the-arrows-mean--routing-hints-not-guaranteed-execution))
+- What persists between stages is the **③ design doc**, not the conversation — when a session ends, only what the documents recorded survives
 
 - The slash menu may show skills without the `mak:` prefix (older Claude Code display behavior). Regardless of display, both `/mak:brainstorming` (canonical) and `/brainstorming` (shorthand) work; if another skill claims the same name, only the prefixed form remains valid.
 - Obvious Trivial / Small work (typos, one-liners) skips the process entirely.

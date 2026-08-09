@@ -103,20 +103,23 @@ Large single-concern work split across PRs (e.g. structural refactor, sequential
 - **Per-PR sub-doc** — written at each PR's entry. Contains that PR's changed files/lines and verification steps; state at the top that **the master doc wins** on conflict. Do not start implementation (mak:coder delegation) before the sub-doc exists.
 - **Naming** — master and sub-docs share an axis. If tied to a roadmap section: master `<roadmap-section>-<slug>.md` / sub-doc `<roadmap-section>-<n>-<slug>.md`; otherwise master `<topic-slug>.md` / sub-doc `<topic-slug>-<n>-<slug>.md`. (Project doc-path conventions take precedence.)
 
-### Verification plan — Step → verify table (§5)
+### Verification plan — Step → verify table (§5.0)
 
-For multi-step work, include this table in §5. Single-step work may state a one-line success criterion instead.
+For multi-step work, include this table as §5.0 inside §5 Verification Plan. Single-step work may state a one-line success criterion instead.
 
 ```markdown
 ### 5.0 Success Criteria / Step → verify
 
-| # | Step | verify (success criterion) |
-| :-- | :--- | :--- |
-| 1 | <step description> | <measurable verification> |
-| 2 | <step description> | <measurable verification> |
+| # | Step | verify (success criterion) | Status |
+| :-- | :--- | :--- | :--- |
+| 1 | <step description> | <measurable verification> | ✅ done |
+| 2 | <step description> | <measurable verification> | ▶ in progress |
+| 3 | <step description> | <measurable verification> | ⬜ todo |
 ```
 
 Success criteria must be verifiable (no vague criteria like "it just works").
+
+**Step status column** — write every row as `⬜ todo` when the doc is created. Advancing a row is the **implementer's** job, not this skill's: whoever implements the step (the `mak:coder` agent, or the main thread implementing directly) moves it **only after its verify criterion actually passes** (`▶ in progress` for the row being worked). This column is the document's progress record: it lets `mak:dev-resume` read how far work got instead of inferring it from commits and code. Keep it here only — the meta block's `Status` tracks the **document** (draft/approved/in progress/done), this column tracks **each step**, and no other place restates either.
 
 ## Quality Checklist
 
@@ -131,7 +134,7 @@ Self-check after writing:
 - [ ] At least one simpler alternative in the option comparison?
 - [ ] No unrequested features / speculative flexibility or configuration / impossible-scenario error handling / excessive abstraction?
 - [ ] Every file/line in §4 directly connected to the user's request?
-- [ ] §5 contains a measurable success criterion or `Step → verify` table?
+- [ ] §5.0 contains a measurable success criterion or `Step → verify` table?
 
 ## References
 
