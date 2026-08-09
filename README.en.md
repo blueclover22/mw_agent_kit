@@ -36,7 +36,7 @@ Then, **inside a Claude Code session**, install the common rules once:
 /mak:setup
 ```
 
-This adds the Workflow task grades, the coding-principle mapping, and the mak delegation summary to `~/.claude/CLAUDE.md` as a marker block (`<!-- mak:begin -->` … `<!-- mak:end -->`). The rules are installed **in your conversation language** (Korean/English, auto-detected; override with `/mak:setup ko` or `/mak:setup en`). Re-running updates only the block; content outside the markers (your personal rules) is never touched.
+This adds the Workflow task grades, the coding-principle mapping, and the mak delegation rules to `~/.claude/CLAUDE.md` as a marker block (`<!-- mak:begin -->` … `<!-- mak:end -->`). The rules are installed **in your conversation language** (Korean/English, auto-detected; override with `/mak:setup ko` or `/mak:setup en`). Re-running updates only the block; content outside the markers (your personal rules) is never touched.
 
 ## 2. Update
 
@@ -89,7 +89,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:review-report` | Review procedure and report format (Critical/Warning/Pass/Note) |
 | `/mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents |
 | `/mak:commit` | Work wrap-up commit — gates, commit, at-a-glance result report. Other git ops (push, …) only on explicit request |
-| `/mak:setup` | Install the common rules (workflow grades, principle mapping, delegation summary) into `~/.claude/CLAUDE.md` as a marker block |
+| `/mak:setup` | Install the common rules (workflow grades, principle mapping, delegation rules) into `~/.claude/CLAUDE.md` as a marker block |
 | `/mak:teardown` | Remove the installed marker block (run before uninstalling) |
 | `/mak:reverse-engineering` | Copy the doc set (8 docs compact by default, 14 docs standard) and reverse-engineer the project |
 

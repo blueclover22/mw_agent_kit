@@ -17,7 +17,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 - Agent availability is phrased as "if the agent is in the available agent list" — never as a `.claude/agents/*.md` file-existence check
 - The design-doc save-path rule has ONE home: `skills/design-doc-template/SKILL.md` §Save location (default `.claude/mak/plan/`). Other files reference "per the `mak:design-doc-template` save-path rule" instead of hardcoding paths
 - The review procedure / report format has ONE home: `skills/review-report/SKILL.md`. `agents/reviewer.md` must not duplicate the procedure
-- The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both (task-grade table from §2.1, principle mapping from §2.2) + the mak delegation summary — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en. Skills/agents keep the "project/global Coding Rules take precedence" phrasing
+- The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both (task-grade table from §2.1, principle mapping from §2.2) + the mak delegation rules — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en. Skills/agents keep the "project/global Coding Rules take precedence" phrasing
 - Skills that reference files inside the plugin use `${CLAUDE_PLUGIN_ROOT}`
 - Frontmatter `description` carries trigger conditions only (when to use / when not to). Detailed criteria go in the body — descriptions are loaded into every session and cost tokens permanently. **Agent descriptions are the exception**: the orchestrator picks an agent from its description alone, so capability and constraint wording ("reads source and fills docs", "never modifies code") is functional there and stays
 - Agent principle bullets (`agents/*.md`) start with a bold lead-in label (`- **Label** — detail`). Keep this emphasis structure uniform across all five agents
@@ -38,7 +38,7 @@ The inventory above is mirrored across user-facing docs, so every add/remove is 
 | :-- | :--- | :--- |
 | 1 | `skills/<name>/SKILL.md` (+ `assets/` if any) | The skill itself |
 | 2 | Handoff wiring | Skills that route into/out of it (§Route to a different skill when, handoff lines). **Skipping this leaves a skill nothing ever invokes** |
-| 3 | `skills/setup/assets/claude-md-snippet.ko.md` + `.en.md` | Delegation-summary chain — **edit both** |
+| 3 | `skills/setup/assets/claude-md-snippet.ko.md` + `.en.md` | Delegation-rules chain (order·relationships·constraints only — per-skill entry conditions belong in each description) — **edit both** |
 | 4 | `README.md` + `README.en.md` | Count in **2 places each** (intro line, `### Skills (N)` heading) + the `/mak:<name>` table row. **Conditional**: if the skill sits on the main development flow, also add it to the §5 ASCII flow diagram — **edit both** and keep the node sets identical to each other and to `docs/guide.md` §3. Flow-external skills (setup/teardown/reverse-engineering) stay out of the diagram |
 | 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
 | 6 | `CLAUDE.md` §Components | Count + the slash-separated list |

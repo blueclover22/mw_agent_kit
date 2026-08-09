@@ -16,7 +16,7 @@
 - 특정 언어, 프레임워크, 빌드 도구에 종속되지 않는다
 - agent(mak:planner/coder/reviewer/doc-editor/analyzer)가 있으면 각 skill 을 위임 형태로 활용하고, agent 위임이 어려운 환경에서도 skill 만으로 동일한 흐름을 수행할 수 있다
 - 코딩 원칙(코딩하기 전에 생각하기 / 단순함이 최우선 / 정밀한 수정 / 목표 중심적 실행)은 본 가이드 §2.2 에 정의되며, 각 skill 절차 안에 자가 점검·게이트로 녹아 있다. 사용자가 전역/프로젝트 CLAUDE.md 에 자체 §Coding Rules 를 두면 그것이 우선한다
-- `/mak:setup` 은 Workflow 작업 등급·코딩 원칙 매핑(§2.2 사본)·mak 위임 요약을 `~/.claude/CLAUDE.md` 마커 블록으로 설치한다 (개인 규칙은 건드리지 않음)
+- `/mak:setup` 은 Workflow 작업 등급·코딩 원칙 매핑(§2.2 사본)·mak 위임 규칙을 `~/.claude/CLAUDE.md` 마커 블록으로 설치한다 (개인 규칙은 건드리지 않음)
 
 ## 2. 각 skill 개요
 
@@ -140,7 +140,7 @@ claude plugin install mak@mw-agent-kit
 
 | 단계 | 명령/행동 | 효과 |
 | :--- | :--- | :--- |
-| 공통 규칙 설치 (1회) | `/mak:setup` | `~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 요약 마커 블록 추가. 재실행 시 블록만 갱신, 개인 규칙 비접촉 |
+| 공통 규칙 설치 (1회) | `/mak:setup` | `~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 규칙 마커 블록 추가. 재실행 시 블록만 갱신, 개인 규칙 비접촉 |
 | 프로젝트 문서 세트 (선택) | `/mak:reverse-engineering` | 문서 세트를 `docs/` 로 복사하고 코드 분석으로 채움 (기본 compact/확장 standard 프로파일) |
 | 프로젝트 특화 규칙 (권장) | `<project>/.claude/CLAUDE.md` 직접 작성 | 검증 명령·문서 경로·도메인 규칙 등 프로젝트 고유 사항. skill 들이 이 파일을 우선 참조한다 |
 | 제거 | `/mak:teardown` → `claude plugin uninstall` | 마커 블록 원복 후 삭제 |

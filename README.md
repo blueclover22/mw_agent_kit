@@ -36,7 +36,7 @@ claude plugin install mak@mw-agent-kit
 /mak:setup
 ```
 
-`~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 요약이 마커 블록(`<!-- mak:begin -->` … `<!-- mak:end -->`)으로 추가됩니다. 규칙은 **대화 언어에 맞춰 한국어/영어 버전이 자동 선택**되며(`/mak:setup ko` 또는 `/mak:setup en` 으로 지정 가능), 재실행하면 블록만 갱신되고 마커 밖의 기존 내용(개인 규칙 등)은 건드리지 않습니다.
+`~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 규칙이 마커 블록(`<!-- mak:begin -->` … `<!-- mak:end -->`)으로 추가됩니다. 규칙은 **대화 언어에 맞춰 한국어/영어 버전이 자동 선택**되며(`/mak:setup ko` 또는 `/mak:setup en` 으로 지정 가능), 재실행하면 블록만 갱신되고 마커 밖의 기존 내용(개인 규칙 등)은 건드리지 않습니다.
 
 ## 2. 업데이트
 
@@ -89,7 +89,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:review-report` | 리뷰 절차·보고서 형식 (Critical/Warning/Pass/메모) |
 | `/mak:doc-audit` | 문서 ↔ 문서 정합성 감사 + 문서가 인용한 코드 경로·심볼의 실재성 대조 |
 | `/mak:commit` | 작업 마무리 커밋 — 게이트 통과 후 커밋, 변경 내용 한눈 보고. push 등 기타 git 명령은 명시 요청 시에만 |
-| `/mak:setup` | 공통 규칙(Workflow 등급·코딩 원칙 매핑·위임 요약)을 `~/.claude/CLAUDE.md` 에 마커 블록으로 설치 |
+| `/mak:setup` | 공통 규칙(Workflow 등급·코딩 원칙 매핑·위임 규칙)을 `~/.claude/CLAUDE.md` 에 마커 블록으로 설치 |
 | `/mak:teardown` | 설치된 마커 블록 제거 (플러그인 삭제 전 실행) |
 | `/mak:reverse-engineering` | 문서 세트(기본 compact 8종 / standard 14종)를 복사하고 프로젝트를 리버스 엔지니어링 |
 

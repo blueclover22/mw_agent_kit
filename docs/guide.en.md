@@ -16,7 +16,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 - No dependency on a specific language, framework, or build tool
 - With the agents (mak:planner/coder/reviewer/doc-editor/analyzer) available, skills are used through delegation; where delegation isn't possible, the skills alone reproduce the same flow
 - The coding principles (think before coding / simplicity first / precise changes / goal-driven execution) are defined in §2.2 of this guide and enforced inside skills as self-checks and gates. If you define your own §Coding Rules in the global/project CLAUDE.md, those take precedence
-- `/mak:setup` installs the Workflow task grades, the coding-principle mapping (a copy of §2.2), and the mak delegation summary as a marker block in `~/.claude/CLAUDE.md` (personal rules are never touched)
+- `/mak:setup` installs the Workflow task grades, the coding-principle mapping (a copy of §2.2), and the mak delegation rules as a marker block in `~/.claude/CLAUDE.md` (personal rules are never touched)
 
 ## 2. Skill Overview
 
@@ -141,7 +141,7 @@ claude plugin install mak@mw-agent-kit
 
 | Step | Command/action | Effect |
 | :--- | :--- | :--- |
-| Install common rules (once) | `/mak:setup` | Adds the Workflow task grades + coding-principle mapping + mak delegation summary marker block to `~/.claude/CLAUDE.md`. Re-running updates only the block; personal rules untouched |
+| Install common rules (once) | `/mak:setup` | Adds the Workflow task grades + coding-principle mapping + mak delegation rules marker block to `~/.claude/CLAUDE.md`. Re-running updates only the block; personal rules untouched |
 | Project doc set (optional) | `/mak:reverse-engineering` | Copies the doc set to `docs/` and fills it via analysis (compact by default, standard to expand) |
 | Project-specific rules (recommended) | Write `<project>/.claude/CLAUDE.md` | Verification commands, doc paths, domain rules. Skills consult this file first |
 | Remove | `/mak:teardown` → `claude plugin uninstall` | Restore the marker block, then uninstall |
