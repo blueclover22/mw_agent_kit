@@ -4,7 +4,7 @@
 >
 > English version: [README.en.md](README.en.md)
 
-`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 11종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
+`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 12종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
 
 ---
 
@@ -76,12 +76,13 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. 구성
 
-### Skills (11종)
+### Skills (12종)
 
 | skill | 역할 |
 | :--- | :--- |
 | `/mak:brainstorming` | 요구사항이 막연할 때 아이디어 발산 (구현 금지 게이트) |
 | `/mak:dev-kickoff` | Non-trivial 작업 착수 — 요구사항 수렴·옵션 제안·승인 게이트 |
+| `/mak:dev-resume` | 다음 작업 자체가 미정일 때 문서에서 근거와 함께 도출하는 재진입점 (읽기·보고 전용) |
 | `/mak:design-doc-template` | 설계 문서 규격·저장 경로 규칙(SSOT)·스켈레톤 |
 | `/mak:roadmap-planning` | 프로젝트 전체 Phase 구조·상태 추적 (상위 축) |
 | `/mak:verify-checklist` | 구현 후 빌드→린트→테스트→포맷→수동 검증 순서 |
@@ -116,6 +117,7 @@ claude plugin uninstall mak@mw-agent-kit
 - 슬래시 메뉴에서 skill 이 `mak:` prefix 없이 보일 수 있습니다(Claude Code 구버전 표시 방식). 표시와 무관하게 `/mak:brainstorming` 정식 형태와 `/brainstorming` 단축 형태 모두 동작하며, 같은 이름의 다른 skill 이 생기면 prefix 형태만 유효합니다.
 - 명백한 Trivial / Small 작업(오타·1줄 수정 등)은 위 절차 없이 바로 수정합니다.
 - 설계 문서는 기본적으로 프로젝트의 `.claude/mak/plan/` 하위에 저장됩니다.
+- 세션을 이어받거나 다음에 할 작업 자체가 미정이면 `/mak:dev-resume` 으로 시작합니다 — 문서에서 진행 상황·문제점·다음 후보를 뽑아 줍니다.
 - 기존 프로젝트를 분석해 문서화하려면 `/mak:reverse-engineering` 을 사용합니다.
 
 상세 프로세스·작업 등급·판단 기준·agent 위임 원칙은 **사용 가이드**가 단일 진입점입니다:

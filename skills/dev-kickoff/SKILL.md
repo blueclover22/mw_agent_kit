@@ -18,6 +18,7 @@ Enter for behavior changes spanning multiple files/modules, new features/compone
 - Direction itself is vague and idea divergence is needed first → `mak:brainstorming`
 - Establishing/updating the project-wide **phase structure** or mid/long-term roadmap → `mak:roadmap-planning`
 - Writing a feature/module **design doc** to spec → `mak:design-doc-template`
+- The task itself is undecided and must be derived from the documents → `mak:dev-resume`
 
 <HARD-GATE>
 Two approvals gate two different actions — do not conflate them:

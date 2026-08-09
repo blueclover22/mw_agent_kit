@@ -1,6 +1,6 @@
 # mak Usage Guide
 
-> Scope: the `mak` plugin's 11 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
+> Scope: the `mak` plugin's 12 skills + 5 agents + the common Workflow rules installed by `/mak:setup`
 > Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → implement → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
 >
 > 한국어 버전: [guide.md](guide.md)
@@ -25,6 +25,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:roadmap-planning` | Establish/maintain the project-wide phase structure. Mid/long-term direction, priorities, status. No implementation (HARD-GATE) |
 | `mak:brainstorming` | Divergence-only stage for vague/multi-directional requirements. Simplicity is an evaluation axis; "simpler alternative" check enforced. No implementation or design docs (HARD-GATE) |
 | `mak:dev-kickoff` | Kickoff sizing + conversational orchestration for Non-trivial/Risky work. Requirements convergence → planner consult decision → options → verifiable goals → approval gate → documentation handoff. No implementation before approval (HARD-GATE) |
+| `mak:dev-resume` | Re-entry point for when the next task itself is undecided. Derives progress, problems, and one next step from documents (roadmap status, design-doc `Status`, recent commits), each with evidence. Explicit-invocation only; diagnose/report/route only (HARD-GATE) |
 | `mak:design-doc-template` | Design-doc sections §1–§8, §5.0 Step → verify table, option comparison, assumption notation, quality checklist, and the **save-location rule SSOT (default `.claude/mak/plan/`)** |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
 | `mak:review-report` | SSOT for the review procedure and report format. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 Note, 6-item Warning checklist |
@@ -57,21 +58,12 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 
 > Source: these four principles are adapted from — and inspired by — the AI-coding guidelines shared by Andrej Karpathy.
 
-## 3. `mak:roadmap-planning` — the Roadmap Axis
-
-Operates as a **separate, higher axis** above the 6-stage flow. Shape the project-wide direction (phases) first; apply the 6-stage flow at each phase's kickoff.
+## 3. Scenario Flow
 
 ```
-mak:roadmap-planning (once at project start + periodic updates)
-      │  pick a phase
-      ▼
-[opt] mak:brainstorming → mak:dev-kickoff → [mak:planner Brief if needed]
-      → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report → mak:commit
-```
-
-## 4. Scenario Flow
-
-```
+[resume] mak:dev-resume — when the next task itself is undecided (resume / handoff);
+      │                 derives progress, problems, and candidates from the documents
+      ▼ task decided
 Requirements received
       │
       ▼
@@ -87,9 +79,27 @@ Requirements received
 ⑤ mak:review-report (delegate to mak:reviewer — fixes → re-delegate to ④; reviewer never edits)
       ▼
 ⑥ (wrap-up) mak:commit — commit after gates (push etc. only on explicit request)
+      │
+      ▼
+[outside the cycle] mak:doc-audit — right after a slice/phase completes, at a phase
+                    transition, or before handing off an unfinished session
 ```
 
+> `mak:dev-resume` and `mak:doc-audit` are not stages of ①–⑥. The former runs **before entering** the cycle (finding what to do from the documents; user name-invocation only); the latter runs **after several turns** of it (when cross-document drift has had time to accumulate). Neither belongs in every cycle.
+
 > Single-concern multi-PR work (e.g. structural refactor) uses `mak:design-doc-template`'s **master doc (decisions, PR dependency graph) + per-PR sub-docs**.
+
+## 4. `mak:roadmap-planning` — the Roadmap Axis
+
+Operates as a **separate, higher axis** wrapping the 6-stage flow above. Shape the project-wide direction (phases) first; apply the 6-stage flow at each phase's kickoff.
+
+```
+mak:roadmap-planning (once at project start + periodic updates)
+      │  pick a phase
+      ▼
+[opt] mak:brainstorming → mak:dev-kickoff → [mak:planner Brief if needed]
+      → mak:design-doc-template → implement → mak:verify-checklist → mak:review-report → mak:commit
+```
 
 ## 5. Install and Apply
 

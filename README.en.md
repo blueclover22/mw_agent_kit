@@ -4,7 +4,7 @@
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 11 skills and 5 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 5 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -76,12 +76,13 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. What's Included
 
-### Skills (11)
+### Skills (12)
 
 | Skill | Role |
 | :--- | :--- |
 | `/mak:brainstorming` | Idea divergence when requirements are vague (no-implementation gate) |
 | `/mak:dev-kickoff` | Kickoff for non-trivial work — requirements convergence, options, approval gate |
+| `/mak:dev-resume` | Re-entry point that derives the next task from documents, with evidence, when it isn't decided yet (read/report only) |
 | `/mak:design-doc-template` | Design-doc format, save-location rule (SSOT), skeleton |
 | `/mak:roadmap-planning` | Project-wide phase structure and status tracking (top-level axis) |
 | `/mak:verify-checklist` | Post-implementation order: build → lint → tests → format → manual |
@@ -116,6 +117,7 @@ The basic development flow:
 - The slash menu may show skills without the `mak:` prefix (older Claude Code display behavior). Regardless of display, both `/mak:brainstorming` (canonical) and `/brainstorming` (shorthand) work; if another skill claims the same name, only the prefixed form remains valid.
 - Obvious Trivial / Small work (typos, one-liners) skips the process entirely.
 - Design docs are saved under the project's `.claude/mak/plan/` by default.
+- Picking up a handed-off session, or unsure what to work on next? Start with `/mak:dev-resume` — it derives progress, problems, and next-step candidates from the documents.
 - To analyze and document an existing project, use `/mak:reverse-engineering`.
 
 For the full process, task grades, decision criteria, and agent delegation principles, the **usage guide** is the single entry point:

@@ -1,6 +1,6 @@
 # mak 사용 가이드
 
-> 대상: `mak` 플러그인의 skill 11종 + agent 5종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
+> 대상: `mak` 플러그인의 skill 12종 + agent 5종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
 > 목적: 어떤 프로젝트에서도 일관된 "발산 → 착수/아키텍처 자문 → 설계 → 구현 → 검증 → 리뷰 → 커밋" 흐름 재현, 그리고 프로젝트 전체 방향을 다루는 로드맵 축 지원
 >
 > English version: [guide.en.md](guide.en.md)
@@ -25,6 +25,7 @@
 | `mak:roadmap-planning` | 프로젝트 전체 Phase 구조 수립·유지. 중장기 방향·우선순위·상태 추적 전담. 구현·코드 수정 금지(HARD-GATE) |
 | `mak:brainstorming` | 요구사항이 불명확하거나 방향이 여러 갈래일 때 아이디어 발산 전용 단계. 평가 축에 단순성 포함, "더 단순한 대안" 자문 강제. 구현·설계 문서 작성 금지(HARD-GATE) |
 | `mak:dev-kickoff` | Non-trivial / Risky 또는 등급 불명확 작업의 착수 분류·대화형 오케스트레이션. 요구사항 수렴 → planner 자문 여부 결정 → 접근법 제안 → 검증 가능한 목표 변환 → 승인 게이트 → 문서화 인계. 설계 승인 전 구현 금지(HARD-GATE) |
+| `mak:dev-resume` | 다음 작업 자체가 미정인 재진입점. 문서(로드맵 상태·설계 문서 Status·최근 커밋)에서 진행 상황·문제점·다음 한 걸음을 근거와 함께 도출. 이름 호출 전용, 진단·보고·라우팅만 (HARD-GATE) |
 | `mak:design-doc-template` | 설계 문서의 §1~§8 섹션 구성, §5.0 Step → verify 표, 옵션 비교 표, 추정 표기, 품질 체크리스트, **저장 경로 규칙 SSOT(기본 `.claude/mak/plan/`)** 제공 |
 | `mak:verify-checklist` | 구현 완료 후 빌드→린트→테스트→포맷(변경 파일만)→수동 시나리오 순 검증. 보고 직전 자가 질의 + "사전 정의 성공 기준 vs 결과" 표 |
 | `mak:review-report` | 리뷰 절차와 보고서 형식의 SSOT. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 메모 분류, Warning 세부 점검 6종 |
@@ -57,21 +58,12 @@
 
 > 출처: 위 4원칙은 Andrej Karpathy 가 공유한 AI 코딩 가이드라인에서 영감을 받아 재구성한 것이다.
 
-## 3. `mak:roadmap-planning` — 프로젝트 로드맵 축
-
-아래 6단계 개발 흐름과 **별개의 상위 축**으로 동작한다. 프로젝트 전체 방향(Phase 구조)을 먼저 잡은 뒤, 각 Phase 착수 시 6단계 흐름을 적용한다.
+## 3. 사용 시나리오 흐름
 
 ```
-mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
-      │  Phase 선택
-      ▼
-[선택] mak:brainstorming → mak:dev-kickoff → [필요 시 mak:planner Brief]
-      → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report → mak:commit
-```
-
-## 4. 사용 시나리오 흐름
-
-```
+[재개] mak:dev-resume — 다음 작업 자체가 미정일 때(세션 재개·인계)
+      │              문서에서 진행 상황·문제점·다음 후보를 근거와 함께 도출
+      ▼ 작업 확정
 요구사항 접수
       │
       ▼
@@ -87,9 +79,26 @@ mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
 ⑤ mak:review-report (mak:reviewer 위임 — 수정 필요 시 ④ 재위임, 직접 수정 금지)
       ▼
 ⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 명시 요청 시에만)
+      │
+      ▼
+[주기 밖] mak:doc-audit — 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
 ```
 
+> `mak:dev-resume` 과 `mak:doc-audit` 은 ①~⑥ 의 단계가 아니다. 전자는 주기에 **들어오기 전**(무엇을 할지 문서에서 찾을 때, 사용자 이름 호출 전용), 후자는 주기를 **몇 번 돈 뒤**(문서 간 정합성이 틀어졌을 만할 때) 부른다. 매 사이클마다 부르는 것이 아니다.
+
 > 단일 관심사의 다PR 작업(구조 리팩터 등)은 `mak:design-doc-template` 의 **마스터 문서(결정·PR 의존 그래프) + PR별 sub-doc** 로 처리한다.
+
+## 4. `mak:roadmap-planning` — 프로젝트 로드맵 축
+
+위 6단계 개발 흐름을 감싸는 **별개의 상위 축**으로 동작한다. 프로젝트 전체 방향(Phase 구조)을 먼저 잡은 뒤, 각 Phase 착수 시 6단계 흐름을 적용한다.
+
+```
+mak:roadmap-planning (프로젝트 초기 1회 + 주기적 갱신)
+      │  Phase 선택
+      ▼
+[선택] mak:brainstorming → mak:dev-kickoff → [필요 시 mak:planner Brief]
+      → mak:design-doc-template → 구현 → mak:verify-checklist → mak:review-report → mak:commit
+```
 
 ## 5. 설치와 적용
 

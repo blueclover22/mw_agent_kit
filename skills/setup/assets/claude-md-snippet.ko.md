@@ -35,6 +35,7 @@
 ## mak 위임 요약
 
 - 개발 프로세스 skill·agent 는 `mak` 플러그인이 제공한다 — skill: `mak:brainstorming`(발산) → `mak:dev-kickoff`(착수·승인 게이트) → `mak:design-doc-template`(설계 문서화) → `mak:verify-checklist`(검증) → `mak:review-report`(리뷰) → `mak:commit`(마무리 커밋 — skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 명시 요청 시에만), 상위 축 `mak:roadmap-planning`. agent: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. 흐름 상세는 각 mak skill·agent 의 설명을 따른다.
+- `mak:dev-resume`(작업 재진입)도 위 주기 밖이다 — 다음 작업 자체가 미정인 재개·인계 시점에 사용자가 이름으로 호출할 때만 쓰고, 진단·보고·라우팅만 한다. 신규 착수에는 부르지 않는다.
 - `mak:doc-audit`(문서 간 정합성 감사)은 위 주기 밖이다 — 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전에만 부르고, 매 커밋 대상이 아니다.
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
 - 계획 승인 없이 `mak:coder` 를 호출하지 않는다 (단순 작업은 명시 요청 시 예외). `mak:reviewer` 는 보고만 하고 코드를 수정하지 않는다.

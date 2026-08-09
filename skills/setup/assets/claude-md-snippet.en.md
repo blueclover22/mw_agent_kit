@@ -35,6 +35,7 @@ Classify work by size and risk first. The grade decides whether to enter `mak:de
 ## mak Delegation Summary
 
 - Development-process skills/agents come from the `mak` plugin — skills: `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` (design documentation) → `mak:verify-checklist` (verification) → `mak:review-report` (review) → `mak:commit` (wrap-up commit — invoking the skill is the explicit commit request; other git ops such as push run only on explicit request); top-level axis `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`. Follow each mak skill/agent description for flow details.
+- `mak:dev-resume` (work re-entry) also sits outside that cycle — use it only when the user invokes it by name at a resume/handoff moment where the next task itself is undecided; it diagnoses, reports, and routes only. Never invoke it to start new work.
 - `mak:doc-audit` (cross-document consistency audit) sits outside that cycle — run it only right after a slice/phase completes, at a phase transition, or before handing off an unfinished session; never on every commit.
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
 - Never invoke `mak:coder` without an approved plan (simple work on explicit request is the exception). `mak:reviewer` reports only and never modifies code.

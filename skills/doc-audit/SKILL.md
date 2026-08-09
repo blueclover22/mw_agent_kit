@@ -1,6 +1,6 @@
 ---
 name: doc-audit
-description: Use right after a slice/phase completes, at a phase transition, or before handing off an unfinished session. Not for implementation vs. one design doc (mak:review-report), build/lint/test verification (mak:verify-checklist), or judging whether documented behavior matches the code (mak:analyzer).
+description: Use right after a slice/phase completes, at a phase transition, or before handing off an unfinished session. Not for implementation vs. one design doc (mak:review-report), build/lint/test verification (mak:verify-checklist), judging whether documented behavior matches the code (mak:analyzer), or deriving what to work on next (mak:dev-resume).
 ---
 
 # Document Audit Guide
@@ -53,7 +53,7 @@ Resolve cited paths against the project they belong to — a document may legiti
 
 ### Handoff Check
 
-Only at session handoff. Single question: can the next session identify one concrete task to start from the documents alone (yes/no + evidence)?
+Only at session handoff. Single question: can the next session identify one concrete task to start from the documents alone (yes/no + evidence)? The receiving side of that handoff is `mak:dev-resume`.
 
 ### Non-goals
 
