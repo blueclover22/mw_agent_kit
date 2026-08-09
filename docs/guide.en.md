@@ -61,30 +61,42 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 ## 3. Scenario Flow
 
 ```
-[resume] mak:dev-resume — when the next task itself is undecided (resume / handoff);
-      │                 derives progress, problems, and candidates from the documents
-      ▼ task decided
+[higher axis] mak:roadmap-planning ── shape the phases first; enter the cycle per phase
+[resume]      mak:dev-resume ─────── when the next task itself is undecided (resume / handoff)
+   │                                 derives progress, problems, candidates from the documents
+   │ task decided
+   ▼
 Requirements received
-      │
-      ▼
-[opt] ① mak:brainstorming — only when vague / multi-directional
-      │ direction chosen
-      ▼
-② mak:dev-kickoff — [mak:planner Brief if needed]
-      ▼
-③ mak:design-doc-template
-      ▼
-④ implement (delegate to mak:coder) → mak:verify-checklist
-      ▼
-⑤ mak:review-report (delegate to mak:reviewer — fixes → re-delegate to ④; reviewer never edits)
-      ┊ not chained automatically — only on the user's explicit request
-      ▼
-⑥ (wrap-up) mak:commit — commit after gates (push etc. need their own explicit request)
-      │
-      ▼
-[outside the cycle] mak:doc-audit — right after a slice/phase completes, at a phase
+   │
+   ▼
+[opt] ① mak:brainstorming ───── only when vague / multi-directional
+   │ direction chosen
+   ▼
+   ② mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief
+   │
+   │ ⚑ Approval gate 1 — design content. No file is written before this
+   ▼
+   ③ mak:design-doc-template ── design doc = the state between stages
+   │                            §5.0 Step → verify table records progress (⬜ / ▶ / ✅)
+   │ ⚑ Approval gate 2 — implementation start
+   ▼
+   ④ implement → mak:verify-checklist ──▶ [delegate] mak:coder
+   ▲        build→lint→test→format→manual     advances §5.0 Status per passing step
+   │            │
+   │            ▼
+   │        ⑤ mak:review-report ──────▶ [delegate] mak:reviewer — reports only, never edits
+   └────────────┤ fixes needed → reviewer does not fix; the main thread re-delegates to ④
+                ┊
+                ┊ not chained automatically — only on the user's explicit request
+                ▼
+                ⑥ mak:commit ── commit after the gates (verification · precise changes · hygiene)
+                   push/amend and other git ops each need their own explicit request
+
+[outside the cycle] mak:doc-audit ── right after a slice/phase completes, at a phase
                     transition, or before handing off an unfinished session
 ```
+
+> Symbols: `▼ │` default progression · `▶` agent delegation · `┊` a user gate that never advances on its own · `⚑` approval gate (impassable without user confirmation) · `▲ └─` rework loop
 
 > `mak:dev-resume` and `mak:doc-audit` are not stages of ①–⑥. The former runs **before entering** the cycle (finding what to do from the documents; user name-invocation only); the latter runs **after several turns** of it (when cross-document drift has had time to accumulate). Neither belongs in every cycle.
 

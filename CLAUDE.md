@@ -39,7 +39,7 @@ The inventory above is mirrored across user-facing docs, so every add/remove is 
 | 1 | `skills/<name>/SKILL.md` (+ `assets/` if any) | The skill itself |
 | 2 | Handoff wiring | Skills that route into/out of it (§Route to a different skill when, handoff lines). **Skipping this leaves a skill nothing ever invokes** |
 | 3 | `skills/setup/assets/claude-md-snippet.ko.md` + `.en.md` | Delegation-summary chain — **edit both** |
-| 4 | `README.md` + `README.en.md` | Count in **2 places each** (intro line, `### Skills (N)` heading) + the `/mak:<name>` table row. **Conditional**: if the skill sits on the main development flow, also add it to the §5 mermaid diagram — **edit both** and keep node sets identical. Flow-external skills (setup/teardown/reverse-engineering) stay out of the diagram |
+| 4 | `README.md` + `README.en.md` | Count in **2 places each** (intro line, `### Skills (N)` heading) + the `/mak:<name>` table row. **Conditional**: if the skill sits on the main development flow, also add it to the §5 ASCII flow diagram — **edit both** and keep the node sets identical to each other and to `docs/guide.md` §3. Flow-external skills (setup/teardown/reverse-engineering) stay out of the diagram |
 | 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
 | 6 | `CLAUDE.md` §Components | Count + the slash-separated list |
 | 7 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |

@@ -61,29 +61,41 @@
 ## 3. 사용 시나리오 흐름
 
 ```
-[재개] mak:dev-resume — 다음 작업 자체가 미정일 때(세션 재개·인계)
-      │              문서에서 진행 상황·문제점·다음 후보를 근거와 함께 도출
-      ▼ 작업 확정
+[상위 축] mak:roadmap-planning ── 프로젝트 Phase 구조를 먼저 잡고, 각 Phase 착수 시 아래 주기로
+[재개]    mak:dev-resume ─────── 다음 작업 자체가 미정일 때 (세션 재개·인계)
+   │                             문서에서 진행 상황·문제점·다음 후보를 근거와 함께 도출
+   │ 작업 확정
+   ▼
 요구사항 접수
-      │
-      ▼
-[선택] ① mak:brainstorming — 막연하거나 방향이 여러 갈래일 때만
-      │ 방향 선택
-      ▼
-② mak:dev-kickoff — [필요 시 mak:planner Brief]
-      ▼
-③ mak:design-doc-template
-      ▼
-④ 구현 (mak:coder 위임) → mak:verify-checklist
-      ▼
-⑤ mak:review-report (mak:reviewer 위임 — 수정 필요 시 ④ 재위임, 직접 수정 금지)
-      ┊ 자동으로 이어지지 않음 — 사용자 명시 요청 시에만
-      ▼
-⑥ (마무리) mak:commit — 게이트 통과 후 커밋 (push 등은 별도 명시 요청 시에만)
-      │
-      ▼
-[주기 밖] mak:doc-audit — 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
+   │
+   ▼
+[선택] ① mak:brainstorming ───── 막연하거나 방향이 여러 갈래일 때만
+   │ 방향 선택
+   ▼
+   ② mak:dev-kickoff ─────────▶ [위임·선택] mak:planner — Architecture Brief
+   │
+   │ ⚑ 승인 게이트 1 — 설계 내용 승인. 승인 전에는 어떤 파일도 쓰지 않는다
+   ▼
+   ③ mak:design-doc-template ── 설계 문서 = 단계 간 상태 저장소
+   │                            §5.0 Step → verify 표에 진행 상태(⬜ / ▶ / ✅) 기록
+   │ ⚑ 승인 게이트 2 — 구현 착수 승인
+   ▼
+   ④ 구현 → mak:verify-checklist ──▶ [위임] mak:coder
+   ▲        빌드→린트→테스트→포맷→수동      Step 통과 시 §5.0 Status 갱신
+   │            │
+   │            ▼
+   │        ⑤ mak:review-report ──────▶ [위임] mak:reviewer — 보고만, 코드 수정 금지
+   └────────────┤ 수정 필요 → reviewer 가 직접 고치지 않고 메인이 ④ 로 재위임
+                ┊
+                ┊ 자동으로 이어지지 않음 — 사용자가 명시 요청할 때만
+                ▼
+                ⑥ mak:commit ── 게이트(검증·정밀성·위생) 통과 후 커밋
+                   push·amend 등 기타 git 명령은 각각 별도 명시 요청 시에만
+
+[주기 밖] mak:doc-audit ── 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
 ```
+
+> 기호: `▼ │` 기본 진행 · `▶` agent 위임 · `┊` 자동으로 이어지지 않는 사용자 게이트 · `⚑` 승인 게이트(사용자 확인 없이는 통과 불가) · `▲ └─` 재작업 루프
 
 > `mak:dev-resume` 과 `mak:doc-audit` 은 ①~⑥ 의 단계가 아니다. 전자는 주기에 **들어오기 전**(무엇을 할지 문서에서 찾을 때, 사용자 이름 호출 전용), 후자는 주기를 **몇 번 돈 뒤**(문서 간 정합성이 틀어졌을 만할 때) 부른다. 매 사이클마다 부르는 것이 아니다.
 

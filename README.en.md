@@ -107,25 +107,35 @@ claude plugin uninstall mak@mw-agent-kit
 
 The basic development flow:
 
-```mermaid
-flowchart TD
-    RM["/mak:roadmap-planning<br/>higher axis · phase structure"] -. pick a phase .-> B
-    RS["/mak:dev-resume<br/>when the next task is undecided"] -. task decided .-> B
+```
+[higher axis] /mak:roadmap-planning ── shape the phases first; enter the cycle per phase
+[resume]      /mak:dev-resume ─────── when the next task itself is undecided (resume / handoff)
+   │ task decided
+   ▼
+[opt] ① /mak:brainstorming ───── only when vague / multi-directional
+   │ direction chosen
+   ▼
+   ② /mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief
+   │ ⚑ Approval gate 1 — design content. No file is written before this
+   ▼
+   ③ /mak:design-doc-template ── design doc = the state between stages
+   │ ⚑ Approval gate 2 — start      §5.0 Step table records progress (⬜ / ▶ / ✅)
+   ▼
+   ④ implement → /mak:verify-checklist ──▶ [delegate] mak:coder
+   ▲        build→lint→test→format→manual      advances §5.0 Status per passing step
+   │            │
+   │            ▼
+   │        ⑤ /mak:review-report ──────▶ [delegate] mak:reviewer — reports only, never edits
+   └────────────┤ fixes needed → the main thread re-delegates to ④
+                ┊ not chained automatically — only on the user's explicit request
+                ▼
+                ⑥ /mak:commit ── commit after the gates
+                   other git ops each need their own explicit request
 
-    B["① /mak:brainstorming<br/>only when vague"] --> K
-    K["② /mak:dev-kickoff<br/>requirements · approval gate"] --> D
-    D["③ /mak:design-doc-template<br/>design doc = state between stages"] --> I
-    I["④ implement → /mak:verify-checklist"] --> V
-    V["⑤ /mak:review-report"] -- fixes needed --> I
-    V -. only on explicit request .-> C["⑥ /mak:commit"]
-    V -. after a slice · phase .-> AU["/mak:doc-audit<br/>outside the cycle"]
-
-    K -. delegate .-> AP(["mak:planner"])
-    I -. delegate .-> AC(["mak:coder"])
-    V -. delegate .-> AR(["mak:reviewer"])
+[outside the cycle] /mak:doc-audit ── after a slice/phase, at a phase transition, or before handoff
 ```
 
-- **Solid** = default progression, **dashed** = conditional entry / agent delegation
+- Symbols: `▼ │` default progression · `▶` agent delegation · `┊` a user gate that never advances on its own · `⚑` approval gate · `▲ └─` rework loop
 - The arrows are **routing hints the main thread consults**, not an execution path that advances on its own. Skills and agents never invoke each other directly; the main thread always decides the transition ([details](docs/guide.en.md#what-the-arrows-mean--routing-hints-not-guaranteed-execution))
 - What persists between stages is the **③ design doc**, not the conversation — when a session ends, only what the documents recorded survives
 

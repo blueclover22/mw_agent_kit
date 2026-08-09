@@ -107,25 +107,35 @@ claude plugin uninstall mak@mw-agent-kit
 
 기본 개발 흐름:
 
-```mermaid
-flowchart TD
-    RM["/mak:roadmap-planning<br/>상위 축 · Phase 구조"] -. Phase 선택 .-> B
-    RS["/mak:dev-resume<br/>다음 작업이 미정일 때"] -. 작업 확정 .-> B
+```
+[상위 축] /mak:roadmap-planning ── Phase 구조를 먼저 잡고, 각 Phase 착수 시 아래 주기로
+[재개]    /mak:dev-resume ─────── 다음 작업 자체가 미정일 때 (세션 재개·인계)
+   │ 작업 확정
+   ▼
+[선택] ① /mak:brainstorming ───── 막연하거나 방향이 여러 갈래일 때만
+   │ 방향 선택
+   ▼
+   ② /mak:dev-kickoff ─────────▶ [위임·선택] mak:planner — Architecture Brief
+   │ ⚑ 승인 게이트 1 — 설계 내용 승인. 승인 전에는 어떤 파일도 쓰지 않음
+   ▼
+   ③ /mak:design-doc-template ── 설계 문서 = 단계 간 상태 저장소
+   │ ⚑ 승인 게이트 2 — 구현 착수    §5.0 Step 표에 진행 상태(⬜ / ▶ / ✅) 기록
+   ▼
+   ④ 구현 → /mak:verify-checklist ──▶ [위임] mak:coder
+   ▲        빌드→린트→테스트→포맷→수동      Step 통과 시 §5.0 Status 갱신
+   │            │
+   │            ▼
+   │        ⑤ /mak:review-report ──────▶ [위임] mak:reviewer — 보고만, 코드 수정 금지
+   └────────────┤ 수정 필요 → 메인이 ④ 로 재위임
+                ┊ 자동으로 이어지지 않음 — 사용자가 명시 요청할 때만
+                ▼
+                ⑥ /mak:commit ── 게이트 통과 후 커밋
+                   push 등 기타 git 명령은 각각 별도 명시 요청 시에만
 
-    B["① /mak:brainstorming<br/>막연할 때만"] --> K
-    K["② /mak:dev-kickoff<br/>요구사항 수렴 · 승인 게이트"] --> D
-    D["③ /mak:design-doc-template<br/>설계 문서 = 단계 간 상태 저장소"] --> I
-    I["④ 구현 → /mak:verify-checklist"] --> V
-    V["⑤ /mak:review-report"] -- 수정 필요 --> I
-    V -. 사용자 명시 요청 시에만 .-> C["⑥ /mak:commit"]
-    V -. 슬라이스 · phase 완료 후 .-> AU["/mak:doc-audit<br/>주기 밖"]
-
-    K -. 위임 .-> AP(["mak:planner"])
-    I -. 위임 .-> AC(["mak:coder"])
-    V -. 위임 .-> AR(["mak:reviewer"])
+[주기 밖] /mak:doc-audit ── 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
 ```
 
-- **실선** = 기본 진행, **점선** = 조건부 진입·agent 위임
+- 기호: `▼ │` 기본 진행 · `▶` agent 위임 · `┊` 자동으로 이어지지 않는 사용자 게이트 · `⚑` 승인 게이트 · `▲ └─` 재작업 루프
 - 화살표는 자동 실행 경로가 아니라 **메인 스레드가 참고하는 라우팅 힌트**입니다. skill·agent 끼리 서로를 직접 호출하지 않으며, 단계 전환은 항상 메인 스레드가 판단합니다 ([자세히](docs/guide.md#화살표의-의미--실행-보장이-아니라-라우팅-힌트))
 - 단계 사이에 남는 상태는 대화 맥락이 아니라 **③ 설계 문서**입니다 — 세션이 끊기면 문서에 적힌 것만 살아남습니다
 
