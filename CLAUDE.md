@@ -22,38 +22,12 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 - Frontmatter `description` carries trigger conditions only (when to use / when not to). Detailed criteria go in the body — descriptions are loaded into every session and cost tokens permanently. **Agent descriptions are the exception**: the orchestrator picks an agent from its description alone, so capability and constraint wording ("reads source and fills docs", "never modifies code") is functional there and stays
 - Agent principle bullets (`agents/*.md`) start with a bold lead-in label (`- **Label** — detail`). Keep this emphasis structure uniform across all five agents
 - A reference that **forbids** routing to a component (rather than pointing at it) must be phrased `Never route into \`mak:<name>\`` — the fixed wording is what lets the connectivity check below tell a prohibition apart from a real handoff. Both read as `mak:<name>` to grep, so an unmarked prohibition silently counts as an inbound edge and hides an orphan. Currently the only one is `skills/verify-checklist/SKILL.md` → `mak:commit`
+- `agents/coder.md`, `agents/reviewer.md`, `agents/planner.md` load their companion skill via frontmatter `skills:`; `agents/analyzer.md` must NOT — it follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
+- The marketplace name `mw-agent-kit` and the plugin name `mak` must never change — installed users' references would break
 
-## Components
+## Maintenance Procedures
 
-- 12 skills: brainstorming / dev-kickoff / dev-resume / design-doc-template / roadmap-planning / verify-checklist / review-report / doc-audit / commit / setup / teardown / reverse-engineering
-- 5 agents: planner(opus) / coder(sonnet) / reviewer(opus) / doc-editor(haiku) / analyzer(opus) — coder/reviewer/planner load their companion skill via frontmatter `skills:`; analyzer follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
-
-## Adding or Removing a Skill / Agent
-
-The inventory above is mirrored across user-facing docs, so every add/remove is a multi-file sync. Grep alone is not enough: a removal also leaves **inbound** references (routing pointers, handoff lines) that name the component, and an addition is silently dead unless something routes into it.
-
-**Skill** — 7 sync points:
-
-| # | Target | What |
-| :-- | :--- | :--- |
-| 1 | `skills/<name>/SKILL.md` (+ `assets/` if any) | The skill itself |
-| 2 | Handoff wiring | Skills that route into/out of it (§Route to a different skill when, handoff lines). **Skipping this leaves a skill nothing ever invokes** |
-| 3 | `skills/setup/assets/claude-md-snippet.ko.md` + `.en.md` | Delegation-rules chain (order·relationships·constraints only — per-skill entry conditions belong in each description) — **edit both** |
-| 4 | `README.md` + `README.en.md` | Count in **2 places each** (intro line, `### Skills (N)` heading) + the `/mak:<name>` table row. **Conditional**: if the skill sits on the main development flow, also add it to the §5 ASCII flow diagram — **edit both** and keep the node sets identical to each other and to `docs/guide.md` §3. Flow-external skills (setup/teardown/reverse-engineering) stay out of the diagram |
-| 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
-| 6 | `CLAUDE.md` §Components | Count + the slash-separated list |
-| 7 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |
-
-**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `CLAUDE.md` §Components → `plugin.json`.
-
-Then run §Verification Commands plus:
-
-```
-ls -d skills/*/ | wc -l                      # must equal every count in 4–6
-grep -rn "mak:<name>" skills/ agents/ README*.md docs/guide*.md CLAUDE.md
-```
-
-`AGENTS.md` deliberately carries **no counts or component lists** — keep it that way so it never enters this sync set.
+- Adding or removing a skill / agent, and cutting a release: read `docs/maintenance.md` first — both are multi-file syncs
 
 ## Verification Commands
 
@@ -65,7 +39,7 @@ This is a Markdown/JSON repository — no build or tests. After changes, run:
    - `grep -rn "\.claude/docs" skills/ agents/` (old design-doc path)
    - Bare (unprefixed) kit-skill names in backticks inside `skills/*/SKILL.md` and `agents/*.md`
    - `grep -rln '[가-힣]' skills/ agents/ | grep -v claude-md-snippet` (Korean residue outside the setup snippet)
-3. Graph connectivity — run whenever a skill/agent is added, removed, or rewired. The §Adding or Removing sync points check *counts*; this checks *wiring*, which counts cannot catch:
+3. Graph connectivity — run whenever a skill/agent is added, removed, or rewired. The `docs/maintenance.md` sync points check *counts*; this checks *wiring*, which counts cannot catch:
 
    ```
    for f in skills/*/SKILL.md agents/*.md; do
@@ -90,14 +64,3 @@ This is a Markdown/JSON repository — no build or tests. After changes, run:
 ## Document Paths
 
 - Design docs for this repository: `.claude/mak/plan/` (working documents; may be removed once their work is finished)
-
-## Release
-
-- Bump `version` in `.claude-plugin/plugin.json` (semver, 1.0.0 = first real release). **Bump only when shipped behavior changes** — the install cache is keyed by version, so a bump is exactly what makes an update reach installed users:
-  - Major: breaks installed users — skill/agent **removals** or renames, marker-format or snippet-contract changes, save-path default changes
-  - Minor: new skills / agents / capabilities
-  - Patch: fixes inside existing skills/agents that change what the model does (procedure, gates, rule wording)
-  - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway
-- Tag the version-bump commit with the matching annotated tag (`git tag -a v1.2.3 -m "mak v1.2.3"`, pushed separately via `git push origin v1.2.3`). Tags do not affect installation — the marketplace always tracks the default branch — but they pin which commit shipped as each version. Before bumping, run `git diff <last tag>..HEAD --stat -- skills/ agents/` to catch behavior changes that accumulated without a bump
-- The marketplace name `mw-agent-kit` and plugin name `mak` must not change (installed users' references would break)
-- When the `claude-md-snippet.ko.md` / `.en.md` pair changes, confirm the README note "re-run /mak:setup after updates" still holds
