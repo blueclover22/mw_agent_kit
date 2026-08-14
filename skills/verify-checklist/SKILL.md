@@ -114,13 +114,14 @@ Never route into `mak:commit` from here. Committing requires the user's explicit
 
 ## Self-Check Before Reporting
 
-Ask yourself the following before writing the verification report. Clean up simple items caused by your own change before reporting. Do not silently fix scope expansions, design mismatches, or items needing user decisions — report them to the main thread instead.
+Ask yourself the following before writing the verification report. Clean up simple items caused by your own change before reporting. Do not silently fix scope expansions, design mismatches, or items needing user decisions — report them to the main thread instead. The design doc referenced below is located per the `mak:design-doc-template` save-path rule, which also owns the §5.0 status-column rule.
 
 - [ ] Does every changed line connect directly to the user's request? (Precise Changes)
 - [ ] Did any unrequested "improvement" of adjacent code/comments/formatting slip in? (Precise Changes)
 - [ ] Are all unused imports/variables/functions introduced by your change cleaned up? (Precise Changes)
 - [ ] Were unrequested features / speculative flexibility / impossible-scenario error handling added? (Simplicity)
 - [ ] Are all items in the design doc §5.0 success criteria or `Step → verify` table actually met? (Goal-driven)
+- [ ] For each step whose verify criterion just passed, was its §5.0 `Status` cell updated? (Goal-driven)
 
 ## Report Format
 

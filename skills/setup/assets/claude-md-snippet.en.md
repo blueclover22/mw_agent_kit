@@ -31,7 +31,7 @@ Classify work by size and risk first. The grade decides whether to enter `mak:de
 | **Think before coding** | Mark assumptions ("Assumption") · present all interpretations · propose/push back with simpler alternatives · stop and ask when confused | mak:brainstorming §Procedure 3·5, mak:dev-kickoff §2·§3·§4, mak:planner Brief, mak:design-doc-template §Quality Checklist |
 | **Simplicity first** | No unrequested features, speculative flexibility, or impossible-scenario error handling · include simpler alternatives | mak:dev-kickoff §3·§4·§8, mak:planner Brief, mak:design-doc-template §Quality Checklist, mak:verify-checklist §Self-Check, mak:review-report §Warning |
 | **Precise changes** | No out-of-scope files · single purpose per change · no adjacent "improvements" · match existing style · every changed line ties to the request | mak:dev-kickoff §8, mak:verify-checklist §Self-Check, mak:review-report §Warning, mak:coder agent |
-| **Goal-driven execution** | Convert to verifiable goals · `Step → verify: check` plans · verify after changes · confirm behavior before reporting | mak:dev-kickoff §5, mak:design-doc-template §5.0, mak:verify-checklist §Report Format |
+| **Goal-driven execution** | Convert to verifiable goals · `Step → verify: check` plans · verify after changes · confirm behavior before reporting | mak:dev-kickoff §5·§10, mak:design-doc-template §5.0, mak:verify-checklist §Self-Check·§Report Format |
 
 ## mak Delegation Rules
 

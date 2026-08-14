@@ -7,6 +7,8 @@ description: Use on explicit user invocation when resuming or taking over work a
 
 Derives, from what project documents already show, (a) how far work has progressed, (b) problems in that state, (c) one concrete next step — each backed by evidence. Owns the **inbound** side of session handoff: finding out what to do, not doing it.
 
+Report and all user-facing output in the user's conversation language (or the project's documented language policy).
+
 <HARD-GATE>
 Diagnose, report, and route only.
 

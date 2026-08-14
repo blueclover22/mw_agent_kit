@@ -70,7 +70,7 @@ Before asking questions:
 
 Decide by task grade whether to call `mak:planner`.
 
-- **Trivial / Small**: stop this skill and switch to the lightweight flow (direct or `mak:coder`). Do not call planner.
+- **Trivial / Small**: stop this skill and switch to the lightweight flow (direct, or `mak:coder` on the user's explicit request). Do not call planner.
 - **Non-trivial**: request a planner Architecture Brief when the existing structure is complex or options genuinely diverge.
 - **Risky / multi-module / migration**: request a planner Architecture Brief as a rule.
 
@@ -163,13 +163,21 @@ Once the design is approved:
    - Otherwise:
        → implement directly (the design doc is the SSOT for scope)
 
-3. Delegate review on major-stage completion
+3. Verify each step before any review handoff
+   - If implementation was delegated to mak:coder:
+       → coder runs mak:verify-checklist itself; confirm its reported results
+   - Otherwise:
+       → run mak:verify-checklist after each step, and update that step's
+         Status cell in the design doc §5.0 once its verify criterion passes
+         (per the mak:design-doc-template §5.0 status-column rule)
+
+4. Delegate review on major-stage completion
    - If the mak:reviewer agent is available:
        → delegate to mak:reviewer (pass review scope and design doc path)
    - Otherwise:
        → self-review by applying the mak:review-report checklist directly
 
-4. Delegate doc sync when needed
+5. Delegate doc sync when needed
    - If the mak:doc-editor agent is available:
        → delegate to mak:doc-editor (pass the list of documents to sync)
    - Otherwise:

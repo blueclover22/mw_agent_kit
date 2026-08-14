@@ -9,6 +9,8 @@ Audits **document-to-document consistency** and the **reality of code paths/symb
 
 Report only, in the user's language — **never edit documents**. Fixes go through `mak:doc-editor` or the main thread.
 
+**Delegation** — if the `mak:analyzer` agent is in the available agent list, the audit itself may be delegated to it. Pass the entry points, the derived audit surface, and the output language. It reports only too; fixes stay with the main thread either way.
+
 ---
 
 ## When to Use
