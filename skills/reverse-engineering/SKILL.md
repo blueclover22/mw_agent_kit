@@ -45,9 +45,9 @@ Templates are in English. Fill content in the user's language (or the project's 
 
 ### 4. Analyze and fill
 
-Follow `docs/CLAUDE.md` §2 (single flow — the essence: trace 1–2 representative call chains into `12` first if code exists, then fill in dependency order `01→02→03 → 04·05 → 06·07 → 09 → 10·11`; feature domains go to `domains/<domain>-guide.md` via `_template.md`; `13` gets only future backlog, never reconstructed history).
+Follow `docs/CLAUDE.md` §2 (single flow, profile-specific fill order — SSOT there, not restated here; feature domains go to `domains/<domain>-guide.md` via `_template.md`; `13` gets only future backlog, never reconstructed history).
 
-**Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches (following the dependency order above; e.g. `12` first, then Foundation docs, then layer/ops docs). Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, and the output language. Keep interactive decisions (profile choice, overwrite confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (e.g. `00.INDEX.md` tables, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
+**Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches, following `docs/CLAUDE.md` §2's profile-specific order. Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, and the output language. Keep interactive decisions (profile choice, overwrite confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (e.g. `00.INDEX.md` tables, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
 
 Hard rules while filling (SSOT: `docs/CLAUDE.md` §1):
 

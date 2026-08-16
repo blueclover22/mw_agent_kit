@@ -34,9 +34,14 @@ This folder (`docs/`) is a **project documentation set template**. It defines th
 
 Whether the project is new or existing, the essence of the work is the same — **analyze the source and transfer facts/conventions into documents.** Proceed in a single flow.
 
-1. **Understand behavior first** — if code exists, trace the call chains (entry point → result) of 1–2 representative scenarios in `12` process-guide. This reveals layers, module boundaries, and key files. (For a brand-new empty project, replace this step with establishing conventions.)
-2. **Fill in dependency order** — `01`→`02`→`03` (Foundation) → `04`·`05` (framework · contracts) → `06`·`07` (layer conventions) → `09` fact sheet → `10`·`11` (build · tests). Content sources for each document are in §3.
-   - **Feature domains** (project-specific features/subsystems such as payments · hw_interface · local_db) — copy `domains/_template.md` to `domains/<domain>-guide.md` and register it in §1 of `08.domains.md`. Do not assign numbers.
+1. **Understand behavior first** — if code exists, trace the call chains (entry point → result) of 1–2 representative scenarios.
+   - **standard**: record the trace into `12` process-guide. This reveals layers, module boundaries, and key files.
+   - **compact**: `12` isn't part of this profile — record the same trace into `02` architecture instead (the structure-discovery result is absorbed into the architecture doc).
+   - (For a brand-new empty project, replace this step with establishing conventions.)
+2. **Fill in profile-specific order.** Content sources for each document are in §3.
+   - **standard**: `01`→`02`→`03` (Foundation) → `04`·`05` (framework · contracts) → `06`·`07` (layer conventions) → `09` fact sheet → `10`·`11` (build · tests).
+   - **compact**: `09` (fact sheet — scope/stack/env first; its Current Structure links and Change Checklist depend on `02`/`03`/`10` and are finalized after those, not on this first pass) → `02` (architecture, incl. the call-chain trace from step 1) → `03` (coding rules) → `04` (framework) → `06` (UI) → `10` (build/ops) → `13` (roadmap).
+   - **Feature domains** (project-specific features/subsystems such as payments · hw_interface · local_db) — copy `domains/_template.md` to `domains/<domain>-guide.md` and register it in §1 of `08.domains.md`. Do not assign numbers. (standard only — this step doesn't apply to compact.)
 3. **Update `13` when adding features or planning.** When first authoring the documentation set, do not fabricate a history of past work — write only the backlog and future consideration items still remaining.
 4. **Template cleanup (once, on application)** — after filling in content, **remove all template-only scaffolding** so only project documents remain:
    - The `> Template: …` notice block at the top of each document (a marker common to all documents). **However, `CLAUDE.md` (the writing guide) and `domains/_template.md` (the copy source for new domains) are scaffolds that remain in the project, so do not delete them.**
