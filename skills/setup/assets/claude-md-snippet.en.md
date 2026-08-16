@@ -37,13 +37,13 @@ Classify work by size and risk first. The grade decides whether to enter `mak:de
 
 **When** to invoke each skill/agent is in its own description. This section fixes only the order, relationships, and constraints between them.
 
-- Development cycle — `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` (design documentation) → implement → `mak:verify-checklist` (verification) → `mak:review-report` (review). Top-level axis: `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer`.
+- Development cycle — `mak:brainstorming` (diverge) → `mak:dev-kickoff` (kickoff, approval gate) → `mak:design-doc-template` (design documentation) → implement → `mak:verify-checklist` (verification) → `mak:review-report` (review). Top-level axis: `mak:roadmap-planning`. Agents: `mak:planner` / `mak:coder` / `mak:reviewer` / `mak:doc-editor` / `mak:analyzer` / `mak:auditor`.
 - Entry points outside the cycle — `mak:dev-resume` (work re-entry), `mak:doc-audit` (cross-document consistency), `mak:reverse-engineering` (an existing project with no doc set). None of the three is a stage of the cycle, so never run them every iteration.
 - `mak:commit` is not chained from the cycle — it is entered only on the user's explicit request (invoking the skill is the explicit commit request; other git ops such as push need their own explicit request).
 - Progress on multi-step work is recorded in the design doc's §5.0 `Step → verify` Status column — whoever implements the step (`mak:coder` or the main thread) advances it as each verify criterion passes, and `mak:dev-resume` reads that column on resume.
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
 - Never invoke `mak:coder` without an approved plan (simple work on explicit request is the exception). `mak:reviewer` and `mak:analyzer` report only and never modify what they inspect.
-- Design docs are written once — if `mak:planner` is available, delegate the writing with the confirmed decisions; otherwise the main thread writes it directly. Editing/syncing existing Markdown documents is delegated to `mak:doc-editor`.
+- Design docs are written once, by the main thread. Editing/syncing existing Markdown documents is delegated to `mak:doc-editor`.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
 
 <!-- mak:end -->

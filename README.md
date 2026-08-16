@@ -4,7 +4,7 @@
 >
 > English version: [README.en.md](README.en.md)
 
-`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 12종과 agent 5종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
+`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 12종과 agent 6종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
 
 ---
 
@@ -93,15 +93,16 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:teardown` | 설치된 마커 블록 제거 (플러그인 삭제 전 실행) |
 | `/mak:reverse-engineering` | 문서 세트(기본 compact 8종 / standard 14종)를 복사하고 프로젝트를 리버스 엔지니어링 |
 
-### Agents (5종)
+### Agents (6종)
 
 | agent | 모델 | 역할 |
 | :--- | :--- | :--- |
-| `mak:planner` | opus | 비대화 아키텍처 자문(Architecture Brief)·설계 문서 집필 |
+| `mak:planner` | opus | 비대화 아키텍처 자문(Architecture Brief) 전담, 읽기 전용 |
 | `mak:coder` | sonnet | 승인된 설계 기반 구현 전담 |
 | `mak:reviewer` | opus | 구현 결과 검토·보고 전담 (코드 수정 금지) |
 | `mak:doc-editor` | haiku | 기존 Markdown 문서 편집·동기화 전담 |
-| `mak:analyzer` | opus | 코드 분석·문서 채움·문서 감사 전담, 감사는 보고만 (코드 수정 금지) |
+| `mak:analyzer` | opus | 코드 분석·문서 채움 전담, 사실만 기록 (코드 수정 금지) |
+| `mak:auditor` | opus | `mak:doc-audit` 문서 간 정합성 감사 전담, 보고만 (문서 수정 금지) |
 
 ## 5. 사용 방법 및 문서
 

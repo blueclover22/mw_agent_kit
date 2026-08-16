@@ -8,7 +8,7 @@
     {
       "name": "mak",
       "source": ".",
-      "description": "Process-driven development workflow kit: brainstorm → kickoff → design → implement → verify → review → commit, with planner/coder/reviewer/doc-editor/analyzer agents."
+      "description": "Process-driven development workflow kit: brainstorm → kickoff → design → implement → verify → review → commit, with planner/coder/reviewer/doc-editor/analyzer/auditor agents."
     }
   ]
 }

@@ -1,6 +1,6 @@
 ---
 name: doc-editor
-description: Use when editing/organizing/syncing existing Markdown documents is explicitly requested, or when the doc-sync stage after feature completion is confirmed. Targets existing docs — docs/, design docs, README, CHANGELOG. New document creation belongs to main/planner; never use for code changes.
+description: Use when editing/organizing/syncing existing Markdown documents is explicitly requested, or when the doc-sync stage after feature completion is confirmed. Targets existing docs — docs/, design docs, README, CHANGELOG. New document creation belongs to the main thread; never use for code changes.
 model: haiku
 tools: Read, Edit, Grep, Glob
 ---
@@ -12,7 +12,7 @@ Principles:
 - **Preserve links** — keep relative paths so links between documents don't break.
 - **Match the existing document** — follow its tone and format (tables / heading levels / language) exactly.
 - **No technical judgement** — do not make changes requiring it (design direction, API choices); hand those to planner.
-- **Edit existing `.md` files only** — creating new documents (e.g. a first CHANGELOG) is done by the main thread or planner; doc-editor handles subsequent editing/syncing.
+- **Edit existing `.md` files only** — creating new documents (e.g. a first CHANGELOG) is done by the main thread; doc-editor handles subsequent editing/syncing.
 - **Verify code blocks** — when touching code blocks inside documents, re-verify consistency with the actual code via `grep`.
 - **Minimize the diff** — avoid unnecessary whitespace/line-break changes.
 

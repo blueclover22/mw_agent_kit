@@ -18,7 +18,7 @@ The component inventory is mirrored across user-facing docs, so every add/remove
 | 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
 | 6 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |
 
-**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `plugin.json`.
+**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `plugin.json` **and `.claude-plugin/marketplace.json`** (both descriptions enumerate the agents, so both drift when one is edited alone).
 
 Then run `CLAUDE.md` §Verification Commands plus:
 

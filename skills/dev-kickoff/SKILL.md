@@ -41,7 +41,7 @@ Complete in order:
 4. **Propose 2–3 approaches** — with trade-offs and a recommendation, based on the planner report or main-thread investigation (include at least one simpler alternative)
 5. **Convert to verifiable goals** — turn the task into measurable success criteria and a `Step → verify: check` plan
 6. **Present the design** — present section by section, proceeding after each section's approval
-7. **Documentation handoff** — pass the confirmed design inputs to `mak:planner`, or only if planner is unavailable, the main thread saves it per the `mak:design-doc-template` spec
+7. **Documentation handoff** — the main thread saves the approved design per the `mak:design-doc-template` spec
 8. **Self-review** — unconfirmed decisions, contradictions, scope problems + simplicity / precise-changes self-check
 9. **User review gate** — wait for user confirmation
 10. **Handoff to next stage** — see the Handoff section below
@@ -117,17 +117,15 @@ Clear success criteria enable independent iteration. Narrow vague criteria like 
 
 ### 7. Documentation handoff
 
-Runs only after §6 design-content approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see HARD-GATE). The approved design is documented **once**, per the `mak:design-doc-template` spec (sections, save location, file naming). This step's core responsibility is producing the confirmed inputs to hand to `mak:planner`.
+Runs only after §6 design-content approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see HARD-GATE). This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming) — purpose/non-goals, chosen option, scope of changes, verification plan, confirmed decisions, remaining uncertainties.
 
-- If the `mak:planner` agent is available: **delegate the writing by passing the confirmed design inputs** — purpose/non-goals, chosen option, scope of changes, verification plan, confirmed decisions, remaining uncertainties. Planner is non-interactive, so leave no items that require asking the user. Once delegated, do not rewrite the same document in later steps (§10).
-- If planner is unavailable: the main thread writes it directly.
-- `mak:dev-kickoff` itself never loops draft-then-planner-rewrite on the same document.
+`mak:dev-kickoff` never loops draft-then-rewrite on the same document — write it once here; later steps only revise it (§8 self-review fixes, §9 user change requests).
 
 **No git commits** — version control is done by the user, except on explicit request or when project rules say otherwise.
 
 ### 8. Self-review
 
-Before the documentation handoff (or after writing directly), check:
+After writing the design doc in §7, check:
 
 - **Incomplete items** — any "TBD", "TODO", unclear requirements? Items needing user decisions get confirmed in the main thread; only genuinely technical uncertainty goes to §Assumptions/Unreviewed.
 - **Consistency** — do sections contradict each other?

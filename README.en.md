@@ -4,7 +4,7 @@
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 5 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 6 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -93,15 +93,16 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:teardown` | Remove the installed marker block (run before uninstalling) |
 | `/mak:reverse-engineering` | Copy the doc set (8 docs compact by default, 14 docs standard) and reverse-engineer the project |
 
-### Agents (5)
+### Agents (6)
 
 | Agent | Model | Role |
 | :--- | :--- | :--- |
-| `mak:planner` | opus | Non-interactive architecture consultation (Architecture Brief), design-doc writing |
+| `mak:planner` | opus | Non-interactive architecture consultation (Architecture Brief), read-only |
 | `mak:coder` | sonnet | Implementation against an approved design |
 | `mak:reviewer` | opus | Review and report only (never modifies code) |
 | `mak:doc-editor` | haiku | Editing/syncing existing Markdown documents |
-| `mak:analyzer` | opus | Code analysis, doc filling, and document auditing — auditing is report-only (never modifies code) |
+| `mak:analyzer` | opus | Code analysis and doc filling — records facts only (never modifies code) |
+| `mak:auditor` | opus | `mak:doc-audit` cross-document consistency audit — report-only (never modifies documents) |
 
 ## 5. Usage & Documentation
 

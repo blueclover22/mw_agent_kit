@@ -20,9 +20,9 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 - The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both (task-grade table from §2.1, principle mapping from §2.2) + the mak delegation rules — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en. Skills/agents keep the "project/global Coding Rules take precedence" phrasing
 - Skills that reference files inside the plugin use `${CLAUDE_PLUGIN_ROOT}`
 - Frontmatter `description` carries trigger conditions only (when to use / when not to). Detailed criteria go in the body — descriptions are loaded into every session and cost tokens permanently. **Agent descriptions are the exception**: the orchestrator picks an agent from its description alone, so capability and constraint wording ("reads source and fills docs", "never modifies code") is functional there and stays
-- Agent principle bullets (`agents/*.md`) start with a bold lead-in label (`- **Label** — detail`). Keep this emphasis structure uniform across all five agents
+- Agent principle bullets (`agents/*.md`) start with a bold lead-in label (`- **Label** — detail`). Keep this emphasis structure uniform across all six agents
 - A reference that **forbids** routing to a component (rather than pointing at it) must be phrased `Never route into \`mak:<name>\`` — the fixed wording is what lets the connectivity check below tell a prohibition apart from a real handoff. Both read as `mak:<name>` to grep, so an unmarked prohibition silently counts as an inbound edge and hides an orphan. Currently the only one is `skills/verify-checklist/SKILL.md` → `mak:commit`
-- `agents/coder.md`, `agents/reviewer.md`, `agents/planner.md` load their companion skill via frontmatter `skills:`; `agents/analyzer.md` must NOT — it follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
+- `agents/coder.md`, `agents/reviewer.md`, `agents/auditor.md` load their companion skill via frontmatter `skills:`; `agents/analyzer.md` must NOT — it follows the copied doc set's own rulebook (target `docs/CLAUDE.md`·`00.INDEX.md`) instead
 - The marketplace name `mw-agent-kit` and the plugin name `mak` must never change — installed users' references would break
 
 ## Maintenance Procedures
