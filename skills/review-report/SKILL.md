@@ -32,9 +32,9 @@ Report template: `${CLAUDE_PLUGIN_ROOT}/skills/review-report/assets/review-repor
 | 🔴 Critical | Build failure, type error, test failure, security vulnerability, implementation that contradicts the approved design's behavior or breaks a data contract | Must fix, then re-review |
 | 🟡 Warning | Code-quality issues, naming inconsistency, unnecessary changes, incomplete features | Fix recommended; prioritize and decide |
 | 🟢 Pass | Implemented as designed; verification passed | Nothing notable |
-| 📝 Note | Potential issues found outside scope; future improvement ideas | Do not fix; record as separate issues |
+| 📝 Note | Potential issues found outside **this review's** scope; future improvement ideas | Do not fix; record as separate issues |
 
-The dividing line is **whether what exists is wrong**, not whether it is out of scope. Work that is merely unfinished or unrequested is 🟡, however far it sits from the design; a wrong behavior or a broken contract is 🔴 even inside the design's scope.
+The dividing line is **whether what exists is wrong**, not whether it falls outside **the design's** scope. Work that is merely unfinished or unrequested is 🟡, however far it sits from the design; a wrong behavior or a broken contract is 🔴 even inside the design's scope.
 
 ### Warning Checklist
 
@@ -47,7 +47,7 @@ Classify the following as 🟡 Warning when found:
 - Changed lines not directly connected to the user's request (Precise Changes)
 - Uncleaned unused imports/variables/functions introduced by the change (Precise Changes)
 
-Pre-existing unused code (out of scope) goes to 📝 Note and is not fixed.
+Pre-existing unused code (outside this review's scope) goes to 📝 Note and is not fixed.
 
 ## Report Format
 
@@ -56,7 +56,7 @@ Pre-existing unused code (out of scope) goes to 📝 Note and is not fixed.
 ## Cautions
 
 - The reviewer reports only and never modifies code directly
-- Record out-of-scope findings only under 📝 Note; do not unilaterally decide to expand scope. If Critical or Warning issues exist, report to the main thread that re-delegation to `mak:coder` is needed — do not re-delegate directly
+- Record findings outside this review's scope only under 📝 Note; do not unilaterally decide to expand scope. If Critical or Warning issues exist, report to the main thread that re-delegation to `mak:coder` is needed — do not re-delegate directly
 - If build/test results could not be verified directly, state "could not run directly — based on coder's report"
 - Distinguish "no issues" from "could not verify"
 - After a slice/stage completion review, hand off to `mak:doc-audit` to check whether other documents referencing this change still hold

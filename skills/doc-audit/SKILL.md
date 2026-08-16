@@ -5,7 +5,7 @@ description: Use right after a slice/phase completes, at a phase transition, or 
 
 # Document Audit Guide
 
-Audits **document-to-document consistency** and the **reality of code paths/symbols the documents cite**. Other mak stages only diff code against one design doc — nothing checks whether the rest of the documents are still valid.
+Audits **document-to-document consistency** and **whether the code paths/symbols the documents cite still exist**. Other mak stages only diff code against one design doc — nothing checks whether the rest of the documents are still valid.
 
 Report only, in the user's language — **never edit documents**. Fixes go through `mak:doc-editor` or the main thread.
 
