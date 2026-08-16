@@ -76,6 +76,8 @@ Only applies when UI or user interaction changed.
 
 ## On Failure
 
+Numbers here name the **check type**, not a fixed row position — when a project's own commands replaced the default steps, match each failure to the closest type below.
+
 | Step | Action on failure |
 | :--- | :--- |
 | ① Build/type errors | Read the full error log, fix, re-run from ① |
@@ -125,7 +127,7 @@ Ask yourself the following before writing the verification report. Clean up simp
 
 ## Report Format
 
-After verification, report in this format (render headings in the user's language):
+After verification, report in this format (render headings in the user's language). The first table records **what was actually run** — when the project declares its own verification commands (§Verification Order priority rule), report those in place of the default rows rather than forcing them into this shape. Drop a row only when that check genuinely does not exist for this project; a check that applies but failed or could not be run stays in the table, marked as such.
 
 ```
 ## Verification Results

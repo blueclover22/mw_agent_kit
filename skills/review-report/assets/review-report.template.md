@@ -1,6 +1,7 @@
 ## Review Report
 
 > Review target: `{{design doc path or summary of scope of changes}}`
+> Review scope: `{{files / commit range actually reviewed}}`
 > Review date: {{YYYY-MM-DD}}
 > Reviewer: reviewer
 
@@ -13,6 +14,8 @@
 ---
 
 ### Build / Verification Results
+
+<!-- Replace the stages below with the project's declared verification commands when it has them (a docs-only project might list a manifest validator and consistency greps). Keep a stage whenever it applies, even if it failed or could not be run. -->
 
 | Stage              | Result                                          | Notes                       |
 | :----------------- | :---------------------------------------------- | :-------------------------- |
@@ -52,7 +55,7 @@
 
 - {{description of passing item}}
 
-#### 📝 Note (out-of-scope findings)
+#### 📝 Note (findings outside this review's scope)
 
 <!-- Not fixed in this scope. Record only future improvement ideas or potential issues -->
 <!-- Section may be omitted if none -->
