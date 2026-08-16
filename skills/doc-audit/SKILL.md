@@ -9,7 +9,7 @@ Audits **document-to-document consistency** and the **reality of code paths/symb
 
 Report only, in the user's language — **never edit documents**. Fixes go through `mak:doc-editor` or the main thread.
 
-**Delegation** — if the `mak:analyzer` agent is in the available agent list, the audit itself may be delegated to it. Pass the entry points, the derived audit surface, and the output language. It reports only too; fixes stay with the main thread either way.
+**Delegation** — if the `mak:analyzer` agent is in the available agent list, the audit itself may be delegated to it. It does not load this skill on its own, so the assignment must carry everything it needs: which §When to Use trigger this audit is running under, the entry points, the derived audit surface, the output language, the project path, and the content of §Checklist (including §Handoff Check when the trigger is a session handoff), §Report (grades and table format), §Scope Rule, and §Non-goals below. It reports only too; fixes stay with the main thread either way.
 
 ---
 
