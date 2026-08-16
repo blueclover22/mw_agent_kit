@@ -117,7 +117,7 @@ Clear success criteria enable independent iteration. Narrow vague criteria like 
 
 ### 7. Documentation handoff
 
-Runs only after §6 design-content approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see HARD-GATE). This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming) — purpose/non-goals, chosen option, scope of changes, verification plan, confirmed decisions, remaining uncertainties.
+Runs only after §6 design-content approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see HARD-GATE). This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming).
 
 `mak:dev-kickoff` never loops draft-then-rewrite on the same document — write it once here; later steps only revise it (§8 self-review fixes, §9 user change requests).
 

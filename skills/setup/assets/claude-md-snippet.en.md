@@ -42,7 +42,7 @@ Classify work by size and risk first. The grade decides whether to enter `mak:de
 - `mak:commit` is not chained from the cycle — it is entered only on the user's explicit request (invoking the skill is the explicit commit request; other git ops such as push need their own explicit request).
 - Progress on multi-step work is recorded in the design doc's §5.0 `Step → verify` Status column — whoever implements the step (`mak:coder` or the main thread) advances it as each verify criterion passes, and `mak:dev-resume` reads that column on resume.
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
-- Never invoke `mak:coder` without an approved plan (simple work on explicit request is the exception). `mak:reviewer` and `mak:analyzer` report only and never modify what they inspect.
+- Never invoke `mak:coder` without an approved plan (simple work on explicit request is the exception). `mak:planner`, `mak:reviewer`, and `mak:auditor` are read-only; `mak:analyzer` writes documents, never code.
 - Design docs are written once, by the main thread. Editing/syncing existing Markdown documents is delegated to `mak:doc-editor`.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
 

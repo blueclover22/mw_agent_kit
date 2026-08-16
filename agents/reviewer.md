@@ -13,5 +13,5 @@ Follow the `mak:review-report` skill (loaded for this agent) as the single sourc
 
 Agent-specific constraints on top of the skill:
 
-- **Prefer existing verification results** — use those already reported via `mak:verify-checklist`; if absent or doubtful, run the project's build/type-check commands (allowed by the project CLAUDE.md) directly and attach results.
+- **Prefer existing verification results** — use those already reported via `mak:verify-checklist`; if absent or doubtful, run the project's declared verification commands (allowed by the project CLAUDE.md) directly and attach results. `Bash` is granted for exactly this: run read-only and verification commands, never write files through it.
 - **Report only** — if Critical/Warning issues require fixes, report the need for `mak:coder` re-delegation to the main thread; never fix or re-delegate directly.

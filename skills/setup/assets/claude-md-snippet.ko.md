@@ -42,7 +42,7 @@
 - `mak:commit` 은 주기가 자동으로 잇지 않는다 — 사용자 명시 요청 시에만 진입한다(skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 별도 명시 요청 시에만).
 - 다단계 작업의 진행 기록은 설계 문서 §5.0 `Step → verify` 표의 Status 열이다 — Step 이 verify 를 통과할 때마다 구현 주체(`mak:coder` 또는 메인)가 갱신하고, `mak:dev-resume` 이 재개 시 이 열을 읽는다.
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
-- 계획 승인 없이 `mak:coder` 를 호출하지 않는다 (단순 작업은 명시 요청 시 예외). `mak:reviewer` 와 `mak:analyzer` 는 보고만 하고 대상을 수정하지 않는다.
+- 계획 승인 없이 `mak:coder` 를 호출하지 않는다 (단순 작업은 명시 요청 시 예외). `mak:planner`·`mak:reviewer`·`mak:auditor` 는 읽기 전용이고, `mak:analyzer` 는 코드가 아닌 문서만 쓴다.
 - 설계 문서 집필은 메인 스레드가 한 번만 한다. 기존 Markdown 문서의 편집·동기화는 `mak:doc-editor` 로 위임한다.
 - 설계 문서는 `mak:design-doc-template` 의 경로 규칙(기본 `.claude/mak/plan/`)을 따른다.
 

@@ -21,13 +21,14 @@ Include:
 - Risks — security, data, migration, operations, regression
 - Decisions needed — questions the user must confirm, with recommended judgement rationale
 - Expected scope of changes — files, modules, documents
-- Verification strategy — build / type check / lint / tests / manual scenarios
+- Verification strategy — the project's declared verification commands (build / type check / lint / tests / manual scenarios where they apply)
 
 ## Principles
 
 - **Follow the kit's coding principles** — think before coding / simplicity first / precise changes / goal-driven execution (embedded as checklists in the mak skills). If the global or project CLAUDE.md defines its own Coding Rules, those take precedence.
 - **Read conventions before judging** — the project's convention documents (e.g. `docs/*.md`, README) and the relevant `CLAUDE.md` sections.
-- **Never modify anything** — read-only by design (no Write/Edit tools); never create or modify implementation code or document files.
+- **Never modify anything** — read-only by design (no Write/Edit tools). `WebFetch`/`WebSearch` are granted for
+  looking up external library, framework, and API documentation when the choice depends on it; findings belong in the Brief, never in a file.
 - **Never decide arbitrarily** — when a new choice arises or inputs contradict, return the list of needed decisions with recommended rationale to the main thread.
 - **Match project style** — write consistently with the project's `docs/`, `CLAUDE.md`, and existing design docs.
 - **Stay out of Trivial / Small work** — if the scope turns out small, report that proceeding without planner is fine.

@@ -30,7 +30,7 @@ This folder (`docs/`) is a **project documentation set template**. It defines th
 
 ---
 
-## 2. Workflow (project analysis)
+## 2. Workflow (project analysis — steps 1–3 may be delegated; step 4 stays with the main thread)
 
 Whether the project is new or existing, the essence of the work is the same — **analyze the source and transfer facts/conventions into documents.** Proceed in a single flow.
 
@@ -43,7 +43,7 @@ Whether the project is new or existing, the essence of the work is the same — 
    - **compact**: `09` (fact sheet — scope/stack/env first; its Current Structure links and Change Checklist depend on `02`/`03`/`10` and are finalized after those, not on this first pass) → `02` (architecture, incl. the call-chain trace from step 1) → `03` (coding rules) → `04` (framework) → `06` (UI) → `10` (build/ops) → `13` (roadmap).
    - **Feature domains** (project-specific features/subsystems such as payments · hw_interface · local_db) — copy `domains/_template.md` to `domains/<domain>-guide.md` and register it in §1 of `08.domains.md`. Do not assign numbers. (standard only — this step doesn't apply to compact.)
 3. **Update `13` when adding features or planning.** When first authoring the documentation set, do not fabricate a history of past work — write only the backlog and future consideration items still remaining.
-4. **Template cleanup (once, on application)** — after filling in content, **remove all template-only scaffolding** so only project documents remain:
+4. **Template cleanup (once, on application — the main thread performs this, never a delegated agent)** — after filling in content, **remove all template-only scaffolding** so only project documents remain:
    - The `> Template: …` notice block at the top of each document (a marker common to all documents). **However, `CLAUDE.md` (the writing guide) and `domains/_template.md` (the copy source for new domains) are scaffolds that remain in the project, so do not delete them.**
    - The INDEX's opening introduction block (`> This document is … template`, etc.) and the entire `## Template Usage Guide` section.
    - Unused domain examples (example rows in `08.domains.md`, etc. — standard only).
@@ -85,7 +85,7 @@ Whether the project is new or existing, the essence of the work is the same — 
 
 ---
 
-## 4. Completion Verification (check after documentation work)
+## 4. Completion Verification (the main thread checks this after documentation work)
 
 - [ ] Does the filled content not violate §Per-Topic SSOT (if the same content exists in two places, collapse one into a link)?
 - [ ] Do relative links within documents (`NN.xxx.md`) point to actual files (no broken links after number changes)?
