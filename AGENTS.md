@@ -2,7 +2,7 @@
 
 This repository IS the Claude Code plugin `mak` (repo root = plugin root; manifest at `.claude-plugin/plugin.json`). Everything is Markdown / JSON — no build, no tests.
 
-Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the reference rules and the full verification command set; this file restates the invariants you must not break and owns §Git. Run the complete checks from `CLAUDE.md` §Verification Commands.
+Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the reference rules and the always-run verification commands (plus the triggers for the conditional ones, whose procedures live in [docs/maintenance.md](docs/maintenance.md)); this file restates the invariants you must not break and owns §Git.
 
 ## Language policy
 
@@ -26,10 +26,8 @@ Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the r
 
 1. `claude plugin validate .`
 2. Consistency greps (must be zero hits): `~/.claude/skills` in skills/agents; `.claude/docs` in skills/agents; bare (unprefixed) skill/agent names in skills/agents; Korean residue outside the setup snippet
-3. On rule changes: local smoke — `claude plugin marketplace add <repo path>` → `claude plugin install mak@mw-agent-kit` → check skills/agents appear
-4. On setup/teardown changes: simulate inject → re-run → remove round-trip against a scratch file
-5. On adding/removing/rewiring a skill or agent: `CLAUDE.md` §Verification Commands 3 (graph connectivity — SINK/ORPHAN). This is the only check that catches a component nothing routes into
-6. On changes to `skills/reverse-engineering/assets/`: `CLAUDE.md` §Verification Commands 6 (compact-profile closure and `related_to` symmetry)
+
+Conditional checks (graph connectivity, local smoke, setup/teardown round-trip, compact-profile closure) live in [docs/maintenance.md](docs/maintenance.md) §Conditional Verification; `CLAUDE.md` §Verification Commands lists their triggers. Graph connectivity is the only check that catches a component nothing routes into — run it on every skill/agent add, remove, or rewire.
 
 ## Git
 
