@@ -17,7 +17,9 @@ Running this skill is the user's explicit "commit" instruction — for the commi
 
 Results are reported once, in the §5 report. Surface immediately only findings that need a user decision (split proposal, unverified proceed, suspected secret).
 
-- **Verification** — confirm the changes were verified (`mak:verify-checklist` results or the project's verify commands). Not verified and the project has a runtime surface → run them now with no auto-fix or formatter (build/type check, lint without `--fix`, tests), then re-check `git status` since builds and tests produce artifacts. On failure, either get explicit confirmation to proceed unverified, or stop and route the fix through the normal flow before re-entering this skill.
+- **Verification** — confirm the changes were verified (`mak:verify-checklist` results or the project's verify commands).
+  - Not verified, and the project declares verification commands (a CLAUDE.md/README §Verification Commands section, package/task-runner scripts, or similar — an actually declared run command, not merely a config file's existence; a runtime surface is not required) → run those commands as documented, with no auto-fix or formatter flags. Build/type check, lint, and tests are common examples, but run whatever the project declares — a docs-only project may declare a manifest validator and consistency greps instead. Then re-check `git status` since builds and tests produce artifacts. On failure, either get explicit confirmation to proceed unverified, or stop and route the fix through the normal flow before re-entering this skill.
+  - Not verified, and the project defines no verification commands → report this gap and the remaining verification blind spot to the user, and get explicit confirmation before proceeding unverified.
 - **Precise changes** — one purpose per commit. Unrelated changes mixed in → propose a split or leave them unstaged; never bundle silently.
 - **Hygiene** — exclude temp/junk files, logs, large binaries, and secrets. Never commit a suspected secret without asking, even if staged.
 
