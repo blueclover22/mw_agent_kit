@@ -116,7 +116,7 @@ The basic development flow:
 [opt] ① /mak:brainstorming ───── only when vague / multi-directional
    │ direction chosen
    ▼
-   ② /mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief
+   ② /mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief, read-only
    │ ⚑ Approval gate 1 — design content. No file is written before this
    ▼
    ③ /mak:design-doc-template ── design doc = the state between stages
@@ -133,7 +133,8 @@ The basic development flow:
                 ⑥ /mak:commit ── commit after the gates
                    other git ops each need their own explicit request
 
-[outside the cycle] /mak:doc-audit ── after a slice/phase, at a phase transition, or before handoff
+[outside the cycle] /mak:doc-audit ─▶ [delegate] mak:auditor — reports only, never edits
+                    after a slice/phase, at a phase transition, or before handoff
 ```
 
 - Symbols: `▼ │` default progression · `▶` agent delegation · `┊` a user gate that never advances on its own · `⚑` approval gate · `▲ └─` rework loop

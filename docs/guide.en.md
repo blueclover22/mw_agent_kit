@@ -72,7 +72,7 @@ Requirements received
 [opt] ① mak:brainstorming ───── only when vague / multi-directional
    │ direction chosen
    ▼
-   ② mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief
+   ② mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief, read-only
    │
    │ ⚑ Approval gate 1 — design content. No file is written before this
    ▼
@@ -92,8 +92,9 @@ Requirements received
                 ⑥ mak:commit ── commit after the gates (verification · precise changes · hygiene)
                    push/amend and other git ops each need their own explicit request
 
-[outside the cycle] mak:doc-audit ── right after a slice/phase completes, at a phase
-                    transition, or before handing off an unfinished session
+[outside the cycle] mak:doc-audit ─▶ [delegate] mak:auditor — reports only, never edits
+                    right after a slice/phase completes, at a phase transition,
+                    or before handing off an unfinished session
 ```
 
 > Symbols: `▼ │` default progression · `▶` agent delegation · `┊` a user gate that never advances on its own · `⚑` approval gate (impassable without user confirmation) · `▲ └─` rework loop

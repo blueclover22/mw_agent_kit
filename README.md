@@ -116,7 +116,7 @@ claude plugin uninstall mak@mw-agent-kit
 [선택] ① /mak:brainstorming ───── 막연하거나 방향이 여러 갈래일 때만
    │ 방향 선택
    ▼
-   ② /mak:dev-kickoff ─────────▶ [위임·선택] mak:planner — Architecture Brief
+   ② /mak:dev-kickoff ─────────▶ [위임·선택] mak:planner — Architecture Brief, 읽기 전용
    │ ⚑ 승인 게이트 1 — 설계 내용 승인. 승인 전에는 어떤 파일도 쓰지 않음
    ▼
    ③ /mak:design-doc-template ── 설계 문서 = 단계 간 상태 저장소
@@ -133,7 +133,8 @@ claude plugin uninstall mak@mw-agent-kit
                 ⑥ /mak:commit ── 게이트 통과 후 커밋
                    push 등 기타 git 명령은 각각 별도 명시 요청 시에만
 
-[주기 밖] /mak:doc-audit ── 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
+[주기 밖] /mak:doc-audit ─▶ [위임] mak:auditor — 보고만, 문서 수정 금지
+          슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
 ```
 
 - 기호: `▼ │` 기본 진행 · `▶` agent 위임 · `┊` 자동으로 이어지지 않는 사용자 게이트 · `⚑` 승인 게이트 · `▲ └─` 재작업 루프
