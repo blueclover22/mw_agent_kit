@@ -2,7 +2,7 @@
 
 This repository IS the Claude Code plugin `mak` (repo root = plugin root; manifest at `.claude-plugin/plugin.json`). Everything is Markdown / JSON — no build, no tests.
 
-Full development rules live in [CLAUDE.md](CLAUDE.md). The invariants below are the ones you must not break:
+Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the reference rules and the full verification command set; this file restates the invariants you must not break and owns §Git. Run the complete checks from `CLAUDE.md` §Verification Commands.
 
 ## Language policy
 
@@ -15,19 +15,21 @@ Full development rules live in [CLAUDE.md](CLAUDE.md). The invariants below are 
 
 - Cross-references between skills/agents always use the `mak:` prefix (`mak:dev-kickoff`), never bare names
 - Agent availability is phrased as "if the agent is in the available agent list", never as a `.claude/agents/*.md` file-existence check
-- The design-doc save-path rule has ONE home: `skills/design-doc-template/SKILL.md` §Save location (default `.claude/mak/plan/`). Everywhere else references that rule instead of hardcoding paths
-- The review procedure/report format has ONE home: `skills/review-report/SKILL.md`; `agents/reviewer.md` must not duplicate it
+- The design-doc save-path rule has ONE home: `skills/design-doc-template/SKILL.md` §Save location (default `.claude/mak/plan/`). Everywhere else attributes it to that rule rather than stating it independently
+- An agent that loads a companion skill via frontmatter `skills:` must not restate that skill's procedure or report format — point at it instead
 - The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en; skills/agents keep the "project/global Coding Rules take precedence" phrasing
 - Frontmatter `description` carries trigger conditions only (loaded into every session); detailed criteria go in the body. Agent descriptions are the exception — the orchestrator selects on that text, so capability/constraint wording stays
 - Use `${CLAUDE_PLUGIN_ROOT}` for referencing files inside the plugin
-- Adding or removing a skill/agent is a 6-point sync (handoff wiring, setup snippets ko/en, README ko/en, guide ko/en, `plugin.json`) — follow [docs/maintenance.md](docs/maintenance.md) §Adding or Removing a Skill / Agent. **This file intentionally carries no counts or component lists**, so it stays out of that sync
+- Adding or removing a skill/agent is a multi-file sync — follow [docs/maintenance.md](docs/maintenance.md) §Adding or Removing a Skill / Agent, which owns the point list. **This file intentionally carries no counts or component lists**, so it stays out of that sync
 
 ## Verification
 
 1. `claude plugin validate .`
-2. Consistency greps (must be zero hits): `~/.claude/skills` in skills/agents; `.claude/docs` in skills/agents; bare (unprefixed) kit-skill names in skills/agents
+2. Consistency greps (must be zero hits): `~/.claude/skills` in skills/agents; `.claude/docs` in skills/agents; bare (unprefixed) skill/agent names in skills/agents; Korean residue outside the setup snippet
 3. On rule changes: local smoke — `claude plugin marketplace add <repo path>` → `claude plugin install mak@mw-agent-kit` → check skills/agents appear
 4. On setup/teardown changes: simulate inject → re-run → remove round-trip against a scratch file
+5. On adding/removing/rewiring a skill or agent: `CLAUDE.md` §Verification Commands 3 (graph connectivity — SINK/ORPHAN). This is the only check that catches a component nothing routes into
+6. On changes to `skills/reverse-engineering/assets/`: `CLAUDE.md` §Verification Commands 6 (compact-profile closure and `related_to` symmetry)
 
 ## Git
 

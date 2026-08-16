@@ -18,7 +18,9 @@ The component inventory is mirrored across user-facing docs, so every add/remove
 | 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
 | 6 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |
 
-**Agent** — same minus the chain position: `agents/<name>.md` → snippet ko/en agent list → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `plugin.json` **and `.claude-plugin/marketplace.json`** (both descriptions enumerate the agents, so both drift when one is edited alone).
+**Agent** — same 6 points, and #4's ASCII flow diagram does apply: agents appear there not as numbered nodes but as `▶ delegate` annotations on the stage that delegates to them (see the `▶` legend). An agent on the main cycle must be added to or removed from all four diagrams (README ko/en + guide ko/en) together. Sync points: `agents/<name>.md` → **handoff wiring** (see below) → snippet ko/en agent list → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `plugin.json` **and `.claude-plugin/marketplace.json`** (both descriptions enumerate the agents, so both drift when one is edited alone).
+
+Handoff wiring applies to agents exactly as it does to skills — the `CLAUDE.md` §Verification Commands connectivity check runs `for f in skills/*/SKILL.md agents/*.md`, so a new agent that nothing mentions is an ORPHAN and one that mentions nobody is a SINK. The check sees mentions, not real handoffs — read the wiring yourself. Give every added agent at least one inbound reference from the skill or agent that delegates to it, and at least one outbound reference for where its findings go.
 
 Then run `CLAUDE.md` §Verification Commands plus:
 
