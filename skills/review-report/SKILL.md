@@ -14,14 +14,14 @@ Report template: `${CLAUDE_PLUGIN_ROOT}/skills/review-report/assets/review-repor
 
 - When an implementation stage (mak:coder or direct) is complete and results need review
 - When checking that the implementation matches the design doc
-- When a combined quality judgement including build/type-check/test results is needed
+- When a combined quality judgement including the project's verification results is needed
 
 ## Review Procedure
 
 1. **Read the design doc** — find the relevant design doc (per the `mak:design-doc-template` save-path rule, default `.claude/mak/plan/`) and note its §Scope of Changes and §Verification Plan
 2. **Read convention docs** — the project's convention documents (e.g. `docs/*.md`, README) and the relevant sections of `CLAUDE.md`
 3. **Compare the implementation** — read the files in the design doc's scope and confirm they match the design intent
-4. **Check build/type-check results** — prefer the verification results reported via `mak:verify-checklist`; if absent or doubtful, run the project's build/type-check commands directly and attach results
+4. **Check verification results** — prefer those reported via `mak:verify-checklist`; if absent or doubtful, run the project's declared verification commands directly and attach results
 5. **Check coding principles** — look for violations of the kit's coding principles (Simplicity / Precise Changes — the Warning checklist below). If the project defines its own Coding Rules, check those as well
 6. **Write the report** — classify issues by severity and output
 
@@ -33,8 +33,6 @@ Report template: `${CLAUDE_PLUGIN_ROOT}/skills/review-report/assets/review-repor
 | 🟡 Warning | Code-quality issues, naming inconsistency, unnecessary changes, incomplete features | Fix recommended; prioritize and decide |
 | 🟢 Pass | Implemented as designed; verification passed | Nothing notable |
 | 📝 Note | Potential issues found outside **this review's** scope; future improvement ideas | Do not fix; record as separate issues |
-
-The dividing line is **whether what exists is wrong**, not whether it falls outside **the design's** scope. Work that is merely unfinished or unrequested is 🟡, however far it sits from the design; a wrong behavior or a broken contract is 🔴 even inside the design's scope.
 
 ### Warning Checklist
 
@@ -57,7 +55,7 @@ Pre-existing unused code (outside this review's scope) goes to 📝 Note and is 
 
 - The reviewer reports only and never modifies code directly
 - Record findings outside this review's scope only under 📝 Note; do not unilaterally decide to expand scope. If Critical or Warning issues exist, report to the main thread that re-delegation to `mak:coder` is needed — do not re-delegate directly
-- If build/test results could not be verified directly, state "could not run directly — based on coder's report"
+- If the verification results could not be confirmed directly, state "could not run directly — based on coder's report"
 - Distinguish "no issues" from "could not verify"
 - After a slice/stage completion review, hand off to `mak:doc-audit` to check whether other documents referencing this change still hold
 

@@ -11,7 +11,7 @@ After completing any implementation step, verify in the order below before repor
 
 ## Verification Order
 
-> **Priority rule**: if the project's CLAUDE.md or README specifies verification commands, use those first. The order and example commands below are defaults.
+> **Priority rule**: if the project declares verification commands — a CLAUDE.md/README §Verification Commands section, package/task-runner scripts, or similar; an actually declared run command, not merely a config file's existence — use those first. The order and example commands below are defaults.
 
 ### ① Build / Type Check
 
@@ -76,7 +76,7 @@ Only applies when UI or user interaction changed.
 
 ## On Failure
 
-Numbers here name the **check type**, not a fixed row position — when a project's own commands replaced the default steps, match each failure to the closest type below.
+Numbers name the **check type**, not a row position. A project command that matches one of these types follows its row; one that matches none (a manifest validator, a security scan) follows the general rule — find the cause, fix within the changed files, re-run that check.
 
 | Step | Action on failure |
 | :--- | :--- |
@@ -127,16 +127,16 @@ Ask yourself the following before writing the verification report. Clean up simp
 
 ## Report Format
 
-After verification, report in this format (render headings in the user's language). The first table records **what was actually run** — when the project declares its own verification commands (§Verification Order priority rule), report those in place of the default rows rather than forcing them into this shape. Drop a row only when that check genuinely does not exist for this project; a check that applies but failed or could not be run stays in the table, marked as such.
+After verification, report in this format (render headings in the user's language). The first table records **every check that applies and whether it ran** — when the project declares its own verification commands (§Verification Order priority rule), report those in place of the default rows. Drop a row only when that check does not exist for this project.
 
 ```
 ## Verification Results
 
 | Step | Command | Result |
 | :--- | :--- | :--- |
-| ① Build/type check | `<command run>` | ✅ pass / ❌ fail |
-| ② Lint | `<command run>` | ✅ pass / ❌ fail |
-| ③ Unit tests | `<command run>` | ✅ pass / ❌ fail |
+| ① Build/type check | `<command run>` | ✅ pass / ❌ fail / ⏭ not run |
+| ② Lint | `<command run>` | ✅ pass / ❌ fail / ⏭ not run |
+| ③ Unit tests | `<command run>` | ✅ pass / ❌ fail / ⏭ not run |
 | ④ Format | `<command run>` | ✅ pass / ⏭ skipped |
 | ⑤ Manual scenario | — | ✅ confirmed / ⚠️ not verifiable |
 
