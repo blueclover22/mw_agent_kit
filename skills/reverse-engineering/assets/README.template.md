@@ -77,7 +77,7 @@ cp <env-example> <env-file>    # e.g. cp .env.example .env  (native Windows: Cop
 | Format | `<format-cmd>` |
 | Build | `<build-cmd>` |
 
-> For verification pipeline details and CI entry points see [`docs/10.build-ops-guide.md`](docs/10.build-ops-guide.md); for test conventions see [`docs/11.test-guide.md`](docs/11.test-guide.md).
+> For verification pipeline details, CI entry points, and test conventions see [`docs/10.build-ops-guide.md`](docs/10.build-ops-guide.md).
 
 ---
 
