@@ -29,10 +29,12 @@ Report template: `${CLAUDE_PLUGIN_ROOT}/skills/review-report/assets/review-repor
 
 | Grade | Criteria | Action |
 | :--- | :--- | :--- |
-| 🔴 Critical | Build failure, type error, test failure, design-scope violation, security vulnerability | Must fix, then re-review |
+| 🔴 Critical | Build failure, type error, test failure, security vulnerability, implementation that contradicts the approved design's behavior or breaks a data contract | Must fix, then re-review |
 | 🟡 Warning | Code-quality issues, naming inconsistency, unnecessary changes, incomplete features | Fix recommended; prioritize and decide |
 | 🟢 Pass | Implemented as designed; verification passed | Nothing notable |
 | 📝 Note | Potential issues found outside scope; future improvement ideas | Do not fix; record as separate issues |
+
+The dividing line is **whether what exists is wrong**, not whether it is out of scope. Work that is merely unfinished or unrequested is 🟡, however far it sits from the design; a wrong behavior or a broken contract is 🔴 even inside the design's scope.
 
 ### Warning Checklist
 

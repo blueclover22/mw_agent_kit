@@ -70,7 +70,7 @@ Write two blocks:
 ### 3. Set phase boundaries
 
 Split phases by dependency, risk, and scope.
-Present 2–3 options in a comparison table with a recommendation.
+Present 2–3 options in a comparison table with a recommendation. If hard constraints (fixed dependency order, a single viable phase boundary, etc.) leave only one real split, state the constraint and proceed with a single option. Do not fabricate alternative splits.
 
 | Option | Phase split approach | Pros | Cons |
 | :--- | :--- | :--- | :--- |

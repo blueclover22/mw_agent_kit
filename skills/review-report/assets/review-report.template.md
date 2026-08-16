@@ -28,7 +28,8 @@
 
 #### 🔴 Critical
 
-<!-- Build failure, type error, test failure, design-scope violation, security vulnerability -->
+<!-- Build failure, type error, test failure, security vulnerability, implementation that contradicts the approved design's behavior or breaks a data contract -->
+<!-- Merely unfinished or unrequested work is Warning, not Critical -->
 <!-- If none: "None" -->
 
 - **[`{{file name}}:{{line}}`]** {{problem description}}

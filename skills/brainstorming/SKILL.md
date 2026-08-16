@@ -5,7 +5,7 @@ description: Use when requirements are vague or multiple approaches are possible
 
 # Idea Divergence — Expanding the Possibility Space
 
-This skill is responsible for **divergence (expand)**. Convergence — evaluating and selecting ideas — and design-doc writing belong to the follow-up skills (`mak:dev-kickoff`, `mak:design-doc-template`).
+This skill is responsible for **divergence (expand) plus light ranking** — pouring out candidates, then a quick evaluation and top-pick recommendation to close out the divergence stage. Detailed requirements convergence and design-doc writing belong to the follow-up skills (`mak:dev-kickoff`, `mak:design-doc-template`).
 
 Write all user-facing output in the user's conversation language (or the project's documented language policy).
 

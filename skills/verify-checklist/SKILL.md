@@ -79,7 +79,7 @@ Only applies when UI or user interaction changed.
 | Step | Action on failure |
 | :--- | :--- |
 | ① Build/type errors | Read the full error log, fix, re-run from ① |
-| ② Lint errors | Auto-fix if available (`--fix` etc.); otherwise fix manually and re-run |
+| ② Lint errors | Run lint without auto-fix first to see the actual error set; then fix, scoped to the changed files only (auto-fix included), and re-run |
 | ③ Test failures | Analyze the failing case and message; decide whether the implementation or the test is wrong, then fix |
 | ④ Format errors | Run the format command, inspect changed files; report any unintended changes |
 | ⑤ Manual scenario | Record the deviation concretely, fix, re-verify |
