@@ -16,7 +16,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 - No dependency on a specific language, framework, or build tool
 - With the agents (mak:planner/coder/reviewer/doc-editor/analyzer/auditor) available, skills are used through delegation; where delegation isn't possible, the skills alone reproduce the same flow
 - The coding principles (think before coding / simplicity first / precise changes / goal-driven execution) are defined in §2.2 of this guide and enforced inside skills as self-checks and gates. If you define your own §Coding Rules in the global/project CLAUDE.md, those take precedence
-- `/mak:setup` installs the Workflow task grades, the coding-principle mapping (a copy of §2.2), and the mak delegation rules as a marker block in `~/.claude/CLAUDE.md` (personal rules are never touched)
+- `/mak:setup` installs the Workflow task grades, the coding-principle mapping (a copy of §2.2), and the mak delegation rules (including the user's advance request for autonomous subagent delegation) as a marker block in `~/.claude/CLAUDE.md` (personal rules are never touched)
 
 ## 2. Skill Overview
 
@@ -46,6 +46,8 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 | **Small** | Small-impact, easily reversible bug fixes / minor behavior changes | Share brief change intent + verification method, then proceed. Usually skip `mak:dev-kickoff` (keep bug reproduction/verification) |
 | **Non-trivial** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
 | **Risky** | Data model, dependencies, security, deployment, migration, multi-module impact | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
+
+> Declare the grade in one line before starting — e.g. `[Non-trivial] → mak:dev-kickoff`. The block installed by `/mak:setup` carries that declaration rule and the per-request-type entry-point routing.
 
 ### 2.2 Coding-Principle Mapping (SSOT for the kit's coding principles)
 
@@ -156,14 +158,16 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 | Situation | Behavior |
 | :--- | :--- |
 | `mak:planner` available | For Non-trivial/Risky work the main thread hands over scope and requests an Architecture Brief. Planner reports options/recommendation/risks/decisions-needed. Read-only, so it never writes documents; it never questions the user or finalizes decisions |
-| `mak:coder` available | Implementation delegated after design approval. Trivial/Small may skip the design doc on explicit request |
-| `mak:reviewer` available | Review delegated on stage completion. Reports only; never edits code |
+| `mak:coder` available | Trivial / Small may be delegated without an approved plan; Non-trivial and above only after design approval |
+| `mak:reviewer` available | Review delegated on stage completion, and for every change `mak:coder` made — the main thread never read that code itself. Reports only; never edits code |
 | `mak:doc-editor` available | Doc sync delegated after feature completion |
 | `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |
 | `mak:auditor` available | `mak:doc-audit` audits delegated to it. Loads that skill as a companion, so the checklist/report format don't need to be re-transmitted. Report-only; never edits the audited documents |
 | Delegation unavailable | The main thread runs the skill's procedure directly — the in-skill self-check gates enforce the coding principles (§2.2) |
 
-**Delegation principles**: stages requiring conversation (requirements convergence, option approval, design gates) stay in the main thread (subagents can't talk to the user). Never invoke `mak:coder` without an approved plan. `mak:reviewer` is not proactively auto-invoked.
+**Delegation principles**: stages requiring conversation (requirements convergence, option approval, design gates) stay in the main thread (subagents can't talk to the user). Never invoke `mak:coder` without an approved plan. `mak:reviewer` is not auto-invoked on generic words like "check".
+
+**Parallel delegation**: investigation-only delegations are invoked concurrently when their **investigation scopes** are disjoint; writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`) when their **write targets** are. The main thread always merges the results. The SSOT for the detailed conditions is the mak delegation rules installed by `/mak:setup`.
 
 ## 7. Template Customization
 

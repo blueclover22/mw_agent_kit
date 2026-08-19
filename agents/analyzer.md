@@ -1,6 +1,6 @@
 ---
 name: analyzer
-description: Use for the analysis/documentation stage of mak:reverse-engineering — a non-interactive codebase analyst that reads the target project's source and fills the copied doc set (docs/) with observed facts. Documents only — never modifies source code. Also usable on explicit request for a standalone codebase-analysis report, including judging whether documented behavior matches the code. Not for design decisions (mak:planner), code changes (mak:coder), editing polish of existing docs (mak:doc-editor), or a mak:doc-audit cross-document consistency audit (mak:auditor).
+description: Use during mak:reverse-engineering to read source and fill the assigned copied docs/ set with observed facts, or on explicit request for a standalone codebase-analysis or code-vs-doc report. Non-interactive; writes documents, never source code. Not for design (mak:planner), code changes (mak:coder), doc polish (mak:doc-editor), or cross-document audits (mak:auditor).
 model: opus
 tools: Read, Grep, Glob, Write, Edit
 ---

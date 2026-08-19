@@ -1,6 +1,6 @@
 ---
 name: dev-resume
-description: Use on explicit user invocation when resuming or taking over work and the next concrete task itself is undecided. Not for an already-decided task (mak:dev-kickoff), a project with no documents yet (mak:reverse-engineering), or document-to-document consistency auditing (mak:doc-audit).
+description: Use only on explicit request to resume or take over work when the next task is undecided. Use mak:dev-kickoff for a decided task, mak:reverse-engineering when project docs are absent, and mak:doc-audit for document-consistency audits.
 ---
 
 # mak:dev-resume — Work Re-Entry Point

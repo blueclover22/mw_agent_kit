@@ -1,6 +1,6 @@
 ---
 name: commit
-description: Wrap up completed work with a git commit — invoke when the current changes should be committed. Covers the commit only; push, amend, and rebase each need their own explicit request.
+description: Use when the user explicitly asks to commit the current changes. Push, amend, and rebase require separate explicit requests.
 ---
 
 # mak:commit — Work Wrap-Up and Commit

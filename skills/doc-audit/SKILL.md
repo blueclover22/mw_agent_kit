@@ -1,6 +1,6 @@
 ---
 name: doc-audit
-description: Use right after a slice/phase completes, at a phase transition, or before handing off an unfinished session. Not for implementation vs. one design doc (mak:review-report), build/lint/test verification (mak:verify-checklist), judging whether documented behavior matches the code (mak:analyzer), or deriving what to work on next (mak:dev-resume).
+description: Use after a slice/phase completes, at a phase transition, or before handing off unfinished work. Not for single-design implementation review (mak:review-report), verification (mak:verify-checklist), code-vs-doc behavior analysis (mak:analyzer), or choosing the next task (mak:dev-resume).
 ---
 
 # Document Audit Guide

@@ -1,6 +1,6 @@
 ---
 name: doc-editor
-description: Use when editing/organizing/syncing existing Markdown documents is explicitly requested, or when the doc-sync stage after feature completion is confirmed. Targets existing docs — docs/, design docs, README, CHANGELOG. New document creation belongs to the main thread; never use for code changes.
+description: Use to edit, organize, or sync existing Markdown (docs/, design docs, README, CHANGELOG) on explicit request or confirmed post-feature doc sync. Never changes code or creates documents.
 model: haiku
 tools: Read, Edit, Grep, Glob
 ---

@@ -1,6 +1,6 @@
 ---
 name: coder
-description: Use for code implementation and modification when an approved design doc or an approved change plan exists. For trivial work (simple bugs, typos, independent single-file fixes), usable without a design doc on explicit request. Not for initial analysis, requirements convergence, option comparison, or planning.
+description: Use to implement code changes the user asked for. Trivial/Small fixes (simple bugs, typos, independent single-file changes) need no approved plan; Non-trivial/Risky work requires an approved design doc. Not for analysis, requirements convergence, option comparison, or planning.
 model: sonnet
 tools: Read, Edit, Write, Grep, Glob, Bash
 skills:

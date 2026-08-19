@@ -1,6 +1,6 @@
 ---
 name: review-report
-description: Use when reviewing implementation results and writing the review report — code review, design-conformance checks, and stage-completion checks. This skill is the single source of truth for the review procedure and report format used by the mak:reviewer agent.
+description: Use when asked to review or critique finished implementation work ("review this", "code review", "look at the PR"), or when a completed stage needs checking against its design doc.
 ---
 
 # Review Report Guide

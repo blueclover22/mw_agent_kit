@@ -1,6 +1,6 @@
 ---
 name: design-doc-template
-description: Use to fix an approved or sufficiently converged design into the standard design-doc format. Provides section structure, the save-location rule (single source of truth for all mak skills/agents), and writing rules. Requirements convergence, direction exploration, and approval gates belong to mak:dev-kickoff.
+description: Use when asked to record an approved or sufficiently converged design in the standard design-doc format. Use mak:dev-kickoff first if requirements or approval remain unresolved.
 ---
 
 # Design Doc Writing Guide

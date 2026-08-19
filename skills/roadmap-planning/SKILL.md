@@ -1,6 +1,6 @@
 ---
 name: roadmap-planning
-description: Use to design or periodically update the project-wide development roadmap (phase structure, priorities, status tracking). Applies to mid/long-term direction across multiple phases, not single-feature design — use mak:dev-kickoff for single features.
+description: Use to create or update a project-wide, multi-phase roadmap, including priorities and status. For a single feature or phase, use mak:dev-kickoff.
 ---
 
 # Project Roadmap Design & Maintenance Guide

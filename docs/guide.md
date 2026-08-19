@@ -16,7 +16,7 @@
 - 특정 언어, 프레임워크, 빌드 도구에 종속되지 않는다
 - agent(mak:planner/coder/reviewer/doc-editor/analyzer/auditor)가 있으면 각 skill 을 위임 형태로 활용하고, agent 위임이 어려운 환경에서도 skill 만으로 동일한 흐름을 수행할 수 있다
 - 코딩 원칙(코딩하기 전에 생각하기 / 단순함이 최우선 / 정밀한 수정 / 목표 중심적 실행)은 본 가이드 §2.2 에 정의되며, 각 skill 절차 안에 자가 점검·게이트로 녹아 있다. 사용자가 전역/프로젝트 CLAUDE.md 에 자체 §Coding Rules 를 두면 그것이 우선한다
-- `/mak:setup` 은 Workflow 작업 등급·코딩 원칙 매핑(§2.2 사본)·mak 위임 규칙을 `~/.claude/CLAUDE.md` 마커 블록으로 설치한다 (개인 규칙은 건드리지 않음)
+- `/mak:setup` 은 Workflow 작업 등급·코딩 원칙 매핑(§2.2 사본)·mak 위임 규칙(subagent 자율 위임 사전 요청 포함)을 `~/.claude/CLAUDE.md` 마커 블록으로 설치한다 (개인 규칙은 건드리지 않음)
 
 ## 2. 각 skill 개요
 
@@ -46,6 +46,8 @@
 | **Small** | 영향 범위가 작고 되돌리기 쉬운 버그 수정·소규모 동작 변경 | 짧은 변경 의도와 검증 방법을 공유한 뒤 진행. 보통 `mak:dev-kickoff` 생략 (버그는 재현·검증 유지) |
 | **Non-trivial** | 여러 파일·모듈 영향, 새 기능·컴포넌트, 구조 선택이 필요한 변경 | `mak:dev-kickoff` 로 착수. 기존 구조가 복잡하거나 선택지가 갈리면 `mak:planner` Architecture Brief 요청 |
 | **Risky** | 데이터 모델·의존성·보안·배포·마이그레이션·다중 모듈 영향 | `mak:dev-kickoff` + `mak:planner` Architecture Brief 원칙적 사용 |
+
+> 착수 전에 등급을 한 줄로 선언한다 — 예: `[Non-trivial] → mak:dev-kickoff`. `/mak:setup` 이 설치하는 블록이 이 선언과 요청 유형별 진입점 라우팅을 규칙으로 담고 있다.
 
 ### 2.2 코딩 원칙 매핑 (kit 코딩 원칙의 SSOT)
 
@@ -155,14 +157,16 @@ claude plugin install mak@mw-agent-kit
 | 상황 | 동작 방식 |
 | :--- | :--- |
 | `mak:planner` 사용 가능 | Non-trivial / Risky 작업에서 메인 스레드가 범위를 넘겨 Architecture Brief 를 요청. planner 는 옵션·권장안·리스크·결정 필요 사항을 보고한다. 읽기 전용이라 문서를 쓰지 않으며, 사용자에게 질문하거나 결정을 확정하지 않는다 |
-| `mak:coder` 사용 가능 | 설계 승인 후 구현 위임. Trivial / Small 은 명시 요청 시 설계 문서 없이 위임 가능 |
-| `mak:reviewer` 사용 가능 | 단계 완료 후 검토 위임. 보고만 하고 코드 수정 금지 |
+| `mak:coder` 사용 가능 | Trivial / Small 은 계획 승인 없이 위임 가능, Non-trivial 이상은 설계 승인 후 위임 |
+| `mak:reviewer` 사용 가능 | 단계 완료 시, 그리고 `mak:coder` 가 수행한 변경에 대해 검토 위임 — 메인이 직접 읽지 않은 코드이기 때문. 보고만 하고 코드 수정 금지 |
 | `mak:doc-editor` 사용 가능 | 기능 완료 후 기존 문서 동기화 위임 |
 | `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고도 수행. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
 | `mak:auditor` 사용 가능 | `mak:doc-audit` 감사를 위임. 이 skill 을 companion 으로 로드해 체크리스트·보고 형식 재전달이 불필요하다. 보고만 하고 감사 대상 문서를 편집하지 않는다 |
 | agent 위임 불가 환경 | 해당 skill 의 절차를 메인이 직접 수행 — skill 내부 자가 점검 게이트가 코딩 원칙(§2.2)을 강제 |
 
-**위임 원칙**: 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다(subagent 는 사용자와 대화 불가). 계획 승인 없이 `mak:coder` 를 호출하지 않는다. `mak:reviewer` 는 proactive 자동 호출 대상이 아니다.
+**위임 원칙**: 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다(subagent 는 사용자와 대화 불가). 계획 승인 없이 `mak:coder` 를 호출하지 않는다. `mak:reviewer` 는 "확인해줘" 같은 일반 단어에는 자동 호출하지 않는다.
+
+**병렬 위임**: 조사 전용 위임은 **조사 범위**가, 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`)은 **쓰기 대상**이 겹치지 않을 때만 동시에 호출하고, 결과 취합은 언제나 메인이 한다. 세부 조건의 SSOT 는 `/mak:setup` 이 설치하는 블록의 mak 위임 규칙이다.
 
 ## 7. 템플릿 커스터마이징
 

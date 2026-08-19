@@ -1,6 +1,6 @@
 ---
 name: brainstorming
-description: Use when requirements are vague or multiple approaches are possible — diverge and explore ideas before narrowing candidates, ahead of concrete design. If the direction is already decided, use mak:dev-kickoff instead.
+description: Use when the user lacks a settled direction and asks what to build or how to approach it ("what are the options", "any ideas", "how should we approach this"). If direction is settled, use mak:dev-kickoff.
 ---
 
 # Idea Divergence — Expanding the Possibility Space

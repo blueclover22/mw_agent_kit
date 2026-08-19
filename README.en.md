@@ -36,7 +36,7 @@ Then, **inside a Claude Code session**, install the common rules once:
 /mak:setup
 ```
 
-This adds the Workflow task grades, the coding-principle mapping, and the mak delegation rules to `~/.claude/CLAUDE.md` as a marker block (`<!-- mak:begin -->` … `<!-- mak:end -->`). The rules are installed **in your conversation language** (Korean/English, auto-detected; override with `/mak:setup ko` or `/mak:setup en`). Re-running updates only the block; content outside the markers (your personal rules) is never touched.
+This adds the Workflow task grades, the coding-principle mapping, and the mak delegation rules to `~/.claude/CLAUDE.md` as a marker block (`<!-- mak:begin -->` … `<!-- mak:end -->`). The rules are installed **in your conversation language** (Korean/English, auto-detected; override with `/mak:setup ko` or `/mak:setup en`). Re-running updates only the block; content outside the markers (your personal rules) is never touched. The block includes a line carrying the user's **advance request for autonomous subagent delegation** within the mak flow — if you don't want that, `/mak:teardown` removes the whole block (there is no way to drop just that line).
 
 ## 2. Update
 

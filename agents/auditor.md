@@ -1,6 +1,6 @@
 ---
 name: auditor
-description: Use for a mak:doc-audit cross-document consistency audit — checks design docs, the roadmap, and the permanent doc set against each other and against whether the code paths/symbols they cite still exist. Report-only, never edits the documents under audit. Not for implementation-vs.-one-design-doc review (mak:reviewer), build/lint/test verification (mak:verify-checklist), or judging whether documented behavior matches the code (mak:analyzer).
+description: Use for mak:doc-audit cross-document consistency checks across design docs, the roadmap, and permanent docs, including cited path/symbol existence. Report-only; never edits audited docs. Not for implementation review (mak:reviewer), verification (mak:verify-checklist), or code-vs-doc behavior analysis (mak:analyzer).
 model: opus
 tools: Read, Grep, Glob
 skills:

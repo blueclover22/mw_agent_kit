@@ -36,7 +36,7 @@ claude plugin install mak@mw-agent-kit
 /mak:setup
 ```
 
-`~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 규칙이 마커 블록(`<!-- mak:begin -->` … `<!-- mak:end -->`)으로 추가됩니다. 규칙은 **대화 언어에 맞춰 한국어/영어 버전이 자동 선택**되며(`/mak:setup ko` 또는 `/mak:setup en` 으로 지정 가능), 재실행하면 블록만 갱신되고 마커 밖의 기존 내용(개인 규칙 등)은 건드리지 않습니다.
+`~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 규칙이 마커 블록(`<!-- mak:begin -->` … `<!-- mak:end -->`)으로 추가됩니다. 규칙은 **대화 언어에 맞춰 한국어/영어 버전이 자동 선택**되며(`/mak:setup ko` 또는 `/mak:setup en` 으로 지정 가능), 재실행하면 블록만 갱신되고 마커 밖의 기존 내용(개인 규칙 등)은 건드리지 않습니다. 이 블록에는 mak 흐름에서의 **subagent 자율 위임을 사전 요청**하는 문장이 포함됩니다 — 원치 않으면 `/mak:teardown` 으로 블록 전체를 제거하세요(그 문장만 빼는 수단은 없습니다).
 
 ## 2. 업데이트
 

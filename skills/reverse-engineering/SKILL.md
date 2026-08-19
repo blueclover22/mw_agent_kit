@@ -1,6 +1,6 @@
 ---
 name: reverse-engineering
-description: Copy the bundled project-docs template set into the current project's docs/ and reverse-engineer the codebase into it — call-chain analysis first, then foundation/domain/operations docs. Starts on the compact profile (8 docs) by default; standard (14 docs + domains/) when the project warrants it. Also usable to bootstrap the doc set for a brand-new project.
+description: Use when asked to bootstrap a project's docs/ set or reverse-engineer an existing codebase into that set; also supports brand-new projects.
 ---
 
 # mak:reverse-engineering — Project Analysis into the Standard Doc Set
@@ -48,6 +48,8 @@ Templates are in English. Fill content in the user's language (or the project's 
 Follow `docs/CLAUDE.md` §2 (single flow, profile-specific fill order — SSOT there, not restated here; feature domains go to `domains/<domain>-guide.md` via `_template.md`; `13` gets only future backlog, never reconstructed history).
 
 **Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches, following `docs/CLAUDE.md` §2's profile-specific order. Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, and the output language. Keep interactive decisions (profile choice, overwrite confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (e.g. `00.INDEX.md` tables, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
+
+Batches may be delegated in parallel, but only after the profile order and cross-document dependencies are respected, only among batches that have no dependency on each other, and only when their assigned document sets do not overlap — two batches writing the same document collide.
 
 Hard rules while filling (SSOT: `docs/CLAUDE.md` §1):
 

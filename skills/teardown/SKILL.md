@@ -1,6 +1,6 @@
 ---
 name: teardown
-description: Remove the mak-managed rules block from ~/.claude/CLAUDE.md, restoring it to its pre-setup state. Run before uninstalling the mak plugin (plugins have no uninstall hook, so this must be run manually).
+description: Use when asked to remove the mak-managed rules block from ~/.claude/CLAUDE.md, especially before uninstalling the plugin.
 ---
 
 # mak:teardown — Remove the mak Block from the Global CLAUDE.md

@@ -1,6 +1,6 @@
 ---
 name: setup
-description: Install the mak common rules (workflow task grades, coding-principle mapping, delegation rules) into ~/.claude/CLAUDE.md as a managed marker block, in the user's language (Korean/English). Safe to re-run — updates the block in place; re-running can also switch the language. Optional argument `ko` or `en` overrides language detection.
+description: Use when asked to install or update the mak common rules in ~/.claude/CLAUDE.md, optionally in Korean (ko) or English (en).
 ---
 
 # mak:setup — Install Common Rules into the Global CLAUDE.md

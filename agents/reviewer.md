@@ -1,6 +1,6 @@
 ---
 name: reviewer
-description: Use when an implementation stage is complete and the code needs review against the design doc and coding conventions, or right after a mak:coder implementation. Invoke on explicit implementation-review requests like "code review", "PR review", "review the implementation". Do not invoke proactively on generic words like "check", "verify", "review the docs". Reports only — never modifies code.
+description: Use after implementation or mak:coder when code needs review against its design doc/conventions, or on explicit requests ("code review", "PR review", "review the implementation"). Report-only; never modifies code. Do not use for generic "check", verification, or document review.
 model: opus
 tools: Read, Grep, Glob, Bash
 skills:
