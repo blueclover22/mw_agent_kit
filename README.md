@@ -81,7 +81,7 @@ claude plugin uninstall mak@mw-agent-kit
 | skill | 역할 |
 | :--- | :--- |
 | `/mak:brainstorming` | 요구사항이 막연할 때 아이디어 발산 (구현 금지 게이트) |
-| `/mak:dev-kickoff` | Non-trivial 작업 착수 — 요구사항 수렴·옵션 제안·승인 게이트 |
+| `/mak:dev-kickoff` | Standard / Risky 작업 착수 — 요구사항 수렴·옵션 제안·승인 게이트 |
 | `/mak:dev-resume` | 다음 작업 자체가 미정일 때 문서에서 근거와 함께 도출하는 재진입점 (읽기·보고 전용) |
 | `/mak:design-doc-template` | 설계 문서 규격·저장 경로 규칙(SSOT)·스켈레톤 |
 | `/mak:roadmap-planning` | 프로젝트 전체 Phase 구조·상태 추적 (상위 축) |

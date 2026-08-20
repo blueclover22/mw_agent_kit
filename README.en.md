@@ -81,7 +81,7 @@ claude plugin uninstall mak@mw-agent-kit
 | Skill | Role |
 | :--- | :--- |
 | `/mak:brainstorming` | Idea divergence when requirements are vague (no-implementation gate) |
-| `/mak:dev-kickoff` | Kickoff for non-trivial work — requirements convergence, options, approval gate |
+| `/mak:dev-kickoff` | Kickoff for Standard / Risky work — requirements convergence, options, approval gate |
 | `/mak:dev-resume` | Re-entry point that derives the next task from documents, with evidence, when it isn't decided yet (read/report only) |
 | `/mak:design-doc-template` | Design-doc format, save-location rule (SSOT), skeleton |
 | `/mak:roadmap-planning` | Project-wide phase structure and status tracking (top-level axis) |

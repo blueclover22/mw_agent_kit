@@ -10,12 +10,12 @@
 | :--- | :--- | :--- |
 | **Trivial** | Typos, formatting, comments, one-liners, obvious independent single-file fixes | Read the existing file and fix directly — no design doc or approval gate. Use `mak:coder` if desired |
 | **Small** | Small-impact, easily reversible bug fixes / minor behavior changes | Share brief change intent + verification method, then proceed. Usually skip `mak:dev-kickoff` (keep bug reproduction/verification) |
-| **Non-trivial** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
-| **Risky** | Data model, dependencies, security, deployment, migration, multi-module impact | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
+| **Standard** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
+| **Risky** | Data model, dependencies, security, deployment, migration | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
 
-- On receiving a development request, declare the grade in one line before starting — e.g. `[Non-trivial] → mak:dev-kickoff`. Never enter implementation without that declaration
-- When the grade is unclear, judge by impact — single file / few lines with no change to public interfaces, data shapes, or dependencies → Trivial / Small; spanning 2+ files/modules or changing interfaces, data models, dependencies, or security → Non-trivial or above
-- Non-trivial / Risky: write an analysis/design plan and get user approval before implementation — never implement before approval
+- On receiving a development request, declare the grade in one line before starting — e.g. `[Standard] → mak:dev-kickoff`. Never enter implementation without that declaration
+- When the grade is unclear, judge by impact — single file / few lines with no change to public interfaces, data shapes, or dependencies → Trivial / Small; spanning 2+ files/modules or changing interfaces, data models, dependencies, or security → Standard or above
+- Standard / Risky: write an analysis/design plan and get user approval before implementation — never implement before approval
 - When planning or designing, understand the related code and existing patterns first, and present options, trade-offs, and a recommendation for anything requiring a choice or approval
 - If scope spreads across multiple files/modules mid-work, upgrade the grade and switch to `mak:dev-kickoff`
 - Documents produced through the mak flow are **written in the user's conversation language**, regardless of the templates' language. A language policy stated in the project's rule documents takes precedence
@@ -53,7 +53,7 @@ The user who installed this block has **requested subagent use in advance** as a
 - `mak:commit` is not chained from the cycle — it is entered only on the user's explicit request (invoking the skill is the explicit commit request; other git ops such as push need their own explicit request).
 - Progress on multi-step work is recorded in the design doc's §5.0 `Step → verify` Status column — whoever implements the step advances it as each verify criterion passes
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
-- Trivial / Small work may be delegated to `mak:coder` without an approved plan; Non-trivial and above only after design approval. Whatever the grade, changes made by `mak:coder` go through `mak:review-report` once `mak:verify-checklist` passes.
+- Trivial / Small work may be delegated to `mak:coder` without an approved plan; Standard and above only after design approval. Whatever the grade, changes made by `mak:coder` go through `mak:review-report` once `mak:verify-checklist` passes.
 - Design docs are written once, by the main thread. Editing/syncing existing Markdown documents is delegated to `mak:doc-editor`.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
 - Investigation-only delegations (`mak:planner`, `mak:reviewer`, `mak:auditor`) are read-only, and are invoked concurrently in a single message when their investigation scopes do not overlap — overlapping scopes duplicate the same work, so split the scope and invoke sequentially instead. Splitting review by module or dimension is the typical case. Never hand verification commands to delegations invoked concurrently — their outputs collide.

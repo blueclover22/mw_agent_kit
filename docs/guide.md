@@ -24,7 +24,7 @@
 | :--- | :--- |
 | `mak:roadmap-planning` | 프로젝트 전체 Phase 구조 수립·유지. 중장기 방향·우선순위·상태 추적 전담. 구현·코드 수정 금지(HARD-GATE) |
 | `mak:brainstorming` | 요구사항이 불명확하거나 방향이 여러 갈래일 때 아이디어를 발산하고 가볍게 순위화하는 단계. 평가 축에 단순성 포함, "더 단순한 대안" 자문 강제. 상세 요구사항 수렴·설계 문서 작성은 후속 skill 소관(구현·설계 문서 작성 금지, HARD-GATE) |
-| `mak:dev-kickoff` | Non-trivial / Risky 또는 등급 불명확 작업의 착수 분류·대화형 오케스트레이션. 요구사항 수렴 → planner 자문 여부 결정 → 접근법 제안 → 검증 가능한 목표 변환 → 승인 게이트 → 문서화 인계. 설계 승인 전 구현 금지(HARD-GATE) |
+| `mak:dev-kickoff` | Standard / Risky 또는 등급 불명확 작업의 착수 분류·대화형 오케스트레이션. 요구사항 수렴 → planner 자문 여부 결정 → 접근법 제안 → 검증 가능한 목표 변환 → 승인 게이트 → 문서화 인계. 설계 승인 전 구현 금지(HARD-GATE) |
 | `mak:dev-resume` | 다음 작업 자체가 미정인 재진입점. 문서(로드맵 상태·설계 문서 Status·최근 커밋)에서 진행 상황·문제점·다음 한 걸음을 근거와 함께 도출. 이름 호출 전용, 진단·보고·라우팅만 (HARD-GATE) |
 | `mak:design-doc-template` | 설계 문서의 §1~§8 섹션 구성, §5.0 Step → verify 표, 옵션 비교 표, 추정 표기, 품질 체크리스트, **저장 경로 규칙 SSOT(기본 `.claude/mak/plan/`)** 제공 |
 | `mak:verify-checklist` | 구현 완료 후 빌드→린트→테스트→포맷(변경 파일만)→수동 시나리오 순 검증. 보고 직전 자가 질의 + "사전 정의 성공 기준 vs 결과" 표 |
@@ -44,10 +44,10 @@
 | :--- | :--- | :--- |
 | **Trivial** | 오타·포맷·주석·1줄 수정·명백한 단일 파일 독립 수정 | 설계 문서·승인 게이트 없이 기존 파일을 읽고 바로 수정. 필요 시 `mak:coder` 사용 |
 | **Small** | 영향 범위가 작고 되돌리기 쉬운 버그 수정·소규모 동작 변경 | 짧은 변경 의도와 검증 방법을 공유한 뒤 진행. 보통 `mak:dev-kickoff` 생략 (버그는 재현·검증 유지) |
-| **Non-trivial** | 여러 파일·모듈 영향, 새 기능·컴포넌트, 구조 선택이 필요한 변경 | `mak:dev-kickoff` 로 착수. 기존 구조가 복잡하거나 선택지가 갈리면 `mak:planner` Architecture Brief 요청 |
-| **Risky** | 데이터 모델·의존성·보안·배포·마이그레이션·다중 모듈 영향 | `mak:dev-kickoff` + `mak:planner` Architecture Brief 원칙적 사용 |
+| **Standard** | 여러 파일·모듈 영향, 새 기능·컴포넌트, 구조 선택이 필요한 변경 | `mak:dev-kickoff` 로 착수. 기존 구조가 복잡하거나 선택지가 갈리면 `mak:planner` Architecture Brief 요청 |
+| **Risky** | 데이터 모델·의존성·보안·배포·마이그레이션 | `mak:dev-kickoff` + `mak:planner` Architecture Brief 원칙적 사용 |
 
-> 착수 전에 등급을 한 줄로 선언한다 — 예: `[Non-trivial] → mak:dev-kickoff`. `/mak:setup` 이 설치하는 블록이 이 선언과 요청 유형별 진입점 라우팅을 규칙으로 담고 있다.
+> 착수 전에 등급을 한 줄로 선언한다 — 예: `[Standard] → mak:dev-kickoff`. `/mak:setup` 이 설치하는 블록이 이 선언과 요청 유형별 진입점 라우팅을 규칙으로 담고 있다.
 
 ### 2.2 코딩 원칙 매핑 (kit 코딩 원칙의 SSOT)
 
@@ -156,8 +156,8 @@ claude plugin install mak@mw-agent-kit
 
 | 상황 | 동작 방식 |
 | :--- | :--- |
-| `mak:planner` 사용 가능 | Non-trivial / Risky 작업에서 메인 스레드가 범위를 넘겨 Architecture Brief 를 요청. planner 는 옵션·권장안·리스크·결정 필요 사항을 보고한다. 읽기 전용이라 문서를 쓰지 않으며, 사용자에게 질문하거나 결정을 확정하지 않는다 |
-| `mak:coder` 사용 가능 | Trivial / Small 은 계획 승인 없이 위임 가능, Non-trivial 이상은 설계 승인 후 위임 |
+| `mak:planner` 사용 가능 | Standard / Risky 작업에서 메인 스레드가 범위를 넘겨 Architecture Brief 를 요청. planner 는 옵션·권장안·리스크·결정 필요 사항을 보고한다. 읽기 전용이라 문서를 쓰지 않으며, 사용자에게 질문하거나 결정을 확정하지 않는다 |
+| `mak:coder` 사용 가능 | Trivial / Small 은 계획 승인 없이 위임 가능, Standard 이상은 설계 승인 후 위임 |
 | `mak:reviewer` 사용 가능 | 단계 완료 시, 그리고 `mak:coder` 가 수행한 변경에 대해 검토 위임 — 메인이 직접 읽지 않은 코드이기 때문. 보고만 하고 코드 수정 금지 |
 | `mak:doc-editor` 사용 가능 | 기능 완료 후 기존 문서 동기화 위임 |
 | `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고도 수행. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
@@ -186,5 +186,5 @@ claude plugin install mak@mw-agent-kit
 
 - **필요한 만큼만 쓴다** — Trivial / Small 위주 프로젝트라면 `mak:verify-checklist` 만으로 시작하고, 필요할 때 dev-kickoff → planner/reviewer 로 올린다. 문서 세트도 compact 프로파일로 시작한다.
 - **관측** — 보고 전 자가검토(verify-checklist §Self-Check)를 습관화한다: 변경 라인=요청 직결? 범위 밖 수정 없나? 검증 수행했나?
-- **회귀 점검** — fork 에서 skill/규칙을 고치면 대표 시나리오 2개로 흐름을 수동 확인한다: ① Trivial 작업이 게이트에 막히지 않는가 ② Non-trivial 새 기능이 "승인 전 구현 금지 / planner 는 자문만 / 집필 1회 / reviewer 코드 미수정" 을 지키는가.
+- **회귀 점검** — fork 에서 skill/규칙을 고치면 대표 시나리오 2개로 흐름을 수동 확인한다: ① Trivial 작업이 게이트에 막히지 않는가 ② Standard 새 기능이 "승인 전 구현 금지 / planner 는 자문만 / 집필 1회 / reviewer 코드 미수정" 을 지키는가.
 - **메모리** — 반복되는 교정·선호·결정은 프로젝트 `CLAUDE.md` / `docs/` / Claude Code 메모리 중 적절한 곳에 누적한다.

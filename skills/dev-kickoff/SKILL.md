@@ -11,7 +11,7 @@ Conduct the conversation and all user-facing output in the user's language (or t
 
 ## Sizing criteria (entry judgement)
 
-Enter for behavior changes spanning multiple files/modules, new features/components, architecture decisions, or suspected impact on data models, dependencies, security, or migration. When the boundary is unclear, judge by impact: roughly single-file/few-lines with no change to public interfaces, data shapes, or dependencies → Trivial / Small (do not enter); spanning 2+ files/modules or changing interfaces, data models, dependencies, or security → Non-trivial or above (enter).
+Enter for behavior changes spanning multiple files/modules, new features/components, architecture decisions, or suspected impact on data models, dependencies, security, or migration. When the boundary is unclear, judge by impact: roughly single-file/few-lines with no change to public interfaces, data shapes, or dependencies → Trivial / Small (do not enter); spanning 2+ files/modules or changing interfaces, data models, dependencies, or security → Standard or above (enter).
 
 ### Route to a different skill when
 
@@ -37,7 +37,7 @@ Complete in order:
 
 1. **Explore project context** — README, CLAUDE.md, docs/, recent commits, related source files
 2. **Clarifying questions** — one at a time until purpose, constraints, and success criteria are clear
-3. **Decide on planner consultation** — Non-trivial: as needed; Risky / multi-module / migration: request a `mak:planner` Architecture Brief as a rule
+3. **Decide on planner consultation** — Standard: as needed; Risky / multi-module / migration: request a `mak:planner` Architecture Brief as a rule
 4. **Propose 2–3 approaches** — with trade-offs and a recommendation, based on the planner report or main-thread investigation (include at least one simpler alternative)
 5. **Convert to verifiable goals** — turn the task into measurable success criteria and a `Step → verify: check` plan
 6. **Present the design** — present section by section, proceeding after each section's approval
@@ -71,7 +71,7 @@ Before asking questions:
 Decide by task grade whether to call `mak:planner`.
 
 - **Trivial / Small**: stop this skill and switch to the lightweight flow (direct, or `mak:coder` on the user's explicit request). Do not call planner.
-- **Non-trivial**: request a planner Architecture Brief when the existing structure is complex or options genuinely diverge.
+- **Standard**: request a planner Architecture Brief when the existing structure is complex or options genuinely diverge.
 - **Risky / multi-module / migration**: request a planner Architecture Brief as a rule.
 
 When calling planner, pass along the requirements confirmed so far, constraints, relevant doc/code paths, and candidate user questions. Planner cannot talk to the user, so the main thread discusses the "decisions needed" items from planner's report with the user and confirms them.

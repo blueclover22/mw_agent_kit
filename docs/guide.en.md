@@ -24,7 +24,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | :--- | :--- |
 | `mak:roadmap-planning` | Establish/maintain the project-wide phase structure. Mid/long-term direction, priorities, status. No implementation (HARD-GATE) |
 | `mak:brainstorming` | Divergence plus light ranking for vague/multi-directional requirements. Simplicity is an evaluation axis; "simpler alternative" check enforced. Detailed requirements convergence and design docs belong to follow-up skills (no implementation or design docs here, HARD-GATE) |
-| `mak:dev-kickoff` | Kickoff sizing + conversational orchestration for Non-trivial/Risky work. Requirements convergence → planner consult decision → options → verifiable goals → approval gate → documentation handoff. No implementation before approval (HARD-GATE) |
+| `mak:dev-kickoff` | Kickoff sizing + conversational orchestration for Standard/Risky work. Requirements convergence → planner consult decision → options → verifiable goals → approval gate → documentation handoff. No implementation before approval (HARD-GATE) |
 | `mak:dev-resume` | Re-entry point for when the next task itself is undecided. Derives progress, problems, and one next step from documents (roadmap status, design-doc `Status`, recent commits), each with evidence. Explicit-invocation only; diagnose/report/route only (HARD-GATE) |
 | `mak:design-doc-template` | Design-doc sections §1–§8, §5.0 Step → verify table, option comparison, assumption notation, quality checklist, and the **save-location rule SSOT (default `.claude/mak/plan/`)** |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
@@ -44,10 +44,10 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 | :--- | :--- | :--- |
 | **Trivial** | Typos, formatting, comments, one-liners, obvious independent single-file fixes | Read the existing file and fix directly — no design doc or approval gate. Use `mak:coder` if desired |
 | **Small** | Small-impact, easily reversible bug fixes / minor behavior changes | Share brief change intent + verification method, then proceed. Usually skip `mak:dev-kickoff` (keep bug reproduction/verification) |
-| **Non-trivial** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
-| **Risky** | Data model, dependencies, security, deployment, migration, multi-module impact | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
+| **Standard** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
+| **Risky** | Data model, dependencies, security, deployment, migration | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
 
-> Declare the grade in one line before starting — e.g. `[Non-trivial] → mak:dev-kickoff`. The block installed by `/mak:setup` carries that declaration rule and the per-request-type entry-point routing.
+> Declare the grade in one line before starting — e.g. `[Standard] → mak:dev-kickoff`. The block installed by `/mak:setup` carries that declaration rule and the per-request-type entry-point routing.
 
 ### 2.2 Coding-Principle Mapping (SSOT for the kit's coding principles)
 
@@ -157,8 +157,8 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 
 | Situation | Behavior |
 | :--- | :--- |
-| `mak:planner` available | For Non-trivial/Risky work the main thread hands over scope and requests an Architecture Brief. Planner reports options/recommendation/risks/decisions-needed. Read-only, so it never writes documents; it never questions the user or finalizes decisions |
-| `mak:coder` available | Trivial / Small may be delegated without an approved plan; Non-trivial and above only after design approval |
+| `mak:planner` available | For Standard/Risky work the main thread hands over scope and requests an Architecture Brief. Planner reports options/recommendation/risks/decisions-needed. Read-only, so it never writes documents; it never questions the user or finalizes decisions |
+| `mak:coder` available | Trivial / Small may be delegated without an approved plan; Standard and above only after design approval |
 | `mak:reviewer` available | Review delegated on stage completion, and for every change `mak:coder` made — the main thread never read that code itself. Reports only; never edits code |
 | `mak:doc-editor` available | Doc sync delegated after feature completion |
 | `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |
@@ -187,5 +187,5 @@ Keep the `{{placeholder}}` structure when editing templates so skills recognize 
 
 - **Use only what you need** — for Trivial/Small-heavy projects start with `mak:verify-checklist` alone and escalate to dev-kickoff → planner/reviewer as needed. Start the doc set on the compact profile.
 - **Observation** — make the pre-report self-check (verify-checklist) a habit: every changed line tied to the request? no out-of-scope edits? verification actually run?
-- **Regression check** — after modifying skills/rules in a fork, manually walk two scenarios: ① Trivial work isn't blocked by gates; ② a Non-trivial feature honors "no implementation before approval / planner advises only / doc written once / reviewer never edits".
+- **Regression check** — after modifying skills/rules in a fork, manually walk two scenarios: ① Trivial work isn't blocked by gates; ② a Standard feature honors "no implementation before approval / planner advises only / doc written once / reviewer never edits".
 - **Memory** — accumulate recurring corrections/preferences/decisions in the project `CLAUDE.md` / `docs/` / Claude Code memory as appropriate.
