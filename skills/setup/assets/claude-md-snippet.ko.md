@@ -43,21 +43,22 @@
 | 단계 완료 후 구현 검토, 코드·PR 리뷰 명시 요청 | `mak:review-report` |
 | 슬라이스·phase 완료 직후, phase 전환, 미완료 세션 인계 전 | `mak:doc-audit` |
 | 여러 Phase 에 걸친 중장기 방향·우선순위 | `mak:roadmap-planning` |
-| 기존 Markdown 문서 편집·동기화 | `mak:doc-editor` |
+| 외부 자료 조사와 조사 문서 산출 | `mak:researcher` — 경로는 메인이 지정(프로젝트 규칙 우선, 기본 `docs/research/`) |
+| Markdown 문서 편집·동기화, 메인이 지정한 신규 문서 생성 | `mak:doc-editor` |
 | 다음 할 일이 미정인 작업 재개 / 문서 세트가 없는 프로젝트 / 커밋 | `mak:dev-resume` / `mak:reverse-engineering` / `mak:commit` |
 
 > 여러 행에 걸리면 위에서부터 먼저 걸리는 행을 따른다. 단 검증·리뷰·감사 행은 배타 선택이 아니라 순서대로 이어지는 단계다.
 
 - 개발 주기 — `mak:brainstorming` → `mak:dev-kickoff` → `mak:design-doc-template` → 구현 → `mak:verify-checklist` → `mak:review-report`
 - `mak:dev-resume`·`mak:doc-audit`·`mak:reverse-engineering` 은 주기의 단계가 아니다 — 매 사이클마다 부르지 않는다
-- `mak:commit` 은 주기가 자동으로 잇지 않는다 — 사용자 명시 요청 시에만 진입한다(skill 실행이 곧 명시적 커밋 요청, push 등 기타 git 명령은 별도 명시 요청 시에만).
+- `mak:commit` 은 주기가 자동으로 잇지 않는다 — 사용자 명시 요청 시에만 진입한다(skill 실행이 곧 명시적 커밋 요청).
 - 다단계 작업의 진행 기록은 설계 문서 §5.0 `Step → verify` 표의 Status 열이다 — Step 이 verify 를 통과할 때마다 구현 주체가 갱신한다
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
 - Trivial / Small 은 계획 승인 없이 `mak:coder` 에 위임할 수 있고, Standard 이상은 설계 승인 후에만 위임한다. `mak:coder` 의 변경은 등급과 무관하게 `mak:verify-checklist` 통과 후 `mak:review-report` 를 거친다
-- 설계 문서 집필은 메인 스레드가 한 번만 한다. 기존 Markdown 문서의 편집·동기화는 `mak:doc-editor` 로 위임한다.
+- 설계 문서와 로드맵 집필은 메인 스레드가 한다 — 내용이 대화에만 있기 때문이다. 설계 문서는 한 번만 쓴다. 그 외 Markdown 문서의 편집·동기화와 신규 생성은 `mak:doc-editor` 로 위임하되, 경로와 들어갈 내용을 지정해 넘긴다.
 - 설계 문서는 `mak:design-doc-template` 의 경로 규칙(기본 `.claude/mak/plan/`)을 따른다.
 - 조사 전용 위임(`mak:planner`·`mak:reviewer`·`mak:auditor`)은 읽기 전용이고, 조사 범위가 서로 겹치지 않으면 한 메시지에서 동시에 호출한다 — 겹치면 같은 조사를 중복하므로 범위를 나눠 순차로 부른다. 모듈·관점별 리뷰 분할이 대표적이다. 동시에 호출하는 위임에는 검증 명령 실행을 맡기지 않는다 — 산출물이 충돌한다.
-- 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`)은 쓰기 대상이 완전히 분리되는지 먼저 판정하고, 분리되면 병렬로 돌린다 — 겹치면 충돌하므로 직렬로 나눈다. 분리 판정 기준은 각각 설계 문서 §Scope of Changes, 대상 문서 목록, 담당 문서 집합이다. 병렬로 돌릴 때는 설계 문서 §5.0 Status 갱신과 검증 실행을 메인이 맡는다 — 위임끼리 같은 행·같은 명령을 동시에 건드리지 않게 한다.
+- 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`·`mak:researcher`)은 쓰기 대상이 완전히 분리되는지 먼저 판정하고, 분리되면 병렬로 돌린다 — 겹치면 충돌하므로 직렬로 나눈다. 분리 판정 기준은 각각 설계 문서 §Scope of Changes, 대상 문서 목록, 담당 문서 집합, 산출 문서 경로다. 병렬로 돌릴 때는 설계 문서 §5.0 Status 갱신과 검증 실행을 메인이 맡는다 — 위임끼리 같은 행·같은 명령을 동시에 건드리지 않게 한다.
 - 병렬 위임 결과의 취합은 메인이 한다 — subagent 는 서로의 조사 내용을 모르므로 각 위임에 필요한 맥락을 모두 실어 보낸다
 
 <!-- mak:end -->

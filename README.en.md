@@ -4,7 +4,7 @@
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 6 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 7 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -93,16 +93,17 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:teardown` | Remove the installed marker block (run before uninstalling) |
 | `/mak:reverse-engineering` | Copy the doc set (8 docs compact by default, 14 docs standard) and reverse-engineer the project |
 
-### Agents (6)
+### Agents (7)
 
 | Agent | Model | Role |
 | :--- | :--- | :--- |
 | `mak:planner` | opus | Non-interactive architecture consultation (Architecture Brief), read-only |
 | `mak:coder` | sonnet | Implementation against an approved design |
 | `mak:reviewer` | opus | Review and report only (never modifies code) |
-| `mak:doc-editor` | haiku | Editing/syncing existing Markdown documents |
+| `mak:doc-editor` | haiku | Editing/syncing Markdown documents, including new ones the main thread specifies |
 | `mak:analyzer` | opus | Code analysis and doc filling — records facts only (never modifies code) |
 | `mak:auditor` | opus | `mak:doc-audit` cross-document consistency audit — report-only (never modifies documents) |
+| `mak:researcher` | opus | External-source research written out as a document at an assigned path (never modifies code) |
 
 ## 5. Usage & Documentation
 
@@ -135,6 +136,8 @@ The basic development flow:
 
 [outside the cycle] /mak:doc-audit ─▶ [delegate] mak:auditor — reports only, never edits
                     after a slice/phase, at a phase transition, or before handoff
+[outside the cycle] research request ─▶ [delegate] mak:researcher — writes a research doc
+                    the main thread assigns the path · parallel when outputs are separate files
 ```
 
 - Symbols: `▼ │` default progression · `▶` agent delegation · `┊` a user gate that never advances on its own · `⚑` approval gate · `▲ └─` rework loop

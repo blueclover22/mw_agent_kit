@@ -1,6 +1,6 @@
 # mak 사용 가이드
 
-> 대상: `mak` 플러그인의 skill 12종 + agent 6종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
+> 대상: `mak` 플러그인의 skill 12종 + agent 7종 + `/mak:setup` 이 설치하는 공통 Workflow 규칙
 > 목적: 어떤 프로젝트에서도 일관된 "발산 → 착수/아키텍처 자문 → 설계 → 구현 → 검증 → 리뷰 → 커밋" 흐름 재현, 그리고 프로젝트 전체 방향을 다루는 로드맵 축 지원
 >
 > English version: [guide.en.md](guide.en.md)
@@ -14,7 +14,7 @@
 프로젝트마다 반복되는 핵심 단계(아이디어 발산 → 개발 착수·수렴 → 필요 시 아키텍처 자문 → 설계 문서화 → 구현 검증 → 리뷰 보고 → 마무리 커밋)를 일관된 절차와 형식으로 수행할 수 있도록 재사용 가능한 skill 을 묶어 제공한다. 여기에 더해, 여러 Phase 에 걸친 중장기 방향을 다루는 `mak:roadmap-planning` 을 별도 축으로 제공한다.
 
 - 특정 언어, 프레임워크, 빌드 도구에 종속되지 않는다
-- agent(mak:planner/coder/reviewer/doc-editor/analyzer/auditor)가 있으면 각 skill 을 위임 형태로 활용하고, agent 위임이 어려운 환경에서도 skill 만으로 동일한 흐름을 수행할 수 있다
+- agent(mak:planner/coder/reviewer/doc-editor/analyzer/auditor/researcher)가 있으면 각 skill 을 위임 형태로 활용하고, agent 위임이 어려운 환경에서도 skill 만으로 동일한 흐름을 수행할 수 있다
 - 코딩 원칙(코딩하기 전에 생각하기 / 단순함이 최우선 / 정밀한 수정 / 목표 중심적 실행)은 본 가이드 §2.2 에 정의되며, 각 skill 절차 안에 자가 점검·게이트로 녹아 있다. 사용자가 전역/프로젝트 CLAUDE.md 에 자체 §Coding Rules 를 두면 그것이 우선한다
 - `/mak:setup` 은 Workflow 작업 등급·코딩 원칙 매핑(§2.2 사본)·mak 위임 규칙(subagent 자율 위임 사전 요청 포함)을 `~/.claude/CLAUDE.md` 마커 블록으로 설치한다 (개인 규칙은 건드리지 않음)
 
@@ -96,6 +96,8 @@
 
 [주기 밖] mak:doc-audit ─▶ [위임] mak:auditor — 보고만, 문서 수정 금지
           슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전
+[주기 밖] 자료 조사 요청 ─▶ [위임] mak:researcher — 지정 경로에 조사 문서 산출
+          경로는 메인이 정해 넘김 · 산출 문서가 서로 다른 파일이면 병렬 위임
 ```
 
 > 기호: `▼ │` 기본 진행 · `▶` agent 위임 · `┊` 자동으로 이어지지 않는 사용자 게이트 · `⚑` 승인 게이트(사용자 확인 없이는 통과 불가) · `▲ └─` 재작업 루프
@@ -159,14 +161,15 @@ claude plugin install mak@mw-agent-kit
 | `mak:planner` 사용 가능 | Standard / Risky 작업에서 메인 스레드가 범위를 넘겨 Architecture Brief 를 요청. planner 는 옵션·권장안·리스크·결정 필요 사항을 보고한다. 읽기 전용이라 문서를 쓰지 않으며, 사용자에게 질문하거나 결정을 확정하지 않는다 |
 | `mak:coder` 사용 가능 | Trivial / Small 은 계획 승인 없이 위임 가능, Standard 이상은 설계 승인 후 위임 |
 | `mak:reviewer` 사용 가능 | 단계 완료 시, 그리고 `mak:coder` 가 수행한 변경에 대해 검토 위임 — 메인이 직접 읽지 않은 코드이기 때문. 보고만 하고 코드 수정 금지 |
-| `mak:doc-editor` 사용 가능 | 기능 완료 후 기존 문서 동기화 위임 |
+| `mak:doc-editor` 사용 가능 | 기능 완료 후 문서 동기화 위임. 메인이 경로와 내용을 지정하면 신규 문서 생성도 수행하며, 구조·내용 출처가 특정되지 않은 생성 위임은 거절하고 되묻는다 |
 | `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고도 수행. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
 | `mak:auditor` 사용 가능 | `mak:doc-audit` 감사를 위임. 이 skill 을 companion 으로 로드해 체크리스트·보고 형식 재전달이 불필요하다. 보고만 하고 감사 대상 문서를 편집하지 않는다 |
+| `mak:researcher` 사용 가능 | 외부 자료 조사와 조사 문서 집필을 위임. 저장 경로는 메인이 정해 넘기고, 대상 프로젝트에 조사 규칙이 있으면 그 규칙이 우선한다. 요구사항 확인·저장 위치 승인·검증 판정·사용자 보고는 메인이 수행 |
 | agent 위임 불가 환경 | 해당 skill 의 절차를 메인이 직접 수행 — skill 내부 자가 점검 게이트가 코딩 원칙(§2.2)을 강제 |
 
 **위임 원칙**: 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다(subagent 는 사용자와 대화 불가). 계획 승인 없이 `mak:coder` 를 호출하지 않는다. `mak:reviewer` 는 "확인해줘" 같은 일반 단어에는 자동 호출하지 않는다.
 
-**병렬 위임**: 조사 전용 위임은 **조사 범위**가, 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`)은 **쓰기 대상**이 겹치지 않을 때만 동시에 호출하고, 결과 취합은 언제나 메인이 한다. 세부 조건의 SSOT 는 `/mak:setup` 이 설치하는 블록의 mak 위임 규칙이다.
+**병렬 위임**: 조사 전용 위임은 **조사 범위**가, 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`·`mak:researcher`)은 **쓰기 대상**이 겹치지 않을 때만 동시에 호출하고, 결과 취합은 언제나 메인이 한다. 세부 조건의 SSOT 는 `/mak:setup` 이 설치하는 블록의 mak 위임 규칙이다.
 
 ## 7. 템플릿 커스터마이징
 

@@ -1,6 +1,6 @@
 # mak Usage Guide
 
-> Scope: the `mak` plugin's 12 skills + 6 agents + the common Workflow rules installed by `/mak:setup`
+> Scope: the `mak` plugin's 12 skills + 7 agents + the common Workflow rules installed by `/mak:setup`
 > Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → implement → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
 >
 > 한국어 버전: [guide.md](guide.md)
@@ -14,7 +14,7 @@
 The kit packages the core stages that repeat in every project — idea divergence → kickoff/convergence → architecture consultation when needed → design documentation → implementation verification → review reporting → wrap-up commit — into reusable skills with consistent procedures and formats. On top, `mak:roadmap-planning` handles mid/long-term direction across phases as a separate axis.
 
 - No dependency on a specific language, framework, or build tool
-- With the agents (mak:planner/coder/reviewer/doc-editor/analyzer/auditor) available, skills are used through delegation; where delegation isn't possible, the skills alone reproduce the same flow
+- With the agents (mak:planner/coder/reviewer/doc-editor/analyzer/auditor/researcher) available, skills are used through delegation; where delegation isn't possible, the skills alone reproduce the same flow
 - The coding principles (think before coding / simplicity first / precise changes / goal-driven execution) are defined in §2.2 of this guide and enforced inside skills as self-checks and gates. If you define your own §Coding Rules in the global/project CLAUDE.md, those take precedence
 - `/mak:setup` installs the Workflow task grades, the coding-principle mapping (a copy of §2.2), and the mak delegation rules (including the user's advance request for autonomous subagent delegation) as a marker block in `~/.claude/CLAUDE.md` (personal rules are never touched)
 
@@ -97,6 +97,9 @@ Requirements received
 [outside the cycle] mak:doc-audit ─▶ [delegate] mak:auditor — reports only, never edits
                     right after a slice/phase completes, at a phase transition,
                     or before handing off an unfinished session
+[outside the cycle] research request ─▶ [delegate] mak:researcher — writes a research doc
+                    the main thread assigns the path · parallel when the outputs
+                    are separate files
 ```
 
 > Symbols: `▼ │` default progression · `▶` agent delegation · `┊` a user gate that never advances on its own · `⚑` approval gate (impassable without user confirmation) · `▲ └─` rework loop
@@ -160,14 +163,15 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 | `mak:planner` available | For Standard/Risky work the main thread hands over scope and requests an Architecture Brief. Planner reports options/recommendation/risks/decisions-needed. Read-only, so it never writes documents; it never questions the user or finalizes decisions |
 | `mak:coder` available | Trivial / Small may be delegated without an approved plan; Standard and above only after design approval |
 | `mak:reviewer` available | Review delegated on stage completion, and for every change `mak:coder` made — the main thread never read that code itself. Reports only; never edits code |
-| `mak:doc-editor` available | Doc sync delegated after feature completion |
+| `mak:doc-editor` available | Doc sync delegated after feature completion. Also creates a new document when the main thread names its path and content; refuses and asks back when the structure and content source are not pinned down |
 | `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |
 | `mak:auditor` available | `mak:doc-audit` audits delegated to it. Loads that skill as a companion, so the checklist/report format don't need to be re-transmitted. Report-only; never edits the audited documents |
+| `mak:researcher` available | External-source research and research-document writing delegated to it. The main thread assigns the save path, and the target project's own research rules win where they exist. Requirements narrowing, save-location approval, adjudicating findings, and reporting to the user stay with the main thread |
 | Delegation unavailable | The main thread runs the skill's procedure directly — the in-skill self-check gates enforce the coding principles (§2.2) |
 
 **Delegation principles**: stages requiring conversation (requirements convergence, option approval, design gates) stay in the main thread (subagents can't talk to the user). Never invoke `mak:coder` without an approved plan. `mak:reviewer` is not auto-invoked on generic words like "check".
 
-**Parallel delegation**: investigation-only delegations are invoked concurrently when their **investigation scopes** are disjoint; writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`) when their **write targets** are. The main thread always merges the results. The SSOT for the detailed conditions is the mak delegation rules installed by `/mak:setup`.
+**Parallel delegation**: investigation-only delegations are invoked concurrently when their **investigation scopes** are disjoint; writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`, `mak:researcher`) when their **write targets** are. The main thread always merges the results. The SSOT for the detailed conditions is the mak delegation rules installed by `/mak:setup`.
 
 ## 7. Template Customization
 
