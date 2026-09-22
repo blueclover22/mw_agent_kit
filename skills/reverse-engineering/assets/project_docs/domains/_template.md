@@ -1,32 +1,30 @@
 ---
-type: DomainGuide
+type: Domain
 related_to:
-  - "../01.Glossary.md"
-  - "../05.framework-api.md"
-  - "../06.frontend-guide.md"
-  - "../07.backend-guide.md"
-  - "../12.process-guide.md"
+  - "../03.conventions.md"
+  - "../04.framework.md"
+  - "../05.layers.md"
 ---
 
-# `<domain>` Guide
+# `<domain>` Domain
 
-> Template: copy this file to `domains/<domain>-guide.md` (e.g. `payments-guide.md`, `hw-interface-guide.md`). Replace `<domain>` with the actual domain name and delete this notice. Register it in the index at [`../08.domains.md`](../08.domains.md) §1. Permanent guide.
+> Template: copy this file to `domains/<name>.md` (kebab-case, e.g. `payments.md`, `hw-interface.md`). Replace `<domain>` with the actual domain name, register the file in [`../00.INDEX.md`](../00.INDEX.md) §Domains, and delete this notice. This file stays in `domains/` as the copy source. Permanent guide.
 
-Defines the conventions of the project feature domain `<domain>`. As a vertical slice that cuts across layers, the UI follows [`../06.frontend-guide.md`](../06.frontend-guide.md) and the core follows [`../07.backend-guide.md`](../07.backend-guide.md) conventions.
+Records the facts of the project feature domain `<domain>` — a vertical slice that cuts across layers. Per-layer conventions follow [`../05.layers.md`](../05.layers.md); this file holds only what is specific to the domain.
 
 ---
 
 ## 1. Domain Overview
-_(TODO)_ Responsibility scope and boundaries, key terms (term definitions in [`../01.Glossary.md`](../01.Glossary.md)).
+_(TODO)_ Responsibility scope and boundaries, key terms (term names in [`../03.conventions.md`](../03.conventions.md) §2 Domain Terms).
 
 ## 2. Core Entities / Models
 _(TODO)_ Key entities/types and their code locations.
 
 ## 3. State Machines / Flows
-_(TODO)_ State transitions and key flows. Call chain tracing in [`../12.process-guide.md`](../12.process-guide.md).
+_(TODO)_ State transitions and key flows. End-to-end call chains that pass through this domain are traced in `../processes/<name>.md` — link them here, do not repeat them.
 
 ## 4. External Integrations / Contracts
-_(TODO)_ External systems and contracts (contract list in [`../05.framework-api.md`](../05.framework-api.md)).
+_(TODO)_ External systems and the contracts this domain owns (contract list in [`../04.framework.md`](../04.framework.md) §5 Contract Catalog).
 
 ## 5. Conventions / Policies
 _(TODO)_ Domain-specific rules (security, validation, exceptions, etc.).

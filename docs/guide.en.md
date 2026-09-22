@@ -32,7 +32,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents. `mak:review-report` audits one design against implementation; `mak:doc-audit` checks whether other docs citing that slice remain valid — the gap. Triggered after slice/phase completion, at phase transitions, or before handing off an unfinished session. Reports only; never edits documents |
 | `mak:commit` | Work wrap-up commit. Pre-commit gates (verification confirmed, every changed line ties to the request, junk/secret scan) → commit with a message matching the repo's convention → at-a-glance result report. Invoking the skill counts as the explicit commit request; other git ops (push/amend/rebase, …) run only on the user's explicit request |
 | `mak:setup` / `mak:teardown` | Install / remove the common rules as a marker block in `~/.claude/CLAUDE.md` |
-| `mak:reverse-engineering` | Copy the doc set (8 docs compact by default, 14 docs standard + domains/) into the project's `docs/` and fill it via code analysis |
+| `mak:reverse-engineering` | Copy the doc set (7 core docs + `domains/`·`processes/`) into the project's `docs/` and fill it via code analysis |
 
 > Each skill carries "route to a different skill when" pointers at the top, so a wrong pick self-corrects mid-procedure.
 
@@ -148,7 +148,7 @@ claude plugin install mak@mw-agent-kit
 | Step | Command/action | Effect |
 | :--- | :--- | :--- |
 | Install common rules (once) | `/mak:setup` | Adds the Workflow task grades + coding-principle mapping + mak delegation rules marker block to `~/.claude/CLAUDE.md`. Re-running updates only the block; personal rules untouched |
-| Project doc set (optional) | `/mak:reverse-engineering` | Copies the doc set to `docs/` and fills it via analysis (compact by default, standard to expand) |
+| Project doc set (optional) | `/mak:reverse-engineering` | Copies the doc set (7 core docs + `domains/`·`processes/`) to `docs/` and fills it via analysis |
 | Project-specific rules (recommended) | Write `<project>/.claude/CLAUDE.md` | Verification commands, doc paths, domain rules. Skills consult this file first |
 | Remove | `/mak:teardown` → `claude plugin uninstall` | Restore the marker block, then uninstall |
 
@@ -164,7 +164,7 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 | `mak:coder` available | Trivial / Small may be delegated without an approved plan; Standard and above only after design approval |
 | `mak:reviewer` available | Review delegated on stage completion, and for every change `mak:coder` made — the main thread never read that code itself. Reports only; never edits code |
 | `mak:doc-editor` available | Doc sync delegated after feature completion. Also creates a new document when the main thread names its path and content; refuses and asks back when the structure and content source are not pinned down |
-| `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports. Records facts (is) only; never modifies code. Interactive decisions (profile, overwrites) and cross-document syncs stay with the main thread |
+| `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports. Records facts (is) only; never modifies code. Interactive decisions (merge, overwrites) and cross-document syncs stay with the main thread |
 | `mak:auditor` available | `mak:doc-audit` audits delegated to it. Loads that skill as a companion, so the checklist/report format don't need to be re-transmitted. Report-only; never edits the audited documents |
 | `mak:researcher` available | External-source research and research-document writing delegated to it. The main thread assigns the save path, and the target project's own research rules win where they exist. Requirements narrowing, save-location approval, adjudicating findings, and reporting to the user stay with the main thread |
 | Delegation unavailable | The main thread runs the skill's procedure directly — the in-skill self-check gates enforce the coding principles (§2.2) |
@@ -189,7 +189,7 @@ Keep the `{{placeholder}}` structure when editing templates so skills recognize 
 
 ## 8. Operating Tips (light mode, observation, regression)
 
-- **Use only what you need** — for Trivial/Small-heavy projects start with `mak:verify-checklist` alone and escalate to dev-kickoff → planner/reviewer as needed. Start the doc set on the compact profile.
+- **Use only what you need** — for Trivial/Small-heavy projects start with `mak:verify-checklist` alone and escalate to dev-kickoff → planner/reviewer as needed. Fill the doc set incrementally, leaving `_(TODO)_` for what is not yet verified.
 - **Observation** — make the pre-report self-check (verify-checklist) a habit: every changed line tied to the request? no out-of-scope edits? verification actually run?
 - **Regression check** — after modifying skills/rules in a fork, manually walk two scenarios: ① Trivial work isn't blocked by gates; ② a Standard feature honors "no implementation before approval / planner advises only / doc written once / reviewer never edits".
 - **Memory** — accumulate recurring corrections/preferences/decisions in the project `CLAUDE.md` / `docs/` / Claude Code memory as appropriate.

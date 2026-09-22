@@ -91,7 +91,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:commit` | Work wrap-up commit — gates, commit, at-a-glance result report. Other git ops (push, …) only on explicit request |
 | `/mak:setup` | Install the common rules (workflow grades, principle mapping, delegation rules) into `~/.claude/CLAUDE.md` as a marker block |
 | `/mak:teardown` | Remove the installed marker block (run before uninstalling) |
-| `/mak:reverse-engineering` | Copy the doc set (8 docs compact by default, 14 docs standard) and reverse-engineer the project |
+| `/mak:reverse-engineering` | Copy the doc set (7 core docs + `domains/`·`processes/`) and reverse-engineer the project |
 
 ### Agents (7)
 

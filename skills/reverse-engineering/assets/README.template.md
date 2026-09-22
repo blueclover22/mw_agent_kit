@@ -77,7 +77,7 @@ cp <env-example> <env-file>    # e.g. cp .env.example .env  (native Windows: Cop
 | Format | `<format-cmd>` |
 | Build | `<build-cmd>` |
 
-> For verification pipeline details, CI entry points, and test conventions see [`docs/10.build-ops-guide.md`](docs/10.build-ops-guide.md).
+> For verification pipeline details, CI entry points, and test conventions see [`docs/06.build-ops.md`](docs/06.build-ops.md).
 
 ---
 
@@ -91,7 +91,7 @@ cp <env-example> <env-file>    # e.g. cp .env.example .env  (native Windows: Cop
 └─ <build-config>    # Build configuration
 ```
 
-> For the full structure and feature rules see [`docs/09.project-guide.md`](docs/09.project-guide.md) §Current Structure.
+> For the full structure and feature rules see [`docs/01.overview.md`](docs/01.overview.md) §Current Structure.
 
 ---
 
@@ -108,7 +108,6 @@ cp <env-example> <env-file>    # e.g. cp .env.example .env  (native Windows: Cop
 | :--- | :--- |
 | Document index (start here) | [`docs/00.INDEX.md`](docs/00.INDEX.md) |
 | Domain / architecture guides | [`docs/`](docs/) (permanent guides) |
-| Progress / roadmap | [`docs/13.roadmap.md`](docs/13.roadmap.md) |
 | AI collaboration rules | [`.claude/CLAUDE.md`](.claude/CLAUDE.md) |
 
 ---
@@ -119,7 +118,7 @@ cp <env-example> <env-file>    # e.g. cp .env.example .env  (native Windows: Cop
 | :--- | :--- | :--- |
 | `<symptom>` | `<cause>` | `<resolution>` |
 
-> For runtime logs and incident response see [`docs/10.build-ops-guide.md`](docs/10.build-ops-guide.md) §Operations/Logs; for project-specific errors see [`docs/09.project-guide.md`](docs/09.project-guide.md) §Troubleshooting.
+> For runtime logs and incident response see [`docs/06.build-ops.md`](docs/06.build-ops.md) §Operations/Logs; for project-specific errors see [`docs/01.overview.md`](docs/01.overview.md) §Troubleshooting.
 
 ---
 

@@ -68,13 +68,17 @@ for f in skills/*/SKILL.md agents/*.md; do n=$(basename $(dirname "$f")); [ "$n"
 
 Simulate the inject → re-run (block replaced, no duplication) → remove round-trip against a scratch file
 
-### Compact-profile closure — `skills/reverse-engineering/assets/` changed
+### Doc-set closure — `skills/reverse-engineering/assets/` changed
 
-The compact profile (`00 02 03 04 06 09 10 13` + `README.template.md`) must stay closed — filename references to `01`/`05`/`07`/`08`/`11`/`12` outside a `standard-only`-tagged line, and `related_to` asymmetry inside that set (00 hub / 13 one-way excepted), must both be zero hits:
+The template set is one fixed composition (`00`–`06` + `CLAUDE.md` + `domains/_template.md` + `processes/_template.md`) and must stay closed: exactly those files ship, every numbered or folder file reference inside them (and in `README.template.md`) resolves to a shipped file, `related_to` among the core documents `01`–`06` is symmetric, `00` lists all six, no core document back-references `00` or a leaf, and the two leaf templates reference only `../<core>` one-way. Every block below must print nothing. Folder references are checked match-level; the only lines skipped are the example registry rows in `00.INDEX.md`, whose Name cell is a `<placeholder>`:
 
 ```
-grep -n '01\.Glossary\.md\|05\.framework-api\.md\|07\.backend-guide\.md\|08\.domains\.md\|11\.test-guide\.md\|12\.process-guide\.md' skills/reverse-engineering/assets/project_docs/{00.INDEX,02.architecture,03.coding-rules,04.framework-guide,06.frontend-guide,09.project-guide,10.build-ops-guide,13.roadmap}.md skills/reverse-engineering/assets/README.template.md | grep -v standard-only
-fm() { awk 'NR>1 && /^---$/{exit} {print}' "$1"; }; D=skills/reverse-engineering/assets/project_docs; for f in $D/{02.architecture,03.coding-rules,04.framework-guide,06.frontend-guide,09.project-guide,10.build-ops-guide}.md; do b=$(basename "$f"); for t in $(fm "$f" | grep -v standard-only | grep -oE '[0-9]{2}\.[A-Za-z.-]+\.md'); do fm "$D/$t" 2>/dev/null | grep -q "\"$b\"" || echo "ASYMMETRY: $b -> $t"; done; done
+D=skills/reverse-engineering/assets/project_docs
+diff <(cd $D && find . -type f | sed 's#^\./##' | sort) <(printf '%s\n' 00.INDEX.md 01.overview.md 02.architecture.md 03.conventions.md 04.framework.md 05.layers.md 06.build-ops.md CLAUDE.md domains/_template.md processes/_template.md | sort)
+grep -rhoE '(\.\./|docs/)?[0-9]{2}\.[A-Za-z-]+\.md' $D skills/reverse-engineering/assets/README.template.md | sed 's#^\(\.\./\|docs/\)##' | sort -u | while read f; do [ -f "$D/$f" ] || echo "MISSING: $f"; done
+grep -rhE '(domains|processes)/[a-z_-]+\.md' $D skills/reverse-engineering/assets/README.template.md | grep -vE '^\| `<' | grep -oE '(\.\./)?(domains|processes)/[a-z_-]+\.md' | sed 's#^\.\./##' | sort -u | while read f; do [ -f "$D/$f" ] || echo "MISSING: $f"; done
+fm() { awk 'NR>1 && /^---$/{exit} {print}' "$1"; }; for f in $D/0[1-6].*.md; do b=$(basename "$f"); fm $D/00.INDEX.md | grep -q "\"$b\"" || echo "HUB MISSING: $b"; fm "$f" | grep -qE '00\.INDEX\.md|domains/|processes/' && echo "BACKREF: $b"; for t in $(fm "$f" | grep -oE '[0-9]{2}\.[A-Za-z-]+\.md'); do fm "$D/$t" | grep -q "\"$b\"" || echo "ASYMMETRY: $b -> $t"; done; done
+for f in $D/*/_template.md; do fm "$f" | grep -E '^\s*- ' | grep -vE '^\s*- "\.\./0[1-6]\.[a-z-]+\.md"' | sed "s#^#LEAF REF ($(basename $(dirname $f))): #"; done
 ```
 
 ## Release

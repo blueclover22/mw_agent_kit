@@ -32,7 +32,7 @@
 | `mak:doc-audit` | 문서 ↔ 문서 정합성 감사 + 문서가 인용한 코드 경로·심볼의 실재성 대조. `mak:review-report` 는 설계서 하나와 구현을 대조할 뿐, 그 슬라이스를 참조하는 다른 문서들이 여전히 유효한지는 보지 않음 — 그 빈칸 담당. 슬라이스·phase 완료 직후 / phase 전환 / 미완료 세션 인계 전 호출. 보고만 하고 문서는 수정하지 않음 |
 | `mak:commit` | 작업 마무리 커밋. 사전 게이트(검증 수행 확인·변경 라인=요청 직결·잡파일/시크릿 스캔) → 저장소 컨벤션에 맞는 메시지로 커밋 → 변경 내용 한눈 보고. skill 실행 자체가 명시적 커밋 요청으로 간주되며, push·amend·rebase 등 기타 git 명령은 사용자가 명시 요청할 때만 수행 |
 | `mak:setup` / `mak:teardown` | 공통 규칙을 `~/.claude/CLAUDE.md` 마커 블록으로 설치 / 제거 |
-| `mak:reverse-engineering` | 문서 세트(기본 compact 8종 / standard 14종 + domains/)를 프로젝트 `docs/` 로 복사하고 코드 분석으로 채움 |
+| `mak:reverse-engineering` | 문서 세트(핵심 7종 + `domains/`·`processes/`)를 프로젝트 `docs/` 로 복사하고 코드 분석으로 채움 |
 
 > 각 skill 상단에 "다음 경우엔 다른 skill 로" 포인터가 있어, 잘못된 skill 을 골라도 절차 중 올바른 skill 로 자가 유도된다.
 
@@ -146,7 +146,7 @@ claude plugin install mak@mw-agent-kit
 | 단계 | 명령/행동 | 효과 |
 | :--- | :--- | :--- |
 | 공통 규칙 설치 (1회) | `/mak:setup` | `~/.claude/CLAUDE.md` 에 Workflow 작업 등급·코딩 원칙 매핑·mak 위임 규칙 마커 블록 추가. 재실행 시 블록만 갱신, 개인 규칙 비접촉 |
-| 프로젝트 문서 세트 (선택) | `/mak:reverse-engineering` | 문서 세트를 `docs/` 로 복사하고 코드 분석으로 채움 (기본 compact/확장 standard 프로파일) |
+| 프로젝트 문서 세트 (선택) | `/mak:reverse-engineering` | 문서 세트(핵심 7종 + `domains/`·`processes/`)를 `docs/` 로 복사하고 코드 분석으로 채움 |
 | 프로젝트 특화 규칙 (권장) | `<project>/.claude/CLAUDE.md` 직접 작성 | 검증 명령·문서 경로·도메인 규칙 등 프로젝트 고유 사항. skill 들이 이 파일을 우선 참조한다 |
 | 제거 | `/mak:teardown` → `claude plugin uninstall` | 마커 블록 원복 후 삭제 |
 
@@ -162,7 +162,7 @@ claude plugin install mak@mw-agent-kit
 | `mak:coder` 사용 가능 | Trivial / Small 은 계획 승인 없이 위임 가능, Standard 이상은 설계 승인 후 위임 |
 | `mak:reviewer` 사용 가능 | 단계 완료 시, 그리고 `mak:coder` 가 수행한 변경에 대해 검토 위임 — 메인이 직접 읽지 않은 코드이기 때문. 보고만 하고 코드 수정 금지 |
 | `mak:doc-editor` 사용 가능 | 기능 완료 후 문서 동기화 위임. 메인이 경로와 내용을 지정하면 신규 문서 생성도 수행하며, 구조·내용 출처가 특정되지 않은 생성 위임은 거절하고 되묻는다 |
-| `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고도 수행. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(프로파일·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
+| `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고도 수행. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(병합·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |
 | `mak:auditor` 사용 가능 | `mak:doc-audit` 감사를 위임. 이 skill 을 companion 으로 로드해 체크리스트·보고 형식 재전달이 불필요하다. 보고만 하고 감사 대상 문서를 편집하지 않는다 |
 | `mak:researcher` 사용 가능 | 외부 자료 조사와 조사 문서 집필을 위임. 저장 경로는 메인이 정해 넘기고, 대상 프로젝트에 조사 규칙이 있으면 그 규칙이 우선한다. 요구사항 확인·저장 위치 승인·검증 판정·사용자 보고는 메인이 수행 |
 | agent 위임 불가 환경 | 해당 skill 의 절차를 메인이 직접 수행 — skill 내부 자가 점검 게이트가 코딩 원칙(§2.2)을 강제 |
@@ -187,7 +187,7 @@ claude plugin install mak@mw-agent-kit
 
 ## 8. 운영 팁 (경량 모드·관측·회귀)
 
-- **필요한 만큼만 쓴다** — Trivial / Small 위주 프로젝트라면 `mak:verify-checklist` 만으로 시작하고, 필요할 때 dev-kickoff → planner/reviewer 로 올린다. 문서 세트도 compact 프로파일로 시작한다.
+- **필요한 만큼만 쓴다** — Trivial / Small 위주 프로젝트라면 `mak:verify-checklist` 만으로 시작하고, 필요할 때 dev-kickoff → planner/reviewer 로 올린다. 문서 세트도 `_(TODO)_` 를 남기며 단계적으로 채운다.
 - **관측** — 보고 전 자가검토(verify-checklist §Self-Check)를 습관화한다: 변경 라인=요청 직결? 범위 밖 수정 없나? 검증 수행했나?
 - **회귀 점검** — fork 에서 skill/규칙을 고치면 대표 시나리오 2개로 흐름을 수동 확인한다: ① Trivial 작업이 게이트에 막히지 않는가 ② Standard 새 기능이 "승인 전 구현 금지 / planner 는 자문만 / 집필 1회 / reviewer 코드 미수정" 을 지키는가.
 - **메모리** — 반복되는 교정·선호·결정은 프로젝트 `CLAUDE.md` / `docs/` / Claude Code 메모리 중 적절한 곳에 누적한다.

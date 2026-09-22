@@ -27,7 +27,7 @@ Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the r
 1. `claude plugin validate .`
 2. Consistency greps (must be zero hits): `~/.claude/skills` in skills/agents; `.claude/docs` in skills/agents; bare (unprefixed) skill/agent names in skills/agents; Korean residue outside the setup snippet
 
-Conditional checks (graph connectivity, local smoke, setup/teardown round-trip, compact-profile closure) live in [docs/maintenance.md](docs/maintenance.md) §Conditional Verification; `CLAUDE.md` §Verification Commands lists their triggers. Graph connectivity is the only check that catches a component nothing routes into — run it on every skill/agent add, remove, or rewire.
+Conditional checks (graph connectivity, local smoke, setup/teardown round-trip, doc-set closure) live in [docs/maintenance.md](docs/maintenance.md) §Conditional Verification; `CLAUDE.md` §Verification Commands lists their triggers. Graph connectivity is the only check that catches a component nothing routes into — run it on every skill/agent add, remove, or rewire.
 
 ## Git
 

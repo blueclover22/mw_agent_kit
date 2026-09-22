@@ -56,7 +56,7 @@ This is a Markdown/JSON repository — no build or tests. Run 1–2 after every 
 | A skill/agent added, removed, or rewired | Graph connectivity (SINK / ORPHAN) |
 | `skills/` · `agents/` · manifest changed (what actually ships) | Local smoke install |
 | `skills/setup/` or `skills/teardown/` logic changed | setup → re-run → teardown round-trip |
-| `skills/reverse-engineering/assets/` changed | Compact-profile closure + `related_to` symmetry |
+| `skills/reverse-engineering/assets/` changed | Doc-set closure (file references resolve) + `related_to` symmetry |
 
 ## Document Paths
 

@@ -1,22 +1,22 @@
 ---
 name: reverse-engineering
-description: Use when asked to bootstrap a project's docs/ set or reverse-engineer an existing codebase into that set; also supports brand-new projects.
+description: Use when asked to bootstrap a project's docs/ set or reverse-engineer an existing codebase into that set.
 ---
 
-# mak:reverse-engineering — Project Analysis into the Standard Doc Set
+# mak:reverse-engineering — Project Analysis into the Doc Set
 
 Bootstraps the project's `docs/` from the bundled template set at
 `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/project_docs/`,
-then fills it by analyzing the codebase (reverse engineering) or by recording agreed conventions (new project).
+then fills it by analyzing the codebase — recording the facts observed in the code.
 
 The set's own rules live inside it:
 
-- `project_docs/00.INDEX.md` — structure, per-topic SSOT, frontmatter conventions, content rules, profiles (the rulebook)
-- `project_docs/CLAUDE.md` — the writing/analysis procedure (how to execute the rulebook)
+- `project_docs/00.INDEX.md` — structure, per-topic SSOT, frontmatter conventions, content rules, domain / process registries (the rulebook)
+- `project_docs/CLAUDE.md` — the analysis procedure (how to execute the rulebook)
 
-This skill orchestrates: profile choice → copy → analyze/fill → template cleanup. The two files above are the SSOT for everything else — follow them, don't restate them.
+This skill orchestrates: copy → analyze/fill → template cleanup. The two files above are the SSOT for everything else — follow them, don't restate them.
 
-Templates are in English. Fill content in the user's language (or the project's documented language policy), keeping the structure.
+The set is one fixed composition — core documents `00`–`06` plus the unnumbered `domains/` (one file per feature domain) and `processes/` (one file per traced scenario) folders, each with a `_template.md` copy source. Templates are in English. Fill content in the user's language (or the project's documented language policy), keeping the structure.
 
 ## Procedure
 
@@ -24,47 +24,36 @@ Templates are in English. Fill content in the user's language (or the project's 
 
 - Confirm the project root (default: current working directory).
 - Check for existing guide documents — `docs/` content, plus obvious guide files elsewhere (e.g. a root-level ARCHITECTURE/CONTRIBUTING guide). If any exist, list them and **confirm with the user whether to merge** (merge / copy only missing files / abort). **Never overwrite an existing document without reading it first.**
-- **On merge, this skill's doc-set format is the baseline** — migrate the existing documents' content into the set's structure (per-topic SSOT, numbering, frontmatter per `00.INDEX.md`), not the other way around. For projects with a mature `docs/`, recommend "copy only missing files" as the lower-impact default. **Before executing a merge, present the plan first**: which files will be created/changed and which originals become superseded — proceed after confirmation. Facts already written in the existing guides are treated as source material for step 4 (verify against code before carrying over; unverifiable claims become `_(TODO)_`). After migration, list the superseded originals and let the user decide whether to archive or delete them — do not delete on your own.
+- **On merge, this skill's doc-set format is the baseline** — migrate the existing documents' content into the set's structure (per-topic SSOT, numbering, frontmatter per `00.INDEX.md`), not the other way around. For projects with a mature `docs/`, recommend "copy only missing files" as the lower-impact default. **Before executing a merge, present the plan first**: which files will be created/changed and which originals become superseded — proceed after confirmation. Facts already written in the existing guides are treated as source material for step 3 (verify against code before carrying over; unverifiable claims become `_(TODO)_`). After migration, list the superseded originals and let the user decide whether to archive or delete them — do not delete on your own.
 
-### 2. Choose a profile
+### 2. Copy the set
 
-**compact is the default.** Confirm it with the user, and move to standard only when the project clearly warrants it — production service, multiple domains, or team collaboration. Growing later is cheap; a set nobody maintains is not.
-
-| Profile | Docs copied | Fits |
-| :--- | :--- | :--- |
-| **compact** (default) | `00` `02` `03` `04` `06` `09` `10` `13` + `CLAUDE.md` (8 docs + guide) | solo / small single-stack apps |
-| **standard** | `00`–`13` all + `CLAUDE.md` + `domains/` (incl. `_template.md`) | production / multi-domain / teams |
-
-(Rationale and promotion path: `00.INDEX.md` §Profiles.)
-
-### 3. Copy the set
-
-- Copy the chosen files from `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/project_docs/` into `<project>/docs/`.
-- For standard, copy the `domains/` folder **recursively** (it holds `_template.md` — copying only top-level `*.md` loses it).
+- Copy the whole set from `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/project_docs/` into `<project>/docs/`.
+- Copy `domains/` and `processes/` **recursively** (each holds its `_template.md` — copying only top-level `*.md` loses them).
 - If the project has no `README.md`, offer `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/README.template.md` as an optional starting skeleton (separate decision; skip silently if the user doesn't want it).
 
-### 4. Analyze and fill
+### 3. Analyze and fill
 
-Follow `docs/CLAUDE.md` §2 (single flow, profile-specific fill order — SSOT there, not restated here; feature domains go to `domains/<domain>-guide.md` via `_template.md`; `13` gets only future backlog, never reconstructed history).
+Follow `docs/CLAUDE.md` §2 (single flow and fill order — SSOT there, not restated here; scenarios go to `processes/<name>.md`, feature domains to `domains/<name>.md`, each via its `_template.md`).
 
-**Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches, following `docs/CLAUDE.md` §2's profile-specific order. Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, and the output language. Keep interactive decisions (profile choice, overwrite confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (e.g. `00.INDEX.md` tables, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
+**Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches, following `docs/CLAUDE.md` §2's order. Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, and the output language. Keep interactive decisions (merge confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (`00.INDEX.md` registries, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
 
-Batches may be delegated in parallel, but only after the profile order and cross-document dependencies are respected, only among batches that have no dependency on each other, and only when their assigned document sets do not overlap — two batches writing the same document collide.
+Batches may be delegated in parallel, but only after the fill order and cross-document dependencies are respected, only among batches that have no dependency on each other, and only when their assigned document sets do not overlap — two batches writing the same document collide. A workable split: **A** `processes/` + `02` + `05` first (the trace grounds the structure documents) → **B** `01` §1–§4 + `03` and **C** `04` + `06` in parallel → **D** `domains/` + `01` §5–§6 after A, B, and C (domains are discovered while tracing; `01`'s Change Checklist and Troubleshooting link into `03`/`04`/`06`).
 
 Hard rules while filling (SSOT: `docs/CLAUDE.md` §1):
 
 - Record observed **facts (is)**, not aspirations; unverified cells get `_(TODO — <what's needed>)_`, never guesses.
 - Respect per-topic SSOT — one home per topic, links elsewhere.
 - Keep frontmatter `type` / `related_to` symmetric per the INDEX rules.
-- No time-stamped status outside `13`.
+- No time-stamped status anywhere in the set.
 
-### 5. Template cleanup + verification
+### 4. Template cleanup + verification
 
-Run the cleanup and the completion checklist exactly as defined in `docs/CLAUDE.md` §2 step 4 and §4 (remove `> Template:` blocks except in `CLAUDE.md`/`_template.md`, remove the INDEX usage section, no unreplaced `<...>`, grep check zero hits).
+Run the cleanup and the completion checklist exactly as defined in `docs/CLAUDE.md` §2 step 4 and §4 (remove `> Template:` blocks except in `CLAUDE.md`/`_template.md`, remove the INDEX intro and example registry rows, prune the stack table, no unreplaced `<...>`, grep check zero hits).
 
-### 6. Report
+### 5. Report
 
-Summarize: profile, files created, docs filled vs left `_(TODO)_`, and suggested next steps (e.g. fill remaining TODOs, or enter `mak:roadmap-planning` to shape `13`).
+Summarize: files created, docs filled vs left `_(TODO)_`, improvement observations noted while tracing (listed here only — never written into the set), and suggested next steps (e.g. fill remaining TODOs; if the user wants a roadmap, `mak:roadmap-planning` creates it as a separate document outside the set).
 
 ## Cautions
 
