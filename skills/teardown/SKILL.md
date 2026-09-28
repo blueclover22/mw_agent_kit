@@ -1,6 +1,7 @@
 ---
 name: teardown
 description: Use when asked to remove the mak-managed rules block from ~/.claude/CLAUDE.md, especially before uninstalling the plugin.
+disable-model-invocation: true
 ---
 
 # mak:teardown — Remove the mak Block from the Global CLAUDE.md

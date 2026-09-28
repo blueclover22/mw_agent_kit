@@ -98,9 +98,9 @@ claude plugin uninstall mak@mw-agent-kit
 | agent | 모델 | 역할 |
 | :--- | :--- | :--- |
 | `mak:planner` | opus | 비대화 아키텍처 자문(Architecture Brief) 전담, 읽기 전용 |
-| `mak:coder` | sonnet | 승인된 설계 기반 구현 전담 |
+| `mak:coder` | inherit | 승인된 설계 기반 구현 전담 |
 | `mak:reviewer` | opus | 구현 결과 검토·보고 전담 (코드 수정 금지) |
-| `mak:doc-editor` | haiku | Markdown 문서 편집·동기화 전담. 메인이 지정한 신규 문서 생성 포함 |
+| `mak:doc-editor` | sonnet | Markdown 문서 편집·동기화 전담. 메인이 지정한 신규 문서 생성 포함 |
 | `mak:analyzer` | opus | 코드 분석·문서 채움 전담, 사실만 기록 (코드 수정 금지) |
 | `mak:auditor` | opus | `mak:doc-audit` 문서 간 정합성 감사 전담, 보고만 (문서 수정 금지) |
 | `mak:researcher` | opus | 외부 자료 조사 후 지정 경로에 조사 문서 산출 전담 (코드 수정 금지) |

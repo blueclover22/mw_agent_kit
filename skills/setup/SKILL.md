@@ -1,6 +1,7 @@
 ---
 name: setup
 description: Use when asked to install or update the mak common rules in ~/.claude/CLAUDE.md, optionally in Korean (ko) or English (en).
+disable-model-invocation: true
 ---
 
 # mak:setup — Install Common Rules into the Global CLAUDE.md

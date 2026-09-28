@@ -1,7 +1,7 @@
 ---
 name: doc-editor
 description: Use to edit, organize, or sync Markdown (docs/, design docs, README, CHANGELOG) on explicit request or confirmed post-feature doc sync, or to create one whose path and content the main thread specifies. Never changes code; never authors design docs or the roadmap.
-model: haiku
+model: sonnet
 tools: Read, Edit, Write, Grep, Glob
 ---
 

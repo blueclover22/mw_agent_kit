@@ -98,9 +98,9 @@ claude plugin uninstall mak@mw-agent-kit
 | Agent | Model | Role |
 | :--- | :--- | :--- |
 | `mak:planner` | opus | Non-interactive architecture consultation (Architecture Brief), read-only |
-| `mak:coder` | sonnet | Implementation against an approved design |
+| `mak:coder` | inherit | Implementation against an approved design |
 | `mak:reviewer` | opus | Review and report only (never modifies code) |
-| `mak:doc-editor` | haiku | Editing/syncing Markdown documents, including new ones the main thread specifies |
+| `mak:doc-editor` | sonnet | Editing/syncing Markdown documents, including new ones the main thread specifies |
 | `mak:analyzer` | opus | Code analysis and doc filling — records facts only (never modifies code) |
 | `mak:auditor` | opus | `mak:doc-audit` cross-document consistency audit — report-only (never modifies documents) |
 | `mak:researcher` | opus | External-source research written out as a document at an assigned path (never modifies code) |
