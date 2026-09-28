@@ -1,6 +1,6 @@
 ---
 name: verify-checklist
-description: Use after any implementation or change, before reporting it done, even without an explicit verification request.
+description: Use before reporting a change done when the project declares verification commands, or when the user asks for verification.
 ---
 
 # Post-Change Verification Checklist
@@ -95,8 +95,8 @@ Verification never decides the next stage on its own — report the results and 
 | Outcome | Next |
 | :--- | :--- |
 | A step failed | Fix and re-run from ①. If the fix is non-trivial and the `mak:coder` agent is in the available agent list, delegate it. If the failure exposes a design mismatch or a scope expansion, stop and report instead of fixing |
-| All passed, slice/stage complete | Hand off to `mak:review-report` (or the `mak:reviewer` agent if it is in the available agent list) |
-| All passed, work continues | Return to the main thread — it decides the next step. If `mak:coder` performed the change, route through `mak:review-report` first |
+| All passed, Standard-or-above slice/stage complete | Hand off to `mak:review-report` (or the `mak:reviewer` agent if it is in the available agent list) |
+| All passed, other cases (work continues, or Trivial / Small done) | Return to the main thread — it decides the next step. When `mak:coder` performed the change, the main thread reads its diff before reporting |
 
 Never route into `mak:commit` from here. Committing requires the user's explicit request.
 
