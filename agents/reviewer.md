@@ -2,6 +2,7 @@
 name: reviewer
 description: Use after implementation or mak:coder when code needs review against its design doc/conventions, or on explicit requests ("code review", "PR review", "review the implementation"). Report-only; never modifies code. Do not use for generic "check", verification, or document review.
 model: opus
+effort: low
 tools: Read, Grep, Glob, Bash
 skills:
   - mak:review-report
