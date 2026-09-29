@@ -15,55 +15,19 @@ After completing any implementation step, verify in the order below before repor
 
 ### ① Build / Type Check
 
-Catch compile and type errors first. If this step fails, later steps are meaningless.
-
-Examples:
-
-```
-pnpm tsc --noEmit          # TypeScript type check
-pnpm build                 # bundle build
-cargo build                # Rust build
-go build ./...             # Go build
-mvn compile                # Java/Maven compile
-```
+Catch compile and type errors first. If this step fails, later steps are meaningless. e.g. `pnpm tsc --noEmit`, `cargo build`, `go build ./...`, `mvn compile`.
 
 ### ② Lint
 
-Check code style and static-analysis errors.
-
-Examples:
-
-```
-pnpm lint                  # ESLint (Node/TS)
-cargo clippy               # Rust clippy
-golangci-lint run          # Go lint
-```
+Check code style and static-analysis errors. e.g. `pnpm lint`, `cargo clippy`, `golangci-lint run`.
 
 ### ③ Unit Tests
 
-Confirm the changed logic does not break existing contracts.
-
-Examples:
-
-```
-pnpm test                  # Jest / Vitest etc.
-cargo test                 # Rust tests
-go test ./...              # Go tests
-mvn test                   # Java/Maven tests
-yarn test                  # Yarn projects
-```
+Confirm the changed logic does not break existing contracts. e.g. `pnpm test`, `cargo test`, `go test ./...`, `mvn test`.
 
 ### ④ Format
 
-Check formatting consistency. **Format only the files you changed** — project-wide reformatting inflates the diff and conflicts with the Precise Changes principle. Skippable if CI already enforces it.
-
-Examples:
-
-```
-pnpm prettier --write <changed files>   # Prettier (JS/TS/MD)
-cargo fmt -- <changed files>            # Rust format
-gofmt -w <changed files>                # Go format
-```
+Check formatting consistency. **Format only the files you changed** — project-wide reformatting inflates the diff and conflicts with the Precise Changes principle. Skippable if CI already enforces it. e.g. `pnpm prettier --write <changed files>`, `cargo fmt -- <changed files>`, `gofmt -w <changed files>`.
 
 ### ⑤ Manual Scenario (UI changes only)
 
@@ -110,7 +74,6 @@ Never route into `mak:commit` from here. Committing requires the user's explicit
 - `node_modules/.bin/<tool>` — use package-manager scripts instead of direct paths
 - Prefer platform-independent commands (package-manager scripts, task runners) over OS-specific shell invocations (`cmd.exe /c ...`, `powershell.exe -Command ...`). When an OS-specific command is unavoidable, note both platform forms (`cp` / `Copy-Item`, etc.)
 - `git commit`, `git push` — only when the user explicitly says "commit"/"push". Otherwise the user runs these directly
-- Never report "done" before confirming verification results
 
 ---
 

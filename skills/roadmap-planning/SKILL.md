@@ -10,12 +10,9 @@ It focuses on mid/long-term direction across phases — phase boundaries, priori
 
 Write the roadmap and all user-facing output in the user's conversation language (or the project's documented language policy). The bundled template is in English; keep its structure.
 
-<HARD-GATE>
-This skill performs investigation and document writing only. No implementation or code modification.
+## Write boundary
 
-Allowed: read-only investigation (Read / Grep / Glob / git log), and creating/updating the roadmap document (.md) after user approval.
-Prohibited: creating/modifying/deleting source code files; running build or execution commands.
-</HARD-GATE>
+The roadmap directs work, it does not do it: investigation and document writing only. Allowed: read-only investigation (Read / Grep / Glob / git log) and creating/updating the roadmap document (.md) after user approval. Prohibited: creating, modifying, or deleting source code files and running build or execution commands.
 
 ---
 

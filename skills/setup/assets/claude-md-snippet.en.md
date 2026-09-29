@@ -31,7 +31,7 @@
 
 ## mak Delegation Rules
 
-The user who installed this block has **pre-approved subagent delegation** in the mak flow — when a task meets the criteria below and the agent's own description conditions, the main thread launches the agent without further confirmation. Delegate only sizeable, independent, parallelizable work, bulk investigation or output that would crowd the main context, or a role an agent's description assigns. Do not delegate what a handful of tool calls can finish, and do not use a subagent to re-check your own work — stage-completion review of Standard-or-above work and user-requested review are the exceptions.
+The user who installed this block has **pre-approved subagent delegation** in the mak flow — when a task meets the criteria below, the main thread launches the agent without further confirmation. Delegate only sizeable, independent, parallelizable work, bulk investigation or output that would crowd the main context, or a role an agent's description assigns. Do not delegate what a handful of tool calls can finish, and do not use a subagent to re-check your own work — stage-completion review of Standard-or-above work and user-requested review are the exceptions.
 
 **When** to invoke each skill/agent is in its own description. This section fixes only the entry points and the order/constraints between them.
 
@@ -50,15 +50,13 @@ The user who installed this block has **pre-approved subagent delegation** in th
 > When a request matches several rows, follow the first one from the top. The verify / review / audit rows are sequential stages when their conditions hold, though — not exclusive choices.
 
 - Development cycle — `mak:brainstorming` → `mak:dev-kickoff` → `mak:design-doc-template` → implement → `mak:verify-checklist` → `mak:review-report` — verify and review follow the routing table's conditions
-- `mak:dev-resume`, `mak:doc-audit`, and `mak:reverse-engineering` are not stages of the cycle — never run them every iteration
-- `mak:commit` is not chained from the cycle — it is entered only on the user's explicit request (invoking the skill is the explicit commit request).
-- Progress on multi-step work is recorded in the design doc's §5.0 `Step → verify` Status column — whoever implements the step advances it as each verify criterion passes
+- `mak:dev-resume`, `mak:doc-audit`, and `mak:reverse-engineering` are not stages of the development cycle — never run them every iteration
+- `mak:commit` is not chained from any stage — it is entered only on the user's explicit request (invoking the skill is the explicit commit request).
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
 - Trivial / Small work may be delegated to `mak:coder` without an approved plan; Standard and above only after design approval. Once a `mak:coder` change passes `mak:verify-checklist`, Standard-or-above work goes through `mak:review-report` at stage completion, and for Trivial / Small the main thread reads the diff itself.
 - Design docs and the roadmap are written by the main thread — their content exists only in the conversation. The design doc is written once. Editing/syncing any other Markdown document, and creating one, is delegated to `mak:doc-editor` with its path and content specified.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
-- Investigation-only delegations (`mak:planner`, `mak:reviewer`, `mak:auditor`) are read-only, and are invoked concurrently in a single message when their investigation scopes do not overlap — overlapping scopes duplicate the same work, so split the scope and invoke sequentially instead. Splitting review by module or dimension is the typical case. Never hand verification commands to delegations invoked concurrently — their outputs collide.
-- Writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`, `mak:researcher`) are first judged for disjoint write targets, and run in parallel when they are disjoint — overlapping targets collide, so split them serially. The disjointness criterion is the design doc's §Scope of Changes, the target document list, the assigned document set, and the output document path respectively. When they run in parallel, the main thread takes over updating the design doc's §5.0 Status and running verification — so no two delegations touch the same row or the same command.
-- The main thread merges the results of parallel delegation — subagents do not know what the others found, so pack every piece of needed context into each delegation
+- Investigation-only delegations (`mak:planner`, `mak:reviewer`, `mak:auditor`) are read-only, and are invoked concurrently in a single message when their investigation scopes do not overlap — otherwise split the scope and invoke sequentially. Splitting review by module or dimension is the typical case. Never hand verification commands to delegations invoked concurrently — their outputs collide.
+- Writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`, `mak:researcher`) are first judged for disjoint write targets, and run in parallel when they are disjoint — overlapping targets collide, so split them serially. The disjointness criterion is the design doc's §Scope of Changes, the target document list, the assigned document set, and the output document path respectively. When they run in parallel, the main thread takes over updating the design doc's §5.0 Status and running verification. The main thread merges the results of parallel delegation, and each delegation gets all the context it needs.
 
 <!-- mak:end -->

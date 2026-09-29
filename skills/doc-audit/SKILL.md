@@ -1,6 +1,6 @@
 ---
 name: doc-audit
-description: Use after a slice/phase completes, at a phase transition, or before handing off unfinished work. Not for single-design implementation review (mak:review-report), verification (mak:verify-checklist), code-vs-doc behavior analysis (mak:analyzer), or choosing the next task (mak:dev-resume).
+description: Use after a slice/phase completes, at a phase transition, or before handing off unfinished work.
 ---
 
 # Document Audit Guide
@@ -21,7 +21,7 @@ Report only, in the user's language — **never edit documents**. Fixes go throu
 
 **Do not run on every commit** — this targets accumulated drift across documents, not a single change.
 
-Route elsewhere: implementation vs. one design doc → `mak:review-report`; build/lint/tests → `mak:verify-checklist`; whether documented *behavior* matches code → `mak:analyzer`.
+Route elsewhere: implementation vs. one design doc → `mak:review-report`; build/lint/tests → `mak:verify-checklist`; whether documented *behavior* matches code → `mak:analyzer`; choosing the next task → `mak:dev-resume`.
 
 ## Audit Surface
 

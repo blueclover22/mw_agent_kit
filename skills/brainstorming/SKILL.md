@@ -9,11 +9,9 @@ This skill is responsible for **divergence (expand) plus light ranking** — pou
 
 Write all user-facing output in the user's conversation language (or the project's documented language policy).
 
-<HARD-GATE>
-Do not implement, write design documents, or create/modify files of any kind.
+## Write boundary
 
-Read-only investigation (Read, Grep, Glob, git log, etc.) is allowed and encouraged for context gathering. Prohibited writes: creating, modifying, or deleting code or document files.
-</HARD-GATE>
+Do not implement, write design documents, or create/modify/delete files of any kind — divergence must stay cheap and reversible. Read-only investigation (Read, Grep, Glob, git log, etc.) is allowed and encouraged.
 
 ## When to Use
 

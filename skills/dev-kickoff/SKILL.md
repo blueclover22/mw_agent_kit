@@ -109,7 +109,7 @@ Clear success criteria enable independent iteration. Narrow vague criteria like 
 
 ### 7. Documentation handoff
 
-Runs only after §6 design approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see §Approval gate). Save it with meta `Status: approved`. This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming).
+Runs only after §6 design approval. Save it with meta `Status: approved`. This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming).
 
 `mak:dev-kickoff` never loops draft-then-rewrite on the same document — write it once here; later steps only revise it (§8 self-review fixes, §9 user change requests).
 
@@ -138,8 +138,6 @@ If self-review produced substantive changes beyond typos, mention them briefly w
 State the saved path and move to §10 without waiting for a second approval. The user may still request changes — apply them and re-run the self-review. If self-review or a requested change alters an already-approved decision (not wording), present that change and get approval before §10.
 
 ### 10. Handoff to next stage
-
-Once the design is approved:
 
 ```
 1. Design approved at §6 — never move on without it
@@ -173,11 +171,3 @@ Once the design is approved:
 ```
 
 The design doc is the source of truth. All subsequent agents (or direct work) operate against it.
-
-## Core Principles
-
-- **Batch questions** — only those that change the work, in one message
-- **YAGNI** — cut anything not needed for the stated goal
-- **Explore first** — always check existing patterns before proposing
-- **One approval** — present the whole design, revise on feedback
-- **Explicit trade-offs** — every option must include concrete downsides

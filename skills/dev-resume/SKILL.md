@@ -9,12 +9,9 @@ Derives, from what project documents already show, (a) how far work has progress
 
 Report and all user-facing output in the user's conversation language (or the project's documented language policy).
 
-<HARD-GATE>
-Diagnose, report, and route only.
+## Write boundary
 
-Allowed: Read / Grep / Glob, read-only git commands, reproducing only the verification commands the documents actually claim (§Procedure step 3).
-Forbidden: creating/modifying/deleting any file, any code change. Found defects go on the next-step candidate list — never fixed here.
-</HARD-GATE>
+This skill diagnoses, reports, and routes only — fixes go through the normal flow. Allowed: Read / Grep / Glob, read-only git commands, and reproducing only the verification commands the documents actually claim (§Procedure step 3). Forbidden: creating/modifying/deleting any file and any code change; found defects go on the next-step candidate list.
 
 ## When to Use
 
