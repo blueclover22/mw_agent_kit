@@ -1,5 +1,5 @@
 ---
-description: Kickoff should batch all clarifying questions into one message instead of asking one at a time. Passes only partially until mak:dev-kickoff reliably batches its questions.
+description: Kickoff should batch all clarifying questions into one message instead of asking one at a time.
 tags: [routing, kickoff]
 max_turns: 20
 allowed_tools: [Read, Glob, Grep, Skill, Agent]

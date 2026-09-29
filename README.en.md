@@ -132,10 +132,10 @@ The basic development flow:
    │ direction chosen
    ▼
    ② /mak:dev-kickoff ─────────▶ [delegate, opt] mak:planner — Architecture Brief, read-only
-   │ ⚑ Approval gate 1 — design content. No file is written before this
+   │ ⚑ Approval gate — one approval of the whole design. No file is written before this
    ▼
    ③ /mak:design-doc-template ── design doc = the state between stages
-   │ ⚑ Approval gate 2 — start      §5.0 Step table records progress (⬜ / ▶ / ✅)
+   │ saved → implement              §5.0 Step table records progress (⬜ / ▶ / ✅)
    ▼
    ④ implement → /mak:verify-checklist ──▶ [delegate] mak:coder
    ▲        build→lint→test→format→manual      advances §5.0 Status per passing step

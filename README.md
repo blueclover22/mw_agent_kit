@@ -132,10 +132,10 @@ claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publis
    │ 방향 선택
    ▼
    ② /mak:dev-kickoff ─────────▶ [위임·선택] mak:planner — Architecture Brief, 읽기 전용
-   │ ⚑ 승인 게이트 1 — 설계 내용 승인. 승인 전에는 어떤 파일도 쓰지 않음
+   │ ⚑ 승인 게이트 — 설계 전체 1회 승인. 승인 전에는 어떤 파일도 쓰지 않음
    ▼
    ③ /mak:design-doc-template ── 설계 문서 = 단계 간 상태 저장소
-   │ ⚑ 승인 게이트 2 — 구현 착수    §5.0 Step 표에 진행 상태(⬜ / ▶ / ✅) 기록
+   │ 저장 후 바로 구현             §5.0 Step 표에 진행 상태(⬜ / ▶ / ✅) 기록
    ▼
    ④ 구현 → /mak:verify-checklist ──▶ [위임] mak:coder
    ▲        빌드→린트→테스트→포맷→수동      Step 통과 시 §5.0 Status 갱신

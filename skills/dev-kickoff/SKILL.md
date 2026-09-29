@@ -20,30 +20,23 @@ Enter for behavior changes spanning multiple files/modules, new features/compone
 - Writing a feature/module **design doc** to spec → `mak:design-doc-template`
 - The task itself is undecided and must be derived from the documents → `mak:dev-resume`
 
-<HARD-GATE>
-Two approvals gate two different actions — do not conflate them:
+## Approval gate
 
-1. **Design-content approval (§6)** — until the user approves the presented design content, no writes of any kind (file creation, modification, deletion).
-2. **Implementation-start approval (§9–§10)** — until the user approves against the saved document, no implementation writes.
-
-The ONLY writes permitted between the two gates are: saving the design doc itself (§7, requires §6 approval first) and subsequent edits to that same document (§8 self-review fixes, §9 user change requests). Nothing else is written until §10.
-
-Reading files, read-only commands (git log, ls, grep, etc.), and search tools are allowed and encouraged throughout. Exception: if sizing clearly comes out Trivial / Small, stop this skill and switch to the general lightweight flow.
-</HARD-GATE>
+Write nothing — no file creation, modification, or deletion — until the user approves the design (§6). Scope and approach are the user's decision, and anything written earlier may be thrown away. Between approval and implementation the only write is the design doc itself (§7) and edits to it. Reading files, read-only commands, and search are fine throughout. If sizing comes out clearly Trivial / Small, leave this skill for the lightweight flow.
 
 ## Checklist
 
 Complete in order:
 
 1. **Explore project context** — README, CLAUDE.md, docs/, recent commits, related source files
-2. **Clarifying questions** — one at a time until purpose, constraints, and success criteria are clear
+2. **Clarifying questions** — ask the ones whose answers would materially change the work, together in one message
 3. **Decide on planner consultation** — Standard: as needed; Risky / multi-module / migration: request a `mak:planner` Architecture Brief as a rule
 4. **Propose 2–3 approaches** — with trade-offs and a recommendation, based on the planner report or main-thread investigation (include at least one simpler alternative)
 5. **Convert to verifiable goals** — turn the task into measurable success criteria and a `Step → verify: check` plan
-6. **Present the design** — present section by section, proceeding after each section's approval
+6. **Present the design** — the whole design at once; get one approval
 7. **Documentation handoff** — the main thread saves the approved design per the `mak:design-doc-template` spec
 8. **Self-review** — unconfirmed decisions, contradictions, scope problems + simplicity / precise-changes self-check
-9. **User review gate** — wait for user confirmation
+9. **Report and proceed** — give the saved path; re-confirm only if self-review or a requested change alters an approved decision
 10. **Handoff to next stage** — see the Handoff section below
 
 ## Procedure
@@ -60,11 +53,11 @@ Before asking questions:
 
 ### 2. Clarifying questions
 
-- One question per message — do not stack multiple questions
-- Offer multiple-choice options when enumerable
-- Focus on: purpose, constraints, success criteria, known non-goals
-- If the request spans independent subsystems, confirm decomposition before detailed discussion
-- If the user explicitly asks for "all questions at once", number them in a single message
+- Ask only questions whose answers would materially change scope, approach, or success criteria
+- Batch them in one message; use the AskUserQuestion tool when choices are enumerable (up to 4 questions per call)
+- Decide routine details yourself and list them as assumptions
+- Split into a later round only when an answer changes which questions come next
+- If the request spans independent subsystems, confirm the decomposition first
 
 ### 3. Decide on planner consultation
 
@@ -111,13 +104,12 @@ Clear success criteria enable independent iteration. Narrow vague criteria like 
 
 ### 6. Present the design
 
-- Write each section at a length matching its complexity (a few sentences for simple content, up to ~300 words for complex content)
-- Cover: architecture, component boundaries, data flow, error handling, test strategy
-- Request approval after each section. Revise on feedback, then proceed
+- Present all sections in one message: architecture, component boundaries, data flow, error handling, test strategy — each at a length matching its complexity
+- Request one approval. Revise on feedback
 
 ### 7. Documentation handoff
 
-Runs only after §6 design-content approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see HARD-GATE). This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming).
+Runs only after §6 design approval — this is the first write in the flow, and all writes before §10 are limited to this design doc (see §Approval gate). Save it with meta `Status: approved`. This step's core responsibility is pinning the approved design as a document **once**, written directly by the main thread per the `mak:design-doc-template` spec (sections, save location, file naming).
 
 `mak:dev-kickoff` never loops draft-then-rewrite on the same document — write it once here; later steps only revise it (§8 self-review fixes, §9 user change requests).
 
@@ -139,21 +131,19 @@ Fix immediately. No re-review needed.
 
 If self-review produced substantive changes beyond typos, mention them briefly when handing the document to the user.
 
-### 9. User review gate (implementation-start approval)
+### 9. Report and proceed
 
-> "The design doc is saved at `<path>`. Please review and tell me anything that needs changing. If it looks good, reply 'proceed' or 'approve'. I'll continue to the next stage after explicit confirmation."
+> "The design doc is saved at `<path>`. Moving to implementation — tell me if anything should change."
 
-Wait for confirmation. On change requests, apply them to the design doc and re-run the self-review; if a change alters an already-approved design decision (not just wording), re-present that section per §6 before proceeding.
+State the saved path and move to §10 without waiting for a second approval. The user may still request changes — apply them and re-run the self-review. If self-review or a requested change alters an already-approved decision (not wording), present that change and get approval before §10.
 
 ### 10. Handoff to next stage
 
 Once the design is approved:
 
 ```
-1. Confirm design approval
-   - The user explicitly confirmed ("approve", "proceed", "OK", etc.)
-   - Never move on without approval
-   - The design doc was already written once in §7 — do not rewrite it here
+1. Design approved at §6 — never move on without it
+   - The doc was written once in §7, do not rewrite it
 
 2. Delegate implementation to coder after approval
    - If the mak:coder agent is available:
@@ -186,8 +176,8 @@ The design doc is the source of truth. All subsequent agents (or direct work) op
 
 ## Core Principles
 
-- **One question at a time** — never stack questions
+- **Batch questions** — only those that change the work, in one message
 - **YAGNI** — cut anything not needed for the stated goal
 - **Explore first** — always check existing patterns before proposing
-- **Incremental approval** — present, collect feedback, revise; never batch it all
+- **One approval** — present the whole design, revise on feedback
 - **Explicit trade-offs** — every option must include concrete downsides

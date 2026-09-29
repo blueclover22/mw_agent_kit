@@ -77,7 +77,7 @@ claude plugin eval . --tag routing --runs 3 --ablation with-without --scaffold -
 
 An agent-frontmatter change also runs `--tag agent --ablation none` (same other flags) — plugin agents do not exist in the baseline arm.
 
-Scope limits: eval runs load only the plugin — the setup snippet (and any workspace `CLAUDE.md`) is not loaded, so rules that live only in the snippet (grade declaration, delegation criteria) are not measured. Native Windows cannot grant `Bash`, so cases must not depend on it. `kickoff-question-batch` passes only partially (below the 1.0 threshold) until `mak:dev-kickoff` reliably batches its clarifying questions. Results under `evals/results/` are gitignored.
+Scope limits: eval runs load only the plugin — the setup snippet (and any workspace `CLAUDE.md`) is not loaded, so rules that live only in the snippet (grade declaration, delegation criteria) are not measured. Native Windows cannot grant `Bash`, so cases must not depend on it. Results under `evals/results/` are gitignored.
 
 ### Local smoke — `skills/` · `agents/` · manifest changed (what actually ships)
 
