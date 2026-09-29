@@ -46,10 +46,3 @@ Reuse `mak:review-report` grades — 🔴 Critical / 🟡 Warning / 🟢 Pass / 
 
 | Grade | Item | Location | Evidence (claim vs. observed) |
 | :--- | :--- | :--- | :--- |
-
-## Core Principles
-
-- **Never fix** — defects become next-step candidates, not edits
-- **No unsupported findings** — every finding cites its evidence
-- **Candidates are always plural** — never present a single forced next step
-- **Respect existing designations** — a next item the documents already name is never displaced by newly found issues; present it alongside them

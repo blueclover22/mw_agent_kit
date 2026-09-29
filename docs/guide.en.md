@@ -22,10 +22,10 @@ The kit packages the core stages that repeat in every project — idea divergenc
 
 | Skill | One-liner |
 | :--- | :--- |
-| `mak:roadmap-planning` | Establish/maintain the project-wide phase structure. Mid/long-term direction, priorities, status. No implementation (HARD-GATE) |
-| `mak:brainstorming` | Divergence plus light ranking for vague/multi-directional requirements. Simplicity is an evaluation axis; "simpler alternative" check enforced. Detailed requirements convergence and design docs belong to follow-up skills (no implementation or design docs here, HARD-GATE) |
+| `mak:roadmap-planning` | Establish/maintain the project-wide phase structure. Mid/long-term direction, priorities, status. No implementation |
+| `mak:brainstorming` | Divergence plus light ranking for vague/multi-directional requirements. Simplicity is an evaluation axis; "simpler alternative" check enforced. Detailed requirements convergence and design docs belong to follow-up skills (no implementation or design docs here) |
 | `mak:dev-kickoff` | Kickoff sizing + conversational orchestration for Standard/Risky work. Requirements convergence → planner consult decision → options → verifiable goals → approval gate → documentation handoff. No implementation before approval |
-| `mak:dev-resume` | Re-entry point for when the next task itself is undecided. Derives progress, problems, and one next step from documents (roadmap status, design-doc `Status`, recent commits), each with evidence. Explicit-invocation only; diagnose/report/route only (HARD-GATE) |
+| `mak:dev-resume` | Re-entry point for when the next task itself is undecided. Derives progress, problems, and one next step from documents (roadmap status, design-doc `Status`, recent commits), each with evidence. Explicit-invocation only; diagnose/report/route only, no file edits |
 | `mak:design-doc-template` | Design-doc sections §1–§8, §5.0 Step → verify table, option comparison, assumption notation, quality checklist, and the **save-location rule SSOT (default `.claude/mak/plan/`)** |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
 | `mak:review-report` | SSOT for the review procedure and report format. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 Note, 6-item Warning checklist |

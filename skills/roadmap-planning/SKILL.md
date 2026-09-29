@@ -66,7 +66,7 @@ Write two blocks:
 
 ### 3. Set phase boundaries
 
-Split phases by dependency, risk, and scope.
+Split phases by dependency, risk, and scope; 3–9 phases recommended — too many dilutes direction.
 Present 2–3 options in a comparison table with a recommendation. If hard constraints (fixed dependency order, a single viable phase boundary, etc.) leave only one real split, state the constraint and proceed with a single option. Do not fabricate alternative splits.
 
 | Option | Phase split approach | Pros | Cons |
@@ -132,17 +132,6 @@ Save-path priority:
 
 - Kicking off a single feature within a phase → `mak:dev-kickoff`
 - A phase's direction is unclear and needs divergence → `mak:brainstorming` first
-
----
-
-## Core Principles
-
-- **Every phase needs a clear "why."** Orders without reasons collapse when requirements change.
-- **Never delete completed items from the body.** Keep them for maintenance reference.
-- **Mark transfers/holds as official states.** Make deferral itself transparent.
-- **3–9 phases recommended.** Too many dilutes direction.
-- **Status icons: 1–2 characters.** Keep tables scannable.
-- **Sub-items use `Phase-Index` naming** (e.g. `3-7`) — easy to reference from design docs and commits.
 
 ---
 

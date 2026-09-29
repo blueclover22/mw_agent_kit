@@ -114,7 +114,7 @@ claude plugin uninstall mak@mw-agent-kit
 - Only the plugin is loaded, so the global rules `/mak:setup` installs (grade declaration, delegation criteria) are not measured.
 
 ```
-claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write
+claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write --trust-plugin
 ```
 
 See [`docs/maintenance.md`](docs/maintenance.md) §Behavior eval for the full procedure and options.

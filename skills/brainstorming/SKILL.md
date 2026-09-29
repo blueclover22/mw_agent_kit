@@ -36,21 +36,13 @@ Conversely, skip this skill and go straight to `mak:dev-kickoff` when:
 
 Perform in order:
 
-1. **Clarify the problem/goal** — limit to 1–2 questions to grasp the core. Do not dig into detailed requirements (that is `mak:dev-kickoff` territory).
+1. **Clarify the problem/goal** — read `CLAUDE.md`, `README.md`, etc. for context first, then ask 1–2 questions to grasp the core. Do not dig into detailed requirements (that is `mak:dev-kickoff` territory).
 2. **Multi-perspective exploration** — derive ideas from technical / user / operations / cost / time perspectives.
-3. **Diverge** — list **at least 5** ideas. Pour them out first without censoring or self-review. Include at least one simplest-possible alternative among the candidates.
+3. **Diverge** — list **at least 5** ideas. Pour them out first without censoring or self-review. Record wild ideas even if they look infeasible. Include at least one simplest-possible alternative among the candidates.
 4. **Quick evaluation** — summarize each idea's appeal, feasibility, simplicity, and risk in one line.
 5. **Simpler-alternative check** — before narrowing to top candidates, ask "is there an even simpler way?" If the user's initial idea seems excessive, push back explicitly.
 6. **Recommend top 2–3** — present with reasons.
 7. **Handoff guidance** — once the user picks a direction, guide: "To proceed in this direction, move to the `mak:dev-kickoff` skill for requirements convergence and design entry."
-
-## Core Principles
-
-- **Separate ideation from judgement** — do not evaluate quality while listing ideas
-- **Go for quantity** — fill 5+ first, then cut
-- **Welcome wild ideas** — record them even if they look infeasible
-- **No detailed design or implementation specifics** — defer to `mak:dev-kickoff`
-- **Check project convention docs first** — read `CLAUDE.md`, `README.md`, etc. for context
 
 ## Output Format
 

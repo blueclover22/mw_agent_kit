@@ -79,6 +79,8 @@ An agent-frontmatter change also runs `--tag agent --ablation none` (same other 
 
 Scope limits: eval runs load only the plugin — the setup snippet (and any workspace `CLAUDE.md`) is not loaded, so rules that live only in the snippet (grade declaration, delegation criteria) are not measured. Native Windows cannot grant `Bash`, so cases must not depend on it. Results under `evals/results/` are gitignored.
 
+In `with-without` runs, Skill-fired graders are plugin-fired indicators excluded from the score — read them in the report.
+
 ### Local smoke — `skills/` · `agents/` · manifest changed (what actually ships)
 
 `claude plugin marketplace add <repo path>` → `claude plugin install mak@mw-agent-kit` → check skills/agents appear. Note: with a same-version local marketplace, `plugin update` does NOT refresh the cache — bump `version` in plugin.json or uninstall/reinstall

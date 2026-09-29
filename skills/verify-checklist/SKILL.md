@@ -5,7 +5,7 @@ description: Use before reporting a change done when the project declares verifi
 
 # Post-Change Verification Checklist
 
-After completing any implementation step, verify in the order below before reporting results.
+When this skill applies (see description), verify in the order below before reporting results.
 
 ---
 

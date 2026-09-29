@@ -1,6 +1,6 @@
 ---
 description: Multi-file feature request should trigger dev-kickoff instead of jumping to implementation
-tags: [routing, kickoff]
+tags: [routing, kickoff, smoke]
 max_turns: 20
 allowed_tools: [Read, Glob, Grep, Skill, Agent]
 ---

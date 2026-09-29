@@ -114,7 +114,7 @@ claude plugin uninstall mak@mw-agent-kit
 - 플러그인만 로드해 측정하므로 `/mak:setup` 이 설치하는 전역 규칙(등급 선언·위임 기준)은 측정 대상이 아닙니다.
 
 ```
-claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write
+claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write --trust-plugin
 ```
 
 실행 절차와 옵션은 [`docs/maintenance.md`](docs/maintenance.md) §Behavior eval 을 참고하세요.

@@ -153,8 +153,9 @@ State the saved path and move to §10 without waiting for a second approval. The
    - If implementation was delegated to mak:coder:
        → coder runs mak:verify-checklist itself; confirm its reported results
    - Otherwise:
-       → run mak:verify-checklist after each step, and update that step's
-         Status cell in the design doc §5.0 once its verify criterion passes
+       → verify each step against its §5.0 verify criterion (run
+         mak:verify-checklist when the project declares verification commands),
+         and update that step's Status cell once it passes
          (per the mak:design-doc-template §5.0 status-column rule)
 
 4. Delegate review on major-stage completion
