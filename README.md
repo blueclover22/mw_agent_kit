@@ -105,6 +105,20 @@ claude plugin uninstall mak@mw-agent-kit
 | `mak:auditor` | opus | `mak:doc-audit` 문서 간 정합성 감사 전담, 보고만 (문서 수정 금지) |
 | `mak:researcher` | opus | 외부 자료 조사 후 지정 경로에 조사 문서 산출 전담 (코드 수정 금지) |
 
+### 동작 평가 (evals)
+
+`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스 10개가 들어 있습니다(skill 라우팅 7개, agent 품질 3개). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
+
+- 설치본에 함께 복사되지만 세션에 로드되지 않으며, 자동으로 실행되지도 않습니다.
+- 직접 실행할 때만 동작하고, 실행한 사람의 자격증명으로 Claude 세션을 띄우므로 **구독 사용량에서 차감되거나(claude.ai 로그인) API 요금이 청구됩니다(API 키)**. `--max-cost-usd` 로 상한을 거세요 — 상한은 정가 기준 추정치이며 구독 사용량 한도가 아닙니다.
+- 플러그인만 로드해 측정하므로 `/mak:setup` 이 설치하는 전역 규칙(등급 선언·위임 기준)은 측정 대상이 아닙니다.
+
+```
+claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write
+```
+
+실행 절차와 옵션은 [`docs/maintenance.md`](docs/maintenance.md) §Behavior eval 을 참고하세요.
+
 ## 5. 사용 방법 및 문서
 
 기본 개발 흐름:

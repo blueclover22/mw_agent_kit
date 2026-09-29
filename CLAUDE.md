@@ -1,6 +1,6 @@
 # CLAUDE.md — Development Rules for the mak Plugin Repository
 
-This repository IS the Claude Code plugin `mak`. There is no source code — everything is Markdown / JSON.
+This repository IS the Claude Code plugin `mak`. There is no application code — everything is Markdown / JSON, plus Bash fixture scripts under `evals/`.
 The repository root is the plugin root; the manifest lives at `.claude-plugin/plugin.json`.
 
 ## Language Policy
@@ -8,6 +8,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 - `skills/*/SKILL.md` and `agents/*.md` instructions / frontmatter descriptions — **English**
 - `skills/*/assets/` templates and doc sets — **English** (output language is delegated to each skill's "follow the user's language" note)
   - **Exception**: `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` — a **Korean/English mirror pair** injected verbatim into `~/.claude/CLAUDE.md` (mak:setup picks by the user's language). **Edit both together**; markers must stay identical across the pair
+- `evals/` — case, grader, and script code **English**; `prompt.md` bodies and seeded fixture text may be **Korean** (the kit's primary user language)
 - `README.md` / `docs/guide.md` — Korean by default, with English twins `README.en.md` / `docs/guide.en.md`. **Editing one side requires syncing the other**
 - This file and `AGENTS.md` — English
 
@@ -34,7 +35,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 
 ## Verification Commands
 
-This is a Markdown/JSON repository — no build or tests. Run 1–2 after every change; the rest are conditional and their procedures live in `docs/maintenance.md`. This list is what tells you when to go read them.
+This is a Markdown/JSON repository — no build or unit tests. Run 1–2 after every change; the rest are conditional and their procedures live in `docs/maintenance.md`. This list is what tells you when to go read them.
 
 1. `claude plugin validate .` — manifest/structure validation
 2. Consistency greps — all must return zero hits:
@@ -57,6 +58,7 @@ This is a Markdown/JSON repository — no build or tests. Run 1–2 after every 
 | `skills/` · `agents/` · manifest changed (what actually ships) | Local smoke install |
 | `skills/setup/` or `skills/teardown/` logic changed | setup → re-run → teardown round-trip |
 | `skills/reverse-engineering/assets/` changed | Doc-set closure (file references resolve) + `related_to` symmetry |
+| A skill description, SKILL.md procedure, or agent frontmatter changed | Behavior eval smoke (+ agent cases for agent frontmatter) |
 
 ## Document Paths
 

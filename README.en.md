@@ -105,6 +105,20 @@ claude plugin uninstall mak@mw-agent-kit
 | `mak:auditor` | opus | `mak:doc-audit` cross-document consistency audit — report-only (never modifies documents) |
 | `mak:researcher` | opus | External-source research written out as a document at an assigned path (never modifies code) |
 
+### Behavior Evals
+
+`evals/` holds 10 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (7 skill-routing, 3 agent-quality). They are a **tool for kit developers** and have no effect on using the plugin.
+
+- They are copied into the install but never loaded into a session and never run automatically.
+- They run only when you invoke them, launching Claude sessions on your own credential — **usage is deducted from your subscription (claude.ai login) or billed to your API key**. Set a ceiling with `--max-cost-usd`; it caps the list-price estimate, not your plan usage.
+- Only the plugin is loaded, so the global rules `/mak:setup` installs (grade declaration, delegation criteria) are not measured.
+
+```
+claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write
+```
+
+See [`docs/maintenance.md`](docs/maintenance.md) §Behavior eval for the full procedure and options.
+
 ## 5. Usage & Documentation
 
 The basic development flow:

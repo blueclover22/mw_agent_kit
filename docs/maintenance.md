@@ -7,7 +7,7 @@ Language: English (contributor doc, same policy as `CLAUDE.md` / `AGENTS.md`). N
 
 The component inventory is mirrored across user-facing docs, so every add/remove is a multi-file sync. Grep alone is not enough: a removal also leaves **inbound** references (routing pointers, handoff lines) that name the component, and an addition is silently dead unless something routes into it.
 
-**Skill** — 6 sync points:
+**Skill** — 7 sync points:
 
 | # | Target | What |
 | :-- | :--- | :--- |
@@ -17,8 +17,9 @@ The component inventory is mirrored across user-facing docs, so every add/remove
 | 4 | `README.md` + `README.en.md` | Count in **2 places each** (intro line, `### Skills (N)` heading) + the `/mak:<name>` table row. **Conditional**: if the skill sits on the main development flow, also add it to the §5 ASCII flow diagram — **edit both** and keep the node sets identical to each other and to `docs/guide.md` §3. Flow-external skills (setup/teardown/reverse-engineering) stay out of the diagram |
 | 5 | `docs/guide.md` + `docs/guide.en.md` | Count in the `> Scope:` line + the §2 table row (`mak:setup` / `mak:teardown` share one row, so rows = skills − 1) |
 | 6 | `.claude-plugin/plugin.json` | Addition → minor; removal → major (§Release) |
+| 7 | `evals/**` | Cases that name the component — case directory/`name`, `prompt.md` (frontmatter and body), grader `input_match`; grep `evals/` for the name, update on rename, delete the case or grader on removal |
 
-**Agent** — same 6 points, and #4's ASCII flow diagram does apply: agents appear there not as numbered nodes but as `▶ delegate` annotations on the stage that delegates to them (see the `▶` legend). An agent on the main cycle must be added to or removed from all four diagrams (README ko/en + guide ko/en) together. Sync points: `agents/<name>.md` → **handoff wiring** (see below) → snippet ko/en agent list (**and the routing table row, if the agent appears there**) → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `plugin.json` **and `.claude-plugin/marketplace.json`** (both descriptions enumerate the agents, so both drift when one is edited alone).
+**Agent** — same 7 points, and #4's ASCII flow diagram does apply: agents appear there not as numbered nodes but as `▶ delegate` annotations on the stage that delegates to them (see the `▶` legend). An agent on the main cycle must be added to or removed from all four diagrams (README ko/en + guide ko/en) together. Sync points: `agents/<name>.md` → **handoff wiring** (see below) → snippet ko/en agent list (**and the routing table row, if the agent appears there**) → README ko/en (**count in the intro line and the `### Agents (N)` heading**, plus the agent table row) → `docs/guide.md` / `.en` (**count in the `> Scope:` line**, plus the §6 table row) → `plugin.json` **and `.claude-plugin/marketplace.json`** (both descriptions enumerate the agents, so both drift when one is edited alone) → `evals/**` cases that name it.
 
 Handoff wiring applies to agents exactly as it does to skills — the connectivity check in §Conditional Verification below runs `for f in skills/*/SKILL.md agents/*.md`, so a new agent that nothing mentions is an ORPHAN and one that mentions nobody is a SINK. The check sees mentions, not real handoffs — read the wiring yourself. Give every added agent at least one inbound reference from the skill or agent that delegates to it, and at least one outbound reference for where its findings go.
 
@@ -60,6 +61,24 @@ for f in skills/*/SKILL.md agents/*.md; do n=$(basename $(dirname "$f")); [ "$n"
 
 **What this check cannot see** — it detects *mention*, not *handoff*. A `mak:<name>` reference may be a real transition (a §Handoff section, `dev-kickoff` §10) or merely routing advice (§Route to a different skill when, §When to Use exclusions), and grep cannot separate them. Consequences: a skill that only says "not my job" about other skills passes the SINK check while handing work to no one, and cycle counts are inflated by mutual advice — most three-cycles in this graph are advice loops, not work loops (the real ones run through `coder → verify-checklist → review-report`/`reviewer → coder`). So read any new or changed §Handoff section yourself: the check catches **missing** wiring, never **wrong** wiring.
 
+### Behavior eval — a skill description, SKILL.md procedure, or agent frontmatter changed
+
+Smoke (cheap, run after such a change):
+
+```
+claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write --trust-plugin
+```
+
+Full routing check (before a release that changes routing):
+
+```
+claude plugin eval . --tag routing --runs 3 --ablation with-without --scaffold --no-publish --max-cost-usd 25 --allow-tools Edit Write --trust-plugin
+```
+
+An agent-frontmatter change also runs `--tag agent --ablation none` (same other flags) — plugin agents do not exist in the baseline arm.
+
+Scope limits: eval runs load only the plugin — the setup snippet (and any workspace `CLAUDE.md`) is not loaded, so rules that live only in the snippet (grade declaration, delegation criteria) are not measured. Native Windows cannot grant `Bash`, so cases must not depend on it. `kickoff-question-batch` passes only partially (below the 1.0 threshold) until `mak:dev-kickoff` reliably batches its clarifying questions. Results under `evals/results/` are gitignored.
+
 ### Local smoke — `skills/` · `agents/` · manifest changed (what actually ships)
 
 `claude plugin marketplace add <repo path>` → `claude plugin install mak@mw-agent-kit` → check skills/agents appear. Note: with a same-version local marketplace, `plugin update` does NOT refresh the cache — bump `version` in plugin.json or uninstall/reinstall
@@ -87,7 +106,7 @@ for f in $D/*/_template.md; do fm "$f" | grep -E '^\s*- ' | grep -vE '^\s*- "\.\
   - Major: breaks installed users — skill/agent **removals** or renames, marker-format or snippet-contract changes, save-path default changes
   - Minor: new skills / agents / capabilities
   - Patch: fixes inside existing skills/agents that change what the model does (procedure, gates, rule wording)
-  - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway
+  - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway; changes confined to `evals/`
 - Tag the version-bump commit with the matching annotated tag (`git tag -a v1.2.3 -m "mak v1.2.3"`, pushed separately via `git push origin v1.2.3`). Tags do not affect installation — the marketplace always tracks the default branch — but they pin which commit shipped as each version. Before bumping, run `git diff <last tag>..HEAD --stat -- skills/ agents/` to catch behavior changes that accumulated without a bump
 - The marketplace name `mw-agent-kit` and plugin name `mak` must not change — this invariant also lives in `CLAUDE.md` §Reference Rules, which is always loaded
 - When the `claude-md-snippet.ko.md` / `.en.md` pair changes, confirm the README note "re-run /mak:setup after updates" still holds
