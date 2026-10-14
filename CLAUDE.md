@@ -41,7 +41,7 @@ This is a Markdown/JSON repository — no build or unit tests. Run 1–2 after e
 2. Consistency greps — all must return zero hits:
    - `grep -rn "~/.claude/skills" skills/ agents/` (old paths)
    - `grep -rn "\.claude/docs" skills/ agents/` (old design-doc path)
-   - `grep -rln '[가-힣]' skills/ agents/ | grep -v claude-md-snippet` (Korean residue outside the setup snippet)
+   - `LC_ALL=C.UTF-8 grep -rln '[가-힣]' skills/ agents/ | grep -v claude-md-snippet` (Korean residue outside the setup snippet — without a UTF-8 locale, e.g. Git Bash with `LANG` unset, the range matches any non-ASCII byte such as `—`)
    - Bare (unprefixed) skill/agent names in backticks — match-level, not line-level, so a bare name on the same line as a prefixed one is still caught:
 
      ```
