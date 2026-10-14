@@ -100,14 +100,16 @@ claude plugin uninstall mak@mw-agent-kit
 | `mak:planner` | opus | Non-interactive architecture consultation (Architecture Brief), read-only |
 | `mak:coder` | inherit | Implementation against an approved design |
 | `mak:reviewer` | opus | Review and report only (never modifies code) |
-| `mak:doc-editor` | sonnet | Editing/syncing Markdown documents, including new ones the main thread specifies |
+| `mak:doc-editor` | haiku | Editing/syncing Markdown documents, including new ones the main thread specifies |
 | `mak:analyzer` | opus | Code analysis and doc filling — records facts only (never modifies code) |
 | `mak:auditor` | opus | `mak:doc-audit` cross-document consistency audit — report-only (never modifies documents) |
 | `mak:researcher` | opus | External-source research written out as a document at an assigned path (never modifies code) |
 
+> The model column shows aliases as resolved on the Anthropic API (opus = Opus 5.5, sonnet = Sonnet 5.5, haiku = Haiku 5.5, as of 2026-10) — on Bedrock / Vertex AI / Microsoft Foundry the same aliases may map to older models; see [model configuration](https://code.claude.com/docs/en/model-config).
+
 ### Behavior Evals
 
-`evals/` holds 10 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (7 skill-routing, 3 agent-quality). They are a **tool for kit developers** and have no effect on using the plugin.
+`evals/` holds 12 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (7 skill-routing, 5 agent-quality). They are a **tool for kit developers** and have no effect on using the plugin.
 
 - They are copied into the install but never loaded into a session and never run automatically.
 - They run only when you invoke them, launching Claude sessions on your own credential — **usage is deducted from your subscription (claude.ai login) or billed to your API key**. Set a ceiling with `--max-cost-usd`; it caps the list-price estimate, not your plan usage.

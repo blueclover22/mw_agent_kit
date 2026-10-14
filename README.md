@@ -100,14 +100,16 @@ claude plugin uninstall mak@mw-agent-kit
 | `mak:planner` | opus | 비대화 아키텍처 자문(Architecture Brief) 전담, 읽기 전용 |
 | `mak:coder` | inherit | 승인된 설계 기반 구현 전담 |
 | `mak:reviewer` | opus | 구현 결과 검토·보고 전담 (코드 수정 금지) |
-| `mak:doc-editor` | sonnet | Markdown 문서 편집·동기화 전담. 메인이 지정한 신규 문서 생성 포함 |
+| `mak:doc-editor` | haiku | Markdown 문서 편집·동기화 전담. 메인이 지정한 신규 문서 생성 포함 |
 | `mak:analyzer` | opus | 코드 분석·문서 채움 전담, 사실만 기록 (코드 수정 금지) |
 | `mak:auditor` | opus | `mak:doc-audit` 문서 간 정합성 감사 전담, 보고만 (문서 수정 금지) |
 | `mak:researcher` | opus | 외부 자료 조사 후 지정 경로에 조사 문서 산출 전담 (코드 수정 금지) |
 
+> 모델 열은 Anthropic API 기준 별칭 해석입니다(opus = Opus 5.5, sonnet = Sonnet 5.5, haiku = Haiku 5.5, 2026-10 기준) — Bedrock / Vertex AI / Microsoft Foundry 에서는 같은 별칭이 더 이전 모델에 매핑될 수 있습니다. [모델 설정 문서](https://code.claude.com/docs/en/model-config) 참고.
+
 ### 동작 평가 (evals)
 
-`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스 10개가 들어 있습니다(skill 라우팅 7개, agent 품질 3개). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
+`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스 12개가 들어 있습니다(skill 라우팅 7개, agent 품질 5개). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
 
 - 설치본에 함께 복사되지만 세션에 로드되지 않으며, 자동으로 실행되지도 않습니다.
 - 직접 실행할 때만 동작하고, 실행한 사람의 자격증명으로 Claude 세션을 띄우므로 **구독 사용량에서 차감되거나(claude.ai 로그인) API 요금이 청구됩니다(API 키)**. `--max-cost-usd` 로 상한을 거세요 — 상한은 정가 기준 추정치이며 구독 사용량 한도가 아닙니다.
