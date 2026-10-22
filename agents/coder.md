@@ -1,6 +1,6 @@
 ---
 name: coder
-description: Use to implement code changes the user asked for. Trivial/Small fixes (simple bugs, typos, independent single-file changes) need no approved plan; Standard/Risky work requires an approved design doc. Not for analysis, requirements convergence, option comparison, or planning.
+description: Use to implement an approved Standard/Risky design doc, or a Trivial/Small fix when the user explicitly asks for delegation (no approved plan needed). Not for analysis, requirements convergence, option comparison, or planning.
 model: inherit
 tools: Read, Edit, Write, Grep, Glob, Bash
 skills:

@@ -58,7 +58,7 @@ Verification never decides the next stage on its own — report the results and 
 
 | Outcome | Next |
 | :--- | :--- |
-| A step failed | Fix and re-run from ①. If the fix is non-trivial and the `mak:coder` agent is in the available agent list, delegate it. If the failure exposes a design mismatch or a scope expansion, stop and report instead of fixing |
+| A step failed | Fix and re-run from ①. If the fix spreads beyond the task's grade (multiple files/modules), upgrade the grade and switch to `mak:dev-kickoff`; delegate a fix to `mak:coder` (if it is in the available agent list) only for Standard-or-above work or when the user asked for delegation. If the failure exposes a design mismatch or a scope expansion, stop and report instead of fixing |
 | All passed, Standard-or-above slice/stage complete | Hand off to `mak:review-report` (or the `mak:reviewer` agent if it is in the available agent list) |
 | All passed, other cases (work continues, or Trivial / Small done) | Return to the main thread — it decides the next step. When `mak:coder` performed the change, the main thread reads its diff before reporting |
 

@@ -8,7 +8,7 @@
 
 | Grade | Criteria | Default flow |
 | :--- | :--- | :--- |
-| **Trivial** | Typos, formatting, comments, one-liners, obvious independent single-file fixes | Read the existing file and fix directly — no design doc or approval gate. Use `mak:coder` if desired |
+| **Trivial** | Typos, formatting, comments, one-liners, obvious independent single-file fixes | Read the existing file and fix directly — no design doc or approval gate. Delegate to `mak:coder` only when the user asks |
 | **Small** | Small-impact, easily reversible bug fixes / minor behavior changes | Share brief change intent + verification method, then proceed. Usually skip `mak:dev-kickoff` (keep bug reproduction/verification) |
 | **Standard** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
 | **Risky** | Data model, dependencies, security, deployment, migration | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
@@ -53,7 +53,7 @@ The user who installed this block has **pre-approved subagent delegation** in th
 - `mak:dev-resume`, `mak:doc-audit`, and `mak:reverse-engineering` are not stages of the development cycle — never run them every iteration
 - `mak:commit` is not chained from any stage — it is entered only on the user's explicit request (invoking the skill is the explicit commit request).
 - Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
-- Trivial / Small work may be delegated to `mak:coder` without an approved plan; Standard and above only after design approval. Once a `mak:coder` change passes `mak:verify-checklist`, Standard-or-above work goes through `mak:review-report` at stage completion, and for Trivial / Small the main thread reads the diff itself.
+- Trivial / Small work is fixed by the main thread directly — delegate it to `mak:coder` (no approved plan needed) only when the user asks; Standard and above only after design approval. Once a `mak:coder` change passes `mak:verify-checklist`, Standard-or-above work goes through `mak:review-report` at stage completion, and for Trivial / Small the main thread reads the diff itself.
 - Design docs and the roadmap are written by the main thread — their content exists only in the conversation. The design doc is written once. Editing/syncing any other Markdown document, and creating one, is delegated to `mak:doc-editor` with its path and content specified.
 - Design docs follow the `mak:design-doc-template` save-path rule (default `.claude/mak/plan/`).
 - Investigation-only delegations (`mak:planner`, `mak:reviewer`, `mak:auditor`) are read-only, and are invoked concurrently in a single message when their investigation scopes do not overlap — otherwise split the scope and invoke sequentially. Splitting review by module or dimension is the typical case. Never hand verification commands to delegations invoked concurrently — their outputs collide.

@@ -42,7 +42,7 @@
 
 | 등급 | 기준 | 기본 흐름 |
 | :--- | :--- | :--- |
-| **Trivial** | 오타·포맷·주석·1줄 수정·명백한 단일 파일 독립 수정 | 설계 문서·승인 게이트 없이 기존 파일을 읽고 바로 수정. 필요 시 `mak:coder` 사용 |
+| **Trivial** | 오타·포맷·주석·1줄 수정·명백한 단일 파일 독립 수정 | 설계 문서·승인 게이트 없이 기존 파일을 읽고 바로 수정. 사용자가 요청할 때만 `mak:coder` 에 위임 |
 | **Small** | 영향 범위가 작고 되돌리기 쉬운 버그 수정·소규모 동작 변경 | 짧은 변경 의도와 검증 방법을 공유한 뒤 진행. 보통 `mak:dev-kickoff` 생략 (버그는 재현·검증 유지) |
 | **Standard** | 여러 파일·모듈 영향, 새 기능·컴포넌트, 구조 선택이 필요한 변경 | `mak:dev-kickoff` 로 착수. 기존 구조가 복잡하거나 선택지가 갈리면 `mak:planner` Architecture Brief 요청 |
 | **Risky** | 데이터 모델·의존성·보안·배포·마이그레이션 | `mak:dev-kickoff` + `mak:planner` Architecture Brief 원칙적 사용 |
@@ -159,7 +159,7 @@ claude plugin install mak@mw-agent-kit
 | 상황 | 동작 방식 |
 | :--- | :--- |
 | `mak:planner` 사용 가능 | Standard / Risky 작업에서 메인 스레드가 범위를 넘겨 Architecture Brief 를 요청. planner 는 옵션·권장안·리스크·결정 필요 사항을 보고한다. 읽기 전용이라 문서를 쓰지 않으며, 사용자에게 질문하거나 결정을 확정하지 않는다 |
-| `mak:coder` 사용 가능 | Trivial / Small 은 계획 승인 없이 위임 가능, Standard 이상은 설계 승인 후 위임 |
+| `mak:coder` 사용 가능 | Trivial / Small 은 메인이 직접 수정 — 사용자가 요청하면 계획 승인 없이 위임, Standard 이상은 설계 승인 후 위임 |
 | `mak:reviewer` 사용 가능 | Standard 이상 단계 완료 시와 사용자가 요청할 때 검토 위임. Trivial / Small 의 `mak:coder` 변경은 메인이 diff 를 직접 읽어 확인한다. 보고만 하고 코드 수정 금지 |
 | `mak:doc-editor` 사용 가능 | 기능 완료 후 문서 동기화 위임. 메인이 경로와 내용을 지정하면 신규 문서 생성도 수행하며, 구조·내용 출처가 특정되지 않은 생성 위임은 거절하고 되묻는다 |
 | `mak:analyzer` 사용 가능 | `mak:reverse-engineering` 의 분석·문서 채움 단계를 배치 단위로 위임. 명시 요청 시 단독 코드베이스 분석 보고도 수행. 사실(is)만 기록, 코드 수정 금지. 대화형 결정(병합·덮어쓰기)과 문서 간 동기화 반영은 메인이 수행 |

@@ -42,7 +42,7 @@ Classify work by size and risk first. The grade decides whether `mak:dev-kickoff
 
 | Grade | Criteria | Default flow |
 | :--- | :--- | :--- |
-| **Trivial** | Typos, formatting, comments, one-liners, obvious independent single-file fixes | Read the existing file and fix directly — no design doc or approval gate. Use `mak:coder` if desired |
+| **Trivial** | Typos, formatting, comments, one-liners, obvious independent single-file fixes | Read the existing file and fix directly — no design doc or approval gate. Delegate to `mak:coder` only when the user asks |
 | **Small** | Small-impact, easily reversible bug fixes / minor behavior changes | Share brief change intent + verification method, then proceed. Usually skip `mak:dev-kickoff` (keep bug reproduction/verification) |
 | **Standard** | Multiple files/modules, new features/components, structural choices | Enter via `mak:dev-kickoff`. Request a `mak:planner` Architecture Brief when the structure is complex or options genuinely diverge |
 | **Risky** | Data model, dependencies, security, deployment, migration | `mak:dev-kickoff` + `mak:planner` Architecture Brief as a rule |
@@ -161,7 +161,7 @@ The default design-doc path is `.claude/mak/plan/`; a path specified in the proj
 | Situation | Behavior |
 | :--- | :--- |
 | `mak:planner` available | For Standard/Risky work the main thread hands over scope and requests an Architecture Brief. Planner reports options/recommendation/risks/decisions-needed. Read-only, so it never writes documents; it never questions the user or finalizes decisions |
-| `mak:coder` available | Trivial / Small may be delegated without an approved plan; Standard and above only after design approval |
+| `mak:coder` available | Trivial / Small is fixed by the main thread directly — delegated without an approved plan only when the user asks; Standard and above only after design approval |
 | `mak:reviewer` available | Review delegated on completion of a Standard-or-above stage, and on user request. For Trivial / Small `mak:coder` changes the main thread reads the diff itself. Reports only; never edits code |
 | `mak:doc-editor` available | Doc sync delegated after feature completion. Also creates a new document when the main thread names its path and content; refuses and asks back when the structure and content source are not pinned down |
 | `mak:analyzer` available | The analysis/doc-filling stage of `mak:reverse-engineering` delegated in batches. On explicit request also performs standalone codebase-analysis reports. Records facts (is) only; never modifies code. Interactive decisions (merge, overwrites) and cross-document syncs stay with the main thread |

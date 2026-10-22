@@ -8,7 +8,7 @@
 
 | 등급 | 기준 | 기본 흐름 |
 | :--- | :--- | :--- |
-| **Trivial** | 오타·포맷·주석·1줄 수정·명백한 단일 파일 독립 수정 | 설계 문서·승인 게이트 없이 기존 파일을 읽고 바로 수정. 필요 시 `mak:coder` 사용 |
+| **Trivial** | 오타·포맷·주석·1줄 수정·명백한 단일 파일 독립 수정 | 설계 문서·승인 게이트 없이 기존 파일을 읽고 바로 수정. 사용자가 요청할 때만 `mak:coder` 에 위임 |
 | **Small** | 영향 범위가 작고 되돌리기 쉬운 버그 수정·소규모 동작 변경 | 짧은 변경 의도와 검증 방법을 공유한 뒤 진행. 보통 `mak:dev-kickoff` 생략 (버그는 재현·검증 유지) |
 | **Standard** | 여러 파일·모듈 영향, 새 기능·컴포넌트, 구조 선택이 필요한 변경 | `mak:dev-kickoff` 로 착수. 기존 구조가 복잡하거나 선택지가 갈리면 `mak:planner` Architecture Brief 요청 |
 | **Risky** | 데이터 모델·의존성·보안·배포·마이그레이션 | `mak:dev-kickoff` + `mak:planner` Architecture Brief 원칙적 사용 |
@@ -53,7 +53,7 @@
 - `mak:dev-resume`·`mak:doc-audit`·`mak:reverse-engineering` 은 개발 주기의 단계가 아니다 — 매 사이클마다 부르지 않는다
 - `mak:commit` 은 어떤 단계도 자동으로 잇지 않는다 — 사용자 명시 요청 시에만 진입한다(skill 실행이 곧 명시적 커밋 요청).
 - 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
-- Trivial / Small 은 계획 승인 없이 `mak:coder` 에 위임할 수 있고, Standard 이상은 설계 승인 후에만 위임한다. `mak:coder` 의 변경이 `mak:verify-checklist` 를 통과하면, Standard 이상은 단계 완료 시 `mak:review-report` 를 거치고 Trivial / Small 은 메인이 diff 를 직접 읽어 확인한다.
+- Trivial / Small 은 메인 스레드가 직접 수정한다 — 사용자가 요청할 때만 계획 승인 없이 `mak:coder` 에 위임하고, Standard 이상은 설계 승인 후에만 위임한다. `mak:coder` 의 변경이 `mak:verify-checklist` 를 통과하면, Standard 이상은 단계 완료 시 `mak:review-report` 를 거치고 Trivial / Small 은 메인이 diff 를 직접 읽어 확인한다.
 - 설계 문서와 로드맵 집필은 메인 스레드가 한다 — 내용이 대화에만 있기 때문이다. 설계 문서는 한 번만 쓴다. 그 외 Markdown 문서의 편집·동기화와 신규 생성은 `mak:doc-editor` 로 위임하되, 경로와 들어갈 내용을 지정해 넘긴다.
 - 설계 문서는 `mak:design-doc-template` 의 경로 규칙(기본 `.claude/mak/plan/`)을 따른다.
 - 조사 전용 위임(`mak:planner`·`mak:reviewer`·`mak:auditor`)은 읽기 전용이고, 조사 범위가 서로 겹치지 않으면 한 메시지에서 동시에 호출한다 — 겹치면 범위를 나눠 순차로 부른다. 모듈·관점별 리뷰 분할이 대표적이다. 동시에 호출하는 위임에는 검증 명령 실행을 맡기지 않는다 — 산출물이 충돌한다.
