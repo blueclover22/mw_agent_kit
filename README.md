@@ -109,7 +109,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ### 동작 평가 (evals)
 
-`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스 12개가 들어 있습니다(skill 라우팅 7개, agent 품질 5개). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
+`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스 14개가 들어 있습니다(skill 라우팅 7개, agent 품질 7개). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
 
 - 설치본에 함께 복사되지만 세션에 로드되지 않으며, 자동으로 실행되지도 않습니다.
 - 직접 실행할 때만 동작하고, 실행한 사람의 자격증명으로 Claude 세션을 띄우므로 **구독 사용량에서 차감되거나(claude.ai 로그인) API 요금이 청구됩니다(API 키)**. `--max-cost-usd` 로 상한을 거세요 — 상한은 정가 기준 추정치이며 구독 사용량 한도가 아닙니다.

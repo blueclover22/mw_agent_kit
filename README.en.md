@@ -109,7 +109,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ### Behavior Evals
 
-`evals/` holds 12 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (7 skill-routing, 5 agent-quality). They are a **tool for kit developers** and have no effect on using the plugin.
+`evals/` holds 14 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (7 skill-routing, 7 agent-quality). They are a **tool for kit developers** and have no effect on using the plugin.
 
 - They are copied into the install but never loaded into a session and never run automatically.
 - They run only when you invoke them, launching Claude sessions on your own credential — **usage is deducted from your subscription (claude.ai login) or billed to your API key**. Set a ceiling with `--max-cost-usd`; it caps the list-price estimate, not your plan usage.
