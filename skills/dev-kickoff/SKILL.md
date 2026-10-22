@@ -24,21 +24,6 @@ Enter for behavior changes spanning multiple files/modules, new features/compone
 
 Write nothing — no file creation, modification, or deletion — until the user approves the design (§6). Scope and approach are the user's decision, and anything written earlier may be thrown away. Between approval and implementation the only write is the design doc itself (§7) and edits to it. Reading files, read-only commands, and search are fine throughout. If sizing comes out clearly Trivial / Small, leave this skill for the lightweight flow.
 
-## Checklist
-
-Complete in order:
-
-1. **Explore project context** — README, CLAUDE.md, docs/, recent commits, related source files
-2. **Clarifying questions** — ask the ones whose answers would materially change the work, together in one message
-3. **Decide on planner consultation** — Standard: as needed; Risky / multi-module / migration: request a `mak:planner` Architecture Brief as a rule
-4. **Propose 2–3 approaches** — with trade-offs and a recommendation, based on the planner report or main-thread investigation (include at least one simpler alternative)
-5. **Convert to verifiable goals** — turn the task into measurable success criteria and a `Step → verify: check` plan
-6. **Present the design** — the whole design at once; get one approval
-7. **Documentation handoff** — the main thread saves the approved design per the `mak:design-doc-template` spec
-8. **Self-review** — unconfirmed decisions, contradictions, scope problems + simplicity / precise-changes self-check
-9. **Report and proceed** — give the saved path; re-confirm only if self-review or a requested change alters an approved decision
-10. **Handoff to next stage** — see the Handoff section below
-
 ## Procedure
 
 ### 1. Explore project context
