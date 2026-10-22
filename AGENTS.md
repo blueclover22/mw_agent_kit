@@ -1,6 +1,6 @@
 # AGENTS.md — Working on the mak Plugin Repository
 
-This repository IS the Claude Code plugin `mak` (repo root = plugin root; manifest at `.claude-plugin/plugin.json`). Everything is Markdown / JSON (plus eval fixture scripts under `evals/`) — no build, no unit tests.
+This repository IS the Claude Code plugin `mak` (repo root = plugin root; manifest at `.claude-plugin/plugin.json`). Everything is Markdown / JSON (plus eval fixture scripts under `evals/` and check scripts under `scripts/`) — no build, no unit tests.
 
 Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the reference rules and the always-run verification commands (plus the triggers for the conditional ones, whose procedures live in [docs/maintenance.md](docs/maintenance.md)); this file restates the invariants you must not break and owns §Git.
 
@@ -26,7 +26,7 @@ Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the r
 ## Verification
 
 1. `claude plugin validate .`
-2. Consistency greps (must be zero hits): `~/.claude/skills` in skills/agents; `.claude/docs` in skills/agents; bare (unprefixed) skill/agent names in skills/agents; Korean residue outside the setup snippet
+2. `bash scripts/check.sh` — consistency checks; must print `OK` (exit 0)
 
 Conditional checks (graph connectivity, local smoke, setup/teardown round-trip, doc-set closure, behavior eval) live in [docs/maintenance.md](docs/maintenance.md) §Conditional Verification; `CLAUDE.md` §Verification Commands lists their triggers. Graph connectivity is the only check that catches a component nothing routes into — run it on every skill/agent add, remove, or rewire.
 

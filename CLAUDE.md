@@ -1,6 +1,6 @@
 # CLAUDE.md — Development Rules for the mak Plugin Repository
 
-This repository IS the Claude Code plugin `mak`. There is no application code — everything is Markdown / JSON, plus Bash fixture scripts under `evals/`.
+This repository IS the Claude Code plugin `mak`. There is no application code — everything is Markdown / JSON, plus Bash fixture scripts under `evals/` and check scripts under `scripts/`.
 The repository root is the plugin root; the manifest lives at `.claude-plugin/plugin.json`.
 
 ## Language Policy
@@ -38,17 +38,7 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 This is a Markdown/JSON repository — no build or unit tests. Run 1–2 after every change; the rest are conditional and their procedures live in `docs/maintenance.md`. This list is what tells you when to go read them.
 
 1. `claude plugin validate .` — manifest/structure validation
-2. Consistency greps — all must return zero hits:
-   - `grep -rn "~/.claude/skills" skills/ agents/` (old paths)
-   - `grep -rn "\.claude/docs" skills/ agents/` (old design-doc path)
-   - `LC_ALL=C.UTF-8 grep -rln '[가-힣]' skills/ agents/ | grep -v claude-md-snippet` (Korean residue outside the setup snippet — without a UTF-8 locale, e.g. Git Bash with `LANG` unset, the range matches any non-ASCII byte such as `—`)
-   - Bare (unprefixed) skill/agent names in backticks — match-level, not line-level, so a bare name on the same line as a prefixed one is still caught:
-
-     ```
-     for n in $(ls -d skills/*/ | xargs -n1 basename) $(ls agents/*.md | xargs -n1 basename | sed 's/.md//'); do
-       grep -rHoE "\`$n\`" skills/*/SKILL.md agents/*.md
-     done
-     ```
+2. `bash scripts/check.sh` — consistency checks; must print `OK` (exit 0)
 
 **Conditional** — when one of these applies, run the matching procedure in `docs/maintenance.md` §Conditional Verification:
 
