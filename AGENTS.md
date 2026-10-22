@@ -16,9 +16,9 @@ Development rules are split across two files: [CLAUDE.md](CLAUDE.md) holds the r
 
 - Cross-references between skills/agents always use the `mak:` prefix (`mak:dev-kickoff`), never bare names
 - Agent availability is phrased as "if the agent is in the available agent list", never as a `.claude/agents/*.md` file-existence check
-- The design-doc save-path rule has ONE home: `skills/design-doc-template/SKILL.md` §Save location (default `.claude/mak/plan/`). Everywhere else attributes it to that rule rather than stating it independently
+- The design-doc save-path rule has ONE home: `skills/design-doc-template/SKILL.md` §Save location (default `.claude/mak/plan/`). Skills/agents attribute it to that rule and may restate the default for readability; user-facing docs (README, guide) may state the default plainly — the rule text itself lives only in the home
 - An agent that loads a companion skill via frontmatter `skills:` must not restate that skill's procedure or report format — point at it instead
-- The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both — a change to either table must be synced across 4 places: guide ko/en + snippet ko/en; skills/agents keep the "project/global Coding Rules take precedence" phrasing
+- The task grades and the four coding principles have ONE home: `docs/guide.md §2.1 / §2.2`. The setup snippets inject copies of both (the principle copy drops the Enforcement gates column) — a change to any column the snippet copies must be synced across 4 places: guide ko/en + snippet ko/en; a change confined to Enforcement gates syncs guide ko/en only; skills/agents keep the "project/global Coding Rules take precedence" phrasing
 - Frontmatter `description` carries trigger conditions only (loaded into every session); detailed criteria go in the body. Agent descriptions are the exception — the orchestrator selects on that text, so capability/constraint wording stays
 - Use `${CLAUDE_PLUGIN_ROOT}` for referencing files inside the plugin
 - Adding or removing a skill/agent is a multi-file sync — follow [docs/maintenance.md](docs/maintenance.md) §Adding or Removing a Skill / Agent, which owns the point list. **This file intentionally carries no counts or component lists**, so it stays out of that sync
