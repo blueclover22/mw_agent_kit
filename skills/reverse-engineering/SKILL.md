@@ -16,7 +16,7 @@ The set's own rules live inside it:
 
 This skill orchestrates: copy → analyze/fill → template cleanup. The two files above are the SSOT for everything else — follow them, don't restate them.
 
-The set is one fixed composition — core documents `00`–`06` plus the unnumbered `domains/` (one file per feature domain) and `processes/` (one file per traced scenario) folders, each with a `_template.md` copy source. Templates are in English. Fill content in the user's language (or the project's documented language policy), keeping the structure.
+The set is one fixed composition — core documents `00`–`06` plus the unnumbered `domains/` (one file per feature domain) and `processes/` (one file per traced scenario) folders, each with a `_template.md` copy source. Templates are in English. Fill content in the user's language (or the project's documented language policy), keeping the structure; the INDEX's rule text is translated at cleanup (`docs/CLAUDE.md` §2 step 4).
 
 ## Procedure
 
@@ -36,7 +36,7 @@ The set is one fixed composition — core documents `00`–`06` plus the unnumbe
 
 Follow `docs/CLAUDE.md` §2 (single flow and fill order — SSOT there, not restated here; scenarios go to `processes/<name>.md`, feature domains to `domains/<name>.md`, each via its `_template.md`).
 
-**Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches, following `docs/CLAUDE.md` §2's order. Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, and the output language. Keep interactive decisions (merge confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (`00.INDEX.md` registries, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
+**Delegation** — if the `mak:analyzer` agent is in the available agent list, delegate the analysis/filling to it in batches, following `docs/CLAUDE.md` §2's order. Pass each batch: the project root, the assigned document list, a pointer to `docs/00.INDEX.md` + `docs/CLAUDE.md` as the rulebook, the output language, and the observation format — each code-issue observation tagged with category, severity, status, and location per `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/analyzed-issues.template.md`. Keep interactive decisions (merge confirmations, ambiguous conventions needing user input) in the main thread, and apply the cross-document syncs (`00.INDEX.md` registries, `related_to` symmetry) that analyzer reports back. If analyzer is unavailable, fill directly.
 
 Batches may be delegated in parallel, but only after the fill order and cross-document dependencies are respected, only among batches that have no dependency on each other, and only when their assigned document sets do not overlap — two batches writing the same document collide. A workable split: **A** `processes/` + `02` + `05` first (the trace grounds the structure documents) → **B** `01` §1–§4 + `03` and **C** `04` + `06` in parallel → **D** `domains/` + `01` §5–§6 after A, B, and C (domains are discovered while tracing; `01`'s Change Checklist and Troubleshooting link into `03`/`04`/`06`).
 
@@ -49,11 +49,13 @@ Hard rules while filling (SSOT: `docs/CLAUDE.md` §1):
 
 ### 4. Template cleanup + verification
 
-Run the cleanup and the completion checklist exactly as defined in `docs/CLAUDE.md` §2 step 4 and §4 (remove `> Template:` blocks except in `CLAUDE.md`/`_template.md`, remove the INDEX intro and example registry rows, prune the stack table, no unreplaced `<...>`, grep check zero hits).
+Run the cleanup and the completion checklist exactly as defined in `docs/CLAUDE.md` §2 step 4 and §4 (remove `> Template:` blocks except in `CLAUDE.md`/`_template.md`, remove the INDEX intro and example registry rows, prune the stack table, no unreplaced `<...>`, translate the INDEX rule text, grep check zero hits).
 
 ### 5. Report
 
-Summarize: files created, docs filled vs left `_(TODO)_`, improvement observations noted while tracing (listed here only — never written into the set), and suggested next steps (e.g. fill remaining TODOs; if the user wants a roadmap, `mak:roadmap-planning` creates it as a separate document outside the set).
+Summarize: files created, docs filled vs left `_(TODO)_`, improvement observations noted while tracing (listed here — never written into the set), and suggested next steps (e.g. fill remaining TODOs; if the user wants a roadmap, `mak:roadmap-planning` creates it as a separate document outside the set).
+
+If any of those observations are code issues, **ask the user whether to keep them** in the out-of-set analyzed-issues document (`docs/<NN>.analyzed-issues.md`, numbered per `docs/00.INDEX.md` §Content Rules). On approval, the main thread collates the observations, removes duplicates, assigns IDs, and writes the document from `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/analyzed-issues.template.md` (format rules live in the template). If the document already exists, read it and merge, keeping existing IDs.
 
 ## Cautions
 

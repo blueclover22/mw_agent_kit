@@ -125,7 +125,7 @@ Save-path priority:
 
 1. Roadmap path specified in the project `CLAUDE.md` → that path
 2. An existing roadmap document → that file (`docs/*roadmap*.md`, `ROADMAP.md`, etc.)
-3. A `docs/` directory exists → `docs/<index>.roadmap.md` or `docs/roadmap.md` per the project's doc numbering
+3. A `docs/` directory exists → if its documents use two-digit numeric prefixes, `docs/<NN>.roadmap.md` under the next free number (the one after the largest prefix); otherwise `docs/roadmap.md`
 4. None of the above → `ROADMAP.md` (root)
 
 ### 10. Handoff

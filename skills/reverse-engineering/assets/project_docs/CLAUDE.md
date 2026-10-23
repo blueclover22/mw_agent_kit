@@ -24,7 +24,7 @@ This folder (`docs/`) is a **project documentation set template**, filled by rev
 - **01 is a fact sheet** — do not duplicate architecture/layer/domain/naming/build content into 01. 01 holds only links + project-specific information (Scope · Tech Stack · directory tree · entry points · environment variables · Change Checklist · Troubleshooting).
 - **Frontmatter symmetry** — when adding/removing a core document, update adjacent documents' `related_to` **bidirectionally** together, and keep `type` consistent with the §Table of Contents category. 00 is an inbound hub (excluded from back-references); `domains/` · `processes/` files are one-way leaves.
 - **Read before writing** — always read the current content before overwriting an already-filled document.
-- **No time-stamped status anywhere in the set** — no dates · Phases · completion marks · test IDs (INDEX §Content Rules). A roadmap, if the project keeps one, is a separate document outside the set.
+- **No time-stamped status anywhere in the set** — no dates · Phases · completion marks · test IDs (INDEX §Content Rules). A roadmap or analyzed-issues document is a separate document outside the set, numbered per INDEX §Content Rules.
 - **Leave `_(TODO)_` when unsure** — never fill unverified fields with guesses; leave an `_(TODO — <what is needed>)_` placeholder instead.
 
 ---
@@ -46,9 +46,10 @@ The essence of the work is **analyzing the source and transferring observed fact
    - **Prune, do not delete, the stack table under INDEX §Table of Contents** — keep your project's row and drop the others (§Category Guide points at this table for the per-stack 05 mapping). Delete its `_(At template cleanup, …)_` line.
    - The example rows in INDEX §Domains / §Processes and their `> Template:` notices — only real, registered files remain (an empty registry keeps one `_(TODO)_` row).
    - Fill unsubstituted `<...>` with actual values, and leave `_(TODO)_` only for the unverified (no leaving empty placeholders or unsubstituted `<...>` behind).
+   - **Translate the INDEX's remaining rule text** (prose and table bodies) into the output language. Keep in the original: section headings (referenced as `§Per-Topic SSOT` etc. by this guide), frontmatter `type` values and the Category column values that match them 1:1, file names · paths, `_(TODO)_` markers, code · identifiers.
    - **Verify: `grep -rn '> Template:' docs/ --exclude=CLAUDE.md --exclude=_template.md` returns 0 hits.** (`CLAUDE.md` · the two `_template.md` are retained scaffolds and keep their markers, hence excluded.)
 
-> **Write the "current facts (is)."** Record exactly what is observed in the code. Do not guess for unverified fields — use `_(TODO)_`. Report improvement suggestions separately (in the final report); do not mix them into the documents.
+> **Write the "current facts (is)."** Record exactly what is observed in the code. Do not guess for unverified fields — use `_(TODO)_`. Report improvement suggestions separately (in the final report); do not mix them into the documents. Code-issue findings, if the user wants them kept, go to the out-of-set `analyzed-issues.md` document (INDEX §Content Rules).
 
 ---
 
@@ -76,3 +77,4 @@ The essence of the work is **analyzing the source and transferring observed fact
 - [ ] Are unverified items left as `_(TODO)_` rather than guesses?
 - [ ] Do the `00.INDEX.md` tables (§Table of Contents · §Domains · §Processes) match the actual files in `docs/`, `domains/`, `processes/`?
 - [ ] **Template cleanup complete** — are the `> Template:` notices, the INDEX introduction, the example registry rows, and unsubstituted `<...>` gone (`grep -rn '> Template:' docs/ --exclude=CLAUDE.md --exclude=_template.md` returns 0 hits)? `CLAUDE.md` · `domains/_template.md` · `processes/_template.md` are retained.
+- [ ] Is the INDEX rule text translated into the output language, with section headings, `type` / Category values, file names, and `_(TODO)_` markers kept in the original?

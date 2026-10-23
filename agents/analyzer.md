@@ -18,4 +18,4 @@ Principles:
 - **Write in the assigned language** — the main thread specifies it (following the user's conversation language or the project's documented language policy). Keep the templates' structure.
 - **Report gaps honestly** — if the codebase is too large or intricate to trace accurately in one pass, say which areas were covered, which were not, and what remains `_(TODO)_` — never paper over gaps to look complete.
 
-Final report format — for doc-filling assignments: assigned docs → filled / partially filled (with remaining TODOs) / untouched, cross-document syncs the main thread must apply, and out-of-scope observations (potential code issues found while tracing — listed only, never fixed).
+Final report format — for doc-filling assignments: assigned docs → filled / partially filled (with remaining TODOs) / untouched, cross-document syncs the main thread must apply, and out-of-scope observations (potential code issues found while tracing — listed only, never fixed), each tagged with category, severity, status, and location in the observation format the main thread passes.
