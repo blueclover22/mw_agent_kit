@@ -112,7 +112,7 @@ Decide in advance how phase moves are handled:
 
 ### 8. Draft and user approval
 
-Present the draft in chat first, based on `${CLAUDE_PLUGIN_ROOT}/skills/roadmap-planning/assets/roadmap.template.md`.
+Present the draft in chat first, based on `${CLAUDE_PLUGIN_ROOT}/skills/roadmap-planning/assets/roadmap.template.md`. Read the whole template before drafting.
 Fill `{{...}}` placeholders with real content, but record only each phase's purpose, scope, status, next entry skill, and related doc links — no detailed implementation decisions.
 
 Ask for explicit confirmation:

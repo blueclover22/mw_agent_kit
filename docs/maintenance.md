@@ -69,7 +69,7 @@ Smoke (cheap, run after such a change):
 claude plugin eval . --tag smoke --runs 1 --ablation none --scaffold --no-publish --max-cost-usd 3 --allow-tools Edit Write --trust-plugin
 ```
 
-Full routing check (before a release that changes routing):
+Full routing check (**required** before a release that changes the setup snippet, a skill description, or routing):
 
 ```
 claude plugin eval . --tag routing --runs 3 --ablation with-without --scaffold --no-publish --max-cost-usd 25 --allow-tools Edit Write --trust-plugin
@@ -81,9 +81,21 @@ Scope limits: eval runs load only the plugin — the setup snippet (and any work
 
 In `with-without` runs, Skill-fired graders are plugin-fired indicators excluded from the score — read them in the report.
 
-### Local smoke — `skills/` · `agents/` · manifest changed (what actually ships)
+Known gap: on a small fix with no request to verify, `mak:verify-checklist` does not fire on its own. In the 2026-11 runs it fired 0/15 with and without `Bash` and the snippet, and 0/10 with a broader description: the model finishes with Read then Edit and never opens `package.json`. The path that does run it is explicit — `mak:dev-kickoff` §10 and `mak:coder`. `verify-trigger` therefore measures an explicit request; the unprompted small fix would take a `Stop` hook, which the kit does not ship.
 
-`claude plugin marketplace add <repo path>` → `claude plugin install mak@mw-agent-kit` → check skills/agents appear. Note: with a same-version local marketplace, `plugin update` does NOT refresh the cache — bump `version` in plugin.json or uninstall/reinstall
+### Snippet probe — `skills/setup/assets/claude-md-snippet.*.md` changed
+
+Eval runs do not load the snippet, so this probe measures what they cannot: whether the rules still produce a grade declaration. Run each attempt in its own fresh directory that holds only the prompt's fixture plus the snippet copied in as `CLAUDE.md`, keep outputs outside it (a shared directory leaks them into the run and biases later runs), and alternate before and after, using the same Standard-sized request for at least 10 runs each:
+
+```
+claude -p "<development request>" --plugin-dir <repo> --setting-sources project
+```
+
+`--setting-sources project` excludes the installed copy of the snippet in the user's global `CLAUDE.md`. Compare the rate of responses that declare a grade; it must not drop beyond run-to-run noise. Do not inject with `--append-system-prompt-file`: the declaration rate there is near zero (0/10 in the 2026-11 run against 7/15 as a project `CLAUDE.md`), so it cannot show a drop. A Trivial-sized request is not a useful probe either, at 0/5 on both versions.
+
+### Local smoke — `skills/` · `agents/` · `hooks/` · manifest changed (what actually ships)
+
+`claude plugin marketplace add <repo path>` → `claude plugin install mak@mw-agent-kit` → check skills/agents appear and that a `mak:coder` `git commit` attempt is blocked by the hook. Note: with a same-version local marketplace, `plugin update` does NOT refresh the cache — bump `version` in plugin.json or uninstall/reinstall
 
 ### setup/teardown round-trip — inject/remove logic changed
 
@@ -107,8 +119,9 @@ for f in $D/*/_template.md; do fm "$f" | grep -E '^\s*- ' | grep -vE '^\s*- "\.\
 - Bump `version` in `.claude-plugin/plugin.json` (semver, 1.0.0 = first real release). **Bump only when shipped behavior changes** — the install cache is keyed by version, so a bump is exactly what makes an update reach installed users:
   - Major: breaks installed users — skill/agent **removals** or renames, marker-format or snippet-contract changes, save-path default changes
   - Minor: new skills / agents / capabilities
-  - Patch: fixes inside existing skills/agents that change what the model does (procedure, gates, rule wording)
+  - Patch: fixes inside existing skills/agents/hooks that change what the model does (procedure, gates, rule wording)
   - **No bump**: repo-documentation-only changes (README, docs/guide, contributor docs) — a stale cached copy of these is harmless, and they are read from the repo/GitHub anyway; changes confined to `evals/`
-- Tag the version-bump commit with the matching annotated tag (`git tag -a v1.2.3 -m "mak v1.2.3"`, pushed separately via `git push origin v1.2.3`). Tags do not affect installation — the marketplace always tracks the default branch — but they pin which commit shipped as each version. Before bumping, run `git diff <last tag>..HEAD --stat -- skills/ agents/` to catch behavior changes that accumulated without a bump
+- Tag the version-bump commit with the matching annotated tag (`git tag -a v1.2.3 -m "mak v1.2.3"`, pushed separately via `git push origin v1.2.3`). Tags do not affect installation — the marketplace always tracks the default branch — but they pin which commit shipped as each version. Before bumping, run `git diff <last tag>..HEAD --stat -- skills/ agents/ hooks/` to catch behavior changes that accumulated without a bump
 - The marketplace name `mw-agent-kit` and plugin name `mak` must not change — this invariant also lives in `CLAUDE.md` §Reference Rules, which is always loaded
 - When the `claude-md-snippet.ko.md` / `.en.md` pair changes, confirm the README note "re-run /mak:setup after updates" still holds
+- A release that changes the setup snippet or a skill description must run the Full routing check in §Conditional Verification first; a snippet change also runs the Snippet probe

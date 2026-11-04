@@ -16,9 +16,8 @@
 - 개발 요청을 받으면 착수 전에 등급을 한 줄로 선언한다 — 예: `[Standard] → mak:dev-kickoff`. 선언 없이 구현에 들어가지 않는다
 - 등급이 애매하면 영향 범위로 판단한다 — 단일 파일·소수 라인이고 공개 인터페이스·데이터 형태·의존성 변화가 없으면 Trivial / Small, 2개 이상 파일·모듈에 걸치거나 인터페이스·데이터 모델·의존성·보안이 바뀌면 Standard 이상
 - Standard / Risky 는 구현 전 분석·설계 계획을 작성하고 사용자 승인을 받는다 — 승인 전에는 구현하지 않는다
-- 계획·설계 시 관련 코드와 기존 패턴을 먼저 파악하고, 선택·승인이 필요한 사항은 옵션·장단점·권장안을 함께 제시한다
 - 작업 도중 범위가 여러 파일/모듈로 번지면 등급을 올려 `mak:dev-kickoff` 로 전환한다
-- mak 흐름의 산출 문서는 템플릿 언어와 무관하게 **사용자 대화 언어로 작성**한다. 프로젝트 규칙 문서의 언어 정책이 우선한다
+- mak 산출 문서는 사용자 언어로 작성한다 (프로젝트 언어 정책 우선)
 
 ## 코딩 원칙 매핑
 
@@ -49,13 +48,10 @@
 
 > 여러 행에 걸리면 위에서부터 먼저 걸리는 행을 따른다. 단 검증·리뷰·감사 행은 배타 선택이 아니라 조건이 맞으면 순서대로 이어지는 단계다.
 
-- 개발 주기 — `mak:brainstorming` → `mak:dev-kickoff` → `mak:design-doc-template` → 구현 → `mak:verify-checklist` → `mak:review-report` — 검증·리뷰는 위 라우팅 표의 조건을 따른다
-- `mak:dev-resume`·`mak:doc-audit`·`mak:reverse-engineering` 은 개발 주기의 단계가 아니다 — 매 사이클마다 부르지 않는다
-- `mak:commit` 은 어떤 단계도 자동으로 잇지 않는다 — 사용자 명시 요청 시에만 진입한다(skill 실행이 곧 명시적 커밋 요청).
-- 대화가 필요한 단계(요구사항 수렴·옵션 승인·설계 게이트)는 메인 스레드가 직접 수행한다. subagent 는 사용자와 대화할 수 없다.
-- Trivial / Small 은 메인 스레드가 직접 수정한다 — 사용자가 요청할 때만 계획 승인 없이 `mak:coder` 에 위임하고, Standard 이상은 설계 승인 후에만 위임한다. `mak:coder` 의 변경이 `mak:verify-checklist` 를 통과하면, Standard 이상은 단계 완료 시 `mak:review-report` 를 거치고 Trivial / Small 은 메인이 diff 를 직접 읽어 확인한다.
-- 설계 문서와 로드맵 집필은 메인 스레드가 한다 — 내용이 대화에만 있기 때문이며, 설계 문서는 한 번만 쓴다.
-- 조사 전용 위임(`mak:planner`·`mak:reviewer`·`mak:auditor`)은 읽기 전용이고, 조사 범위가 겹치지 않으면 한 메시지에서 동시에 호출하되(모듈·관점별 리뷰 분할이 대표적) 겹치면 범위를 나눠 순차로 부르며, 동시에 호출하는 위임에는 산출물이 충돌하므로 검증 명령 실행을 맡기지 않는다.
-- 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`·`mak:researcher`)은 쓰기 대상이 완전히 분리될 때만 병렬로 돌리고 — 분리 판정 기준은 각각 설계 문서 §Scope of Changes, 대상 문서 목록, 담당 문서 집합, 산출 문서 경로 — 겹치면 충돌하므로 직렬로 나눈다. 병렬로 돌릴 때는 설계 문서 §5.0 Status 갱신·검증 실행·결과 취합을 메인이 맡고, 각 위임에는 필요한 맥락을 모두 실어 보낸다.
+- 개발 주기 — `mak:brainstorming` → `mak:dev-kickoff` → `mak:design-doc-template` → 구현 → `mak:verify-checklist` → `mak:review-report`
+- `mak:commit` 은 사용자 명시 요청 시에만 진입한다
+- 대화 단계(요구사항·옵션 승인·설계 게이트)와 설계 문서·로드맵 집필은 메인 스레드가 한다
+- 조사 전용 위임(`mak:planner`·`mak:reviewer`·`mak:auditor`)은 범위가 겹치지 않으면 동시에 호출하고, 동시 호출에는 검증 명령을 맡기지 않는다
+- 쓰기 위임(`mak:coder`·`mak:doc-editor`·`mak:analyzer`·`mak:researcher`)은 쓰기 대상이 겹치지 않을 때만 병렬로 돌리고, 그때 §5.0 Status 갱신·검증·취합은 메인이 맡는다
 
 <!-- mak:end -->

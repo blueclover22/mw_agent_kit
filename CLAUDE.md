@@ -1,6 +1,6 @@
 # CLAUDE.md — Development Rules for the mak Plugin Repository
 
-This repository IS the Claude Code plugin `mak`. There is no application code — everything is Markdown / JSON, plus Bash fixture scripts under `evals/` and check scripts under `scripts/`.
+This repository IS the Claude Code plugin `mak`. There is no application code — everything is Markdown / JSON, plus Bash fixture scripts under `evals/`, check scripts under `scripts/`, and hook scripts under `hooks/`.
 The repository root is the plugin root; the manifest lives at `.claude-plugin/plugin.json`.
 
 ## Language Policy
@@ -38,14 +38,15 @@ The repository root is the plugin root; the manifest lives at `.claude-plugin/pl
 This is a Markdown/JSON repository — no build or unit tests. Run 1–2 after every change; the rest are conditional and their procedures live in `docs/maintenance.md`. This list is what tells you when to go read them.
 
 1. `claude plugin validate .` — manifest/structure validation
-2. `bash scripts/check.sh` — consistency checks; must print `OK` (exit 0)
+2. `bash scripts/check.sh` — consistency, size, snippet-mirror, and git-guard hook checks; must print `OK` (exit 0). CI runs this on push and PR
 
 **Conditional** — when one of these applies, run the matching procedure in `docs/maintenance.md` §Conditional Verification:
 
 | Trigger | Check |
 | :--- | :--- |
 | A skill/agent added, removed, or rewired | Graph connectivity (SINK / ORPHAN) |
-| `skills/` · `agents/` · manifest changed (what actually ships) | Local smoke install |
+| `skills/` · `agents/` · `hooks/` · manifest changed (what actually ships) | Local smoke install |
+| The setup snippet changed | Snippet probe |
 | `skills/setup/` or `skills/teardown/` logic changed | setup → re-run → teardown round-trip |
 | `skills/reverse-engineering/assets/` changed | Doc-set closure (file references resolve) + `related_to` symmetry |
 | A skill description, SKILL.md procedure, or agent frontmatter changed | Behavior eval smoke (+ agent cases for agent frontmatter) |

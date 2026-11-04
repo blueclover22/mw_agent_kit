@@ -30,7 +30,7 @@ The set is one fixed composition — core documents `00`–`06` plus the unnumbe
 
 - Copy the whole set from `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/project_docs/` into `<project>/docs/`.
 - Copy `domains/` and `processes/` **recursively** (each holds its `_template.md` — copying only top-level `*.md` loses them).
-- If the project has no `README.md`, offer `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/README.template.md` as an optional starting skeleton (separate decision; skip silently if the user doesn't want it).
+- If the project has no `README.md`, offer `${CLAUDE_PLUGIN_ROOT}/skills/reverse-engineering/assets/README.template.md` as an optional starting skeleton (separate decision; skip silently if the user doesn't want it). If used, read the whole template first.
 
 ### 3. Analyze and fill
 

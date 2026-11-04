@@ -152,7 +152,7 @@ claude plugin install mak@mw-agent-kit
 
 설계 문서 기본 경로는 `.claude/mak/plan/` 이며, 프로젝트 `.claude/CLAUDE.md` 에 다른 경로를 명시하면 그쪽이 우선한다 (`mak:design-doc-template` §Save location 이 SSOT).
 
-> 기계적 강제(비밀 파일 read-deny, 검증 명령 allow, 훅 등)는 프로젝트·개인 환경마다 달라 플러그인에 포함하지 않는다. 필요하면 `~/.claude/settings.json` / `<project>/.claude/settings.json` 에서 직접 구성한다. **agent 의 "문서만 수정"·"코드 수정 금지" 류 제약은 프롬프트 수준 규칙**이라(도구 목록으로 표면은 좁혀 두었지만) 오작동·프롬프트 주입까지 기술적으로 막지는 못한다 — 민감한 코드베이스에서는 권한 설정·샌드박스·명령 허용 목록으로 보완한다.
+> 기계적 강제(비밀 파일 read-deny, 검증 명령 allow, 훅 등)는 프로젝트·개인 환경마다 달라 플러그인에 포함하지 않는다. 필요하면 `~/.claude/settings.json` / `<project>/.claude/settings.json` 에서 직접 구성한다. 예외는 서브에이전트 git 가드 하나다 — 플러그인 훅이 `mak:*` agent 의 `git commit`·`git push` 를 차단하며, 메인 스레드와 다른 agent 에는 적용되지 않는다. 실수 방지용이며 보안 경계가 아니다. **agent 의 "문서만 수정"·"코드 수정 금지" 류 제약은 프롬프트 수준 규칙**이라(도구 목록으로 표면은 좁혀 두었지만) 오작동·프롬프트 주입까지 기술적으로 막지는 못한다 — 민감한 코드베이스에서는 권한 설정·샌드박스·명령 허용 목록으로 보완한다.
 
 ## 6. agent 와의 관계
 
@@ -182,6 +182,7 @@ claude plugin install mak@mw-agent-kit
 | `skills/roadmap-planning/assets/roadmap.template.md` | Phase 개수·상태 아이콘·네이밍 |
 | `skills/reverse-engineering/assets/project_docs/` | 문서 세트 구성·스택 매핑 |
 | `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` | 주입되는 공통 규칙 자체 (한/영 미러 — 함께 수정) |
+| `hooks/hooks.json`, `hooks/block-agent-git.sh` | 서브에이전트 git 가드의 등록과 차단 패턴 |
 
 템플릿 수정 시 `{{placeholder}}` 변수 구조를 유지하면 skill 이 채울 위치를 인식할 수 있다.
 

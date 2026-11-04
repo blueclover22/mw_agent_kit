@@ -6,7 +6,7 @@ description: Use when asked to record an approved or sufficiently converged desi
 # Design Doc Writing Guide
 
 All design docs follow this guide's section structure and writing rules.
-Template file: `${CLAUDE_PLUGIN_ROOT}/skills/design-doc-template/assets/design-doc.template.md` (in English; produce the actual document in the user's language — or the project's documented language policy — keeping the structure).
+Template file: `${CLAUDE_PLUGIN_ROOT}/skills/design-doc-template/assets/design-doc.template.md` (in English; produce the actual document in the user's language — or the project's documented language policy — keeping the structure). Read the whole template before writing.
 
 ---
 
@@ -119,7 +119,7 @@ For multi-step work, include this table as §5.0 inside §5 Verification Plan. S
 
 Success criteria must be verifiable (no vague criteria like "it just works").
 
-**Step status column** — write every row as `⬜ todo` when the doc is created. Advancing a row is the **implementer's** job, not this skill's: whoever implements the step (the `mak:coder` agent, or the main thread implementing directly) moves it **only after its verify criterion actually passes** (`▶ in progress` for the row being worked). This column is the document's progress record: it lets `mak:dev-resume` read how far work got instead of inferring it from commits and code. Keep it here only — the meta block's `Status` tracks the **document** (draft/approved/in progress/done), this column tracks **each step**, and no other place restates either.
+**Step status column** — write every row as `⬜ todo` when the doc is created. Advancing a row is the **implementer's** job, not this skill's: whoever implements the step (the `mak:coder` agent, or the main thread implementing directly) moves it **only after its verify criterion actually passes** (`▶ in progress` for the row being worked). In a parallel run the main thread moves it instead, because concurrent edits to one doc collide. This column is the document's progress record: it lets `mak:dev-resume` read how far work got instead of inferring it from commits and code. Keep it here only — the meta block's `Status` tracks the **document** (draft/approved/in progress/done), this column tracks **each step**, and no other place restates either.
 
 ## Quality Checklist
 

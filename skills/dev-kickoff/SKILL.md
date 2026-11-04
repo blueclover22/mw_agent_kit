@@ -131,6 +131,8 @@ State the saved path and move to §10 without waiting for a second approval. The
 2. Delegate implementation to coder after approval
    - If the mak:coder agent is available:
        → delegate to mak:coder (pass the approved design doc path)
+       → for a large design with several independent steps, delegate step by
+         step so each step starts in a fresh context
    - Otherwise:
        → implement directly (the design doc is the SSOT for scope)
 
@@ -157,3 +159,5 @@ State the saved path and move to §10 without waiting for a second approval. The
 ```
 
 The design doc is the source of truth. All subsequent agents (or direct work) operate against it.
+
+Give every delegation all the context it needs; a subagent cannot see this conversation. In a parallel run, tell each delegation to leave the §5.0 `Status` column alone — the main thread owns it there.

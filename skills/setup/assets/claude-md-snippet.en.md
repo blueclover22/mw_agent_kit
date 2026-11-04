@@ -16,9 +16,8 @@
 - On receiving a development request, declare the grade in one line before starting — e.g. `[Standard] → mak:dev-kickoff`. Never enter implementation without that declaration
 - When the grade is unclear, judge by impact — single file / few lines with no change to public interfaces, data shapes, or dependencies → Trivial / Small; spanning 2+ files/modules or changing interfaces, data models, dependencies, or security → Standard or above
 - Standard / Risky: write an analysis/design plan and get user approval before implementation — never implement before approval
-- When planning or designing, understand the related code and existing patterns first, and present options, trade-offs, and a recommendation for anything requiring a choice or approval
 - If scope spreads across multiple files/modules mid-work, upgrade the grade and switch to `mak:dev-kickoff`
-- Documents produced through the mak flow are **written in the user's conversation language**, regardless of the templates' language. A language policy stated in the project's rule documents takes precedence
+- mak-flow documents use the user's language; project language policy wins
 
 ## Coding-Principle Mapping
 
@@ -49,13 +48,10 @@ The user who installed this block has **pre-approved subagent delegation** in th
 
 > When a request matches several rows, follow the first one from the top. The verify / review / audit rows are sequential stages when their conditions hold, though — not exclusive choices.
 
-- Development cycle — `mak:brainstorming` → `mak:dev-kickoff` → `mak:design-doc-template` → implement → `mak:verify-checklist` → `mak:review-report` — verify and review follow the routing table's conditions
-- `mak:dev-resume`, `mak:doc-audit`, and `mak:reverse-engineering` are not stages of the development cycle — never run them every iteration
-- `mak:commit` is not chained from any stage — it is entered only on the user's explicit request (invoking the skill is the explicit commit request).
-- Stages requiring conversation (requirements convergence, option approval, design gates) are performed by the main thread; subagents cannot talk to the user.
-- Trivial / Small work is fixed by the main thread directly — delegate it to `mak:coder` (no approved plan needed) only when the user asks; Standard and above only after design approval. Once a `mak:coder` change passes `mak:verify-checklist`, Standard-or-above work goes through `mak:review-report` at stage completion, and for Trivial / Small the main thread reads the diff itself.
-- Design docs and the roadmap are written by the main thread — their content exists only in the conversation; the design doc is written once.
-- Investigation-only delegations (`mak:planner`, `mak:reviewer`, `mak:auditor`) are read-only and invoked concurrently in one message when their scopes do not overlap (typically review split by module or dimension) — if they overlap, split the scope and invoke sequentially — and concurrent ones are never handed verification commands, since their outputs collide.
-- Writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`, `mak:researcher`) run in parallel only when their write targets are disjoint — judged by the design doc's §Scope of Changes, the target document list, the assigned document set, and the output document path respectively — otherwise they collide, so run them serially. In parallel runs the main thread updates the design doc's §5.0 Status, runs verification, and merges the results, and each delegation gets all the context it needs.
+- Development cycle — `mak:brainstorming` → `mak:dev-kickoff` → `mak:design-doc-template` → implement → `mak:verify-checklist` → `mak:review-report`
+- `mak:commit` runs only on explicit user request
+- Conversation stages (requirements, option approval, design gates) and design-doc/roadmap writing are main-thread work
+- Investigation-only delegations (`mak:planner`, `mak:reviewer`, `mak:auditor`) run concurrently when scopes are disjoint; concurrent ones get no verification commands
+- Writing delegations (`mak:coder`, `mak:doc-editor`, `mak:analyzer`, `mak:researcher`) run in parallel only on disjoint write targets; the main thread then updates §5.0 Status, verifies, and merges
 
 <!-- mak:end -->

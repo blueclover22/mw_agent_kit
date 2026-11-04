@@ -50,6 +50,8 @@ Numbers name the **check type**, not a row position. A project command that matc
 | ④ Format errors | Run the format command, inspect changed files; report any unintended changes |
 | ⑤ Manual scenario | Record the deviation concretely, fix, re-verify |
 
+**Retry limit**: if the same check still fails after 2 fix attempts, stop fixing and report the failure, the fixes tried, and your hypothesis.
+
 ---
 
 ## Handoff
@@ -73,7 +75,7 @@ Never route into `mak:commit` from here. Committing requires the user's explicit
 - `npx <command>`, `npm run <script>` — if the project uses pnpm/yarn, use that package manager
 - `node_modules/.bin/<tool>` — use package-manager scripts instead of direct paths
 - Prefer platform-independent commands (package-manager scripts, task runners) over OS-specific shell invocations (`cmd.exe /c ...`, `powershell.exe -Command ...`). When an OS-specific command is unavoidable, note both platform forms (`cp` / `Copy-Item`, etc.)
-- `git commit`, `git push` — only when the user explicitly says "commit"/"push". Otherwise the user runs these directly
+- `git commit`, `git push` — the main thread only, and only when the user explicitly says "commit"/"push"; subagents never run them. Otherwise the user runs these directly
 
 ---
 
@@ -86,7 +88,7 @@ Ask yourself the following before writing the verification report. Clean up simp
 - [ ] Are all unused imports/variables/functions introduced by your change cleaned up? (Precise Changes)
 - [ ] Were unrequested features / speculative flexibility / impossible-scenario error handling added? (Simplicity)
 - [ ] Are all items in the design doc §5.0 success criteria or `Step → verify` table actually met? (Goal-driven)
-- [ ] For each step whose verify criterion just passed, was its §5.0 `Status` cell updated? (Goal-driven)
+- [ ] For each step whose verify criterion just passed, was its §5.0 `Status` cell updated (by the main thread in a parallel run)? (Goal-driven)
 
 ## Report Format
 

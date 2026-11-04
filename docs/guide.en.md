@@ -154,7 +154,7 @@ claude plugin install mak@mw-agent-kit
 
 The default design-doc path is `.claude/mak/plan/`; a path specified in the project `.claude/CLAUDE.md` wins (`mak:design-doc-template` §Save location is the SSOT).
 
-> Mechanical enforcement (secret-file read-deny, verification-command allowlists, hooks) varies per project/user and is not shipped in the plugin. Configure it yourself in `~/.claude/settings.json` / `<project>/.claude/settings.json` if needed. **Agent constraints like "documents only" / "never modifies code" are prompt-level rules** — tool lists narrow the surface, but they don't technically prevent mistakes or prompt injection; on sensitive codebases, back them with permission settings, sandboxing, and command allowlists.
+> Mechanical enforcement (secret-file read-deny, verification-command allowlists, hooks) varies per project/user and is not shipped in the plugin. Configure it yourself in `~/.claude/settings.json` / `<project>/.claude/settings.json` if needed. The one exception is the subagent git guard — a plugin hook blocks `git commit` and `git push` from `mak:*` agents and does not apply to the main thread or other agents. It prevents mistakes and is not a security boundary. **Agent constraints like "documents only" / "never modifies code" are prompt-level rules** — tool lists narrow the surface, but they don't technically prevent mistakes or prompt injection; on sensitive codebases, back them with permission settings, sandboxing, and command allowlists.
 
 ## 6. Relationship with the Agents
 
@@ -184,6 +184,7 @@ Installed plugin files can't be edited in place. Fork the repository, modify the
 | `skills/roadmap-planning/assets/roadmap.template.md` | Phase count, status icons, naming |
 | `skills/reverse-engineering/assets/project_docs/` | Doc-set composition, stack mappings |
 | `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` | The injected common rules themselves (ko/en mirrors — edit together) |
+| `hooks/hooks.json`, `hooks/block-agent-git.sh` | Subagent git guard registration and blocked patterns |
 
 Keep the `{{placeholder}}` structure when editing templates so skills recognize where to fill.
 
