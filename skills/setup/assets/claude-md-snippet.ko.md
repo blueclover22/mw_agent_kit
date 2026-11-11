@@ -40,6 +40,7 @@
 | 그 외 개발 요청 | 등급 선언 → §Workflow 등급 표의 기본 흐름 |
 | 구현·변경 완료 후 보고 전 (검증 명령 선언 시·검증 요청 시) | `mak:verify-checklist` |
 | Standard 이상 단계 완료 후 구현 검토, 코드·PR 리뷰 명시 요청 | `mak:review-report` |
+| 프로젝트 전체 보안 점검, OWASP 기준 취약점 점검 | `mak:security-audit` — 보고서 경로는 그 규칙에 따름(프로젝트 규칙 우선, 기본 `docs/security/`) |
 | 슬라이스·phase 완료 직후, phase 전환, 미완료 세션 인계 전 | `mak:doc-audit` |
 | 여러 Phase 에 걸친 중장기 방향·우선순위 | `mak:roadmap-planning` |
 | 외부 자료 조사와 조사 문서 산출 | `mak:researcher` — 경로는 메인이 지정(프로젝트 규칙 우선, 기본 `docs/research/`) |

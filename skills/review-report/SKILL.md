@@ -57,6 +57,7 @@ Pre-existing unused code (outside this review's scope) goes to 📝 Note and is 
 - Record findings outside this review's scope only under 📝 Note; do not unilaterally decide to expand scope. If Critical or Warning issues exist, report to the main thread that re-delegation to `mak:coder` is needed — do not re-delegate directly
 - If the verification results could not be confirmed directly, state "could not run directly — based on coder's report"
 - Distinguish "no issues" from "could not verify"
+- For a project-wide security audit rather than a change review, use `mak:security-audit`
 - After a slice/stage completion review, hand off to `mak:doc-audit` to check whether other documents referencing this change still hold
 
 If there are no issues, close concisely with "✅ All checks passed".

@@ -1,6 +1,6 @@
 # mak Usage Guide
 
-> Scope: the `mak` plugin's 12 skills + 7 agents + the common Workflow rules installed by `/mak:setup`
+> Scope: the `mak` plugin's 13 skills + 7 agents + the common Workflow rules installed by `/mak:setup`
 > Purpose: reproduce a consistent "diverge → kickoff/architecture consult → design → implement → verify → review → commit" flow in any project, plus a roadmap axis for project-wide direction
 >
 > 한국어 버전: [guide.md](guide.md)
@@ -29,6 +29,7 @@ The kit packages the core stages that repeat in every project — idea divergenc
 | `mak:design-doc-template` | Design-doc sections §1–§8, §5.0 Step → verify table, option comparison, assumption notation, quality checklist, and the **save-location rule SSOT (default `.claude/mak/plan/`)** |
 | `mak:verify-checklist` | Post-implementation order: build → lint → tests → format (changed files only) → manual scenarios. Pre-report self-check + "predefined criteria vs results" table |
 | `mak:review-report` | SSOT for the review procedure and report format. 🔴 Critical / 🟡 Warning / 🟢 Pass / 📝 Note, 6-item Warning checklist |
+| `mak:security-audit` | Project- or module-wide security audit. Stack detection → OWASP Top 10:2025 + conditional modules (secrets, dependencies, IaC/containers, API Top 10:2023, LLM Top 10:2025) → read-only runs of installed scanners only → severity/confidence classification → saved report (default `docs/security/`). Change-set review belongs to `mak:review-report`. Reports only; never modifies code |
 | `mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents. `mak:review-report` audits one design against implementation; `mak:doc-audit` checks whether other docs citing that slice remain valid — the gap. Triggered after slice/phase completion, at phase transitions, or before handing off an unfinished session. Reports only; never edits documents |
 | `mak:commit` | Work wrap-up commit. Pre-commit gates (verification confirmed, every changed line ties to the request, junk/secret scan) → commit with a message matching the repo's convention → at-a-glance result report. Invoking the skill counts as the explicit commit request; other git ops (push/amend/rebase, …) run only on the user's explicit request |
 | `mak:setup` / `mak:teardown` | Install / remove the common rules as a marker block in `~/.claude/CLAUDE.md` |
@@ -184,6 +185,7 @@ Installed plugin files can't be edited in place. Fork the repository, modify the
 | `skills/roadmap-planning/assets/roadmap.template.md` | Phase count, status icons, naming |
 | `skills/reverse-engineering/assets/project_docs/` | Doc-set composition, stack mappings |
 | `skills/setup/assets/claude-md-snippet.ko.md` / `.en.md` | The injected common rules themselves (ko/en mirrors — edit together) |
+| `skills/security-audit/assets/checklist.md` / `security-report.template.md` | In-house security items, scanner list, severity criteria, report format |
 | `hooks/hooks.json`, `hooks/block-agent-git.sh` | Subagent git guard registration and blocked patterns |
 
 Keep the `{{placeholder}}` structure when editing templates so skills recognize where to fill.

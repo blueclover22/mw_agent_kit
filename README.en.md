@@ -4,7 +4,7 @@
 >
 > 한국어 버전: [README.md](README.md)
 
-`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 12 skills and 7 agents, with no dependency on a specific framework or build tool.
+`mak` is a Claude Code plugin for reproducing the same development process in any language/stack. It ships 13 skills and 7 agents, with no dependency on a specific framework or build tool.
 
 ---
 
@@ -76,7 +76,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. What's Included
 
-### Skills (12)
+### Skills (13)
 
 | Skill | Role |
 | :--- | :--- |
@@ -87,6 +87,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:roadmap-planning` | Project-wide phase structure and status tracking (top-level axis) |
 | `/mak:verify-checklist` | Post-implementation order: build → lint → tests → format → manual |
 | `/mak:review-report` | Review procedure and report format (Critical/Warning/Pass/Note) |
+| `/mak:security-audit` | Project-wide security audit — OWASP Top 10:2025 + stack-specific modules, report saved to `docs/security/` (never modifies code) |
 | `/mak:doc-audit` | Doc-to-doc consistency audit + verification of code paths/symbols cited in documents |
 | `/mak:commit` | Work wrap-up commit — gates, commit, at-a-glance result report. Other git ops (push, …) only on explicit request |
 | `/mak:setup` | Install the common rules (workflow grades, principle mapping, delegation rules) into `~/.claude/CLAUDE.md` as a marker block |
@@ -109,7 +110,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ### Behavior Evals
 
-`evals/` holds 14 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (7 skill-routing, 7 agent-quality). They are a **tool for kit developers** and have no effect on using the plugin.
+`evals/` holds [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) cases that measure whether the kit behaves as intended (skill routing, agent quality). They are a **tool for kit developers** and have no effect on using the plugin.
 
 - They are copied into the install but never loaded into a session and never run automatically.
 - They run only when you invoke them, launching Claude sessions on your own credential — **usage is deducted from your subscription (claude.ai login) or billed to your API key**. Set a ceiling with `--max-cost-usd`; it caps the list-price estimate, not your plan usage.

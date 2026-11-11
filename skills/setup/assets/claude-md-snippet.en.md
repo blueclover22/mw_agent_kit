@@ -40,6 +40,7 @@ The user who installed this block has **pre-approved subagent delegation** in th
 | Any other development request | Declare the grade → the default flow of the §Workflow grade table |
 | Before reporting an implementation/change done (when verification commands are declared, or on request) | `mak:verify-checklist` |
 | Reviewing a completed Standard-or-above stage, or an explicit code/PR review request | `mak:review-report` |
+| Project-wide security audit, OWASP-based vulnerability check | `mak:security-audit` — report path per its rule (project rules win; default `docs/security/`) |
 | Right after a slice/phase completes, at a phase transition, before handing off an unfinished session | `mak:doc-audit` |
 | Mid/long-term direction and priorities across phases | `mak:roadmap-planning` |
 | External-source research and producing a research document | `mak:researcher` — the main thread assigns the path (project rules win; default `docs/research/`) |

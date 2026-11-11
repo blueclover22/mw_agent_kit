@@ -4,7 +4,7 @@
 >
 > English version: [README.en.md](README.en.md)
 
-`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 12종과 agent 7종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
+`mak` 은 어떤 언어·스택의 프로젝트에서도 동일한 개발 프로세스를 재현하기 위한 Claude Code 플러그인입니다. skill 13종과 agent 7종을 제공하며, 특정 프레임워크나 빌드 도구에 종속되지 않습니다.
 
 ---
 
@@ -76,7 +76,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ## 4. 구성
 
-### Skills (12종)
+### Skills (13종)
 
 | skill | 역할 |
 | :--- | :--- |
@@ -87,6 +87,7 @@ claude plugin uninstall mak@mw-agent-kit
 | `/mak:roadmap-planning` | 프로젝트 전체 Phase 구조·상태 추적 (상위 축) |
 | `/mak:verify-checklist` | 구현 후 빌드→린트→테스트→포맷→수동 검증 순서 |
 | `/mak:review-report` | 리뷰 절차·보고서 형식 (Critical/Warning/Pass/메모) |
+| `/mak:security-audit` | 프로젝트 전체 보안 점검 — OWASP Top 10:2025 + 스택별 모듈, 보고서를 `docs/security/` 에 저장 (코드 수정 금지) |
 | `/mak:doc-audit` | 문서 ↔ 문서 정합성 감사 + 문서가 인용한 코드 경로·심볼의 실재성 대조 |
 | `/mak:commit` | 작업 마무리 커밋 — 게이트 통과 후 커밋, 변경 내용 한눈 보고. push 등 기타 git 명령은 명시 요청 시에만 |
 | `/mak:setup` | 공통 규칙(Workflow 등급·코딩 원칙 매핑·위임 규칙)을 `~/.claude/CLAUDE.md` 에 마커 블록으로 설치 |
@@ -109,7 +110,7 @@ claude plugin uninstall mak@mw-agent-kit
 
 ### 동작 평가 (evals)
 
-`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스 14개가 들어 있습니다(skill 라우팅 7개, agent 품질 7개). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
+`evals/` 에는 이 킷이 의도대로 동작하는지 재는 [`claude plugin eval`](https://code.claude.com/docs/en/plugin-evals) 케이스가 들어 있습니다(skill 라우팅, agent 품질). **킷 개발자용 도구**라서 플러그인을 쓰는 데에는 영향이 없습니다.
 
 - 설치본에 함께 복사되지만 세션에 로드되지 않으며, 자동으로 실행되지도 않습니다.
 - 직접 실행할 때만 동작하고, 실행한 사람의 자격증명으로 Claude 세션을 띄우므로 **구독 사용량에서 차감되거나(claude.ai 로그인) API 요금이 청구됩니다(API 키)**. `--max-cost-usd` 로 상한을 거세요 — 상한은 정가 기준 추정치이며 구독 사용량 한도가 아닙니다.
